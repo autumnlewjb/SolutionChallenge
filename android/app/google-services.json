@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "172745731974-b3taua05gefcj4jtkt1chn28jmeehjme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.solutionchallenge.return_med",
+            "certificate_hash": "6fe9c09882b501b3c8f785f537013953cd3f0e40"
+          }
+        },
+        {
           "client_id": "172745731974-dalbh3g4ag1h2onm6pb6af2u370emk3r.apps.googleusercontent.com",
           "client_type": 3
         }
