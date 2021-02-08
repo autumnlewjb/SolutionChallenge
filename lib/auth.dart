@@ -68,6 +68,7 @@ class Auth {
       await _firebaseAuth.signInWithCredential(credential);
     } catch (e) {
       error = GoogleSignIn.kSignInFailedError;
+      print(e);
     }
     return error;
   }
