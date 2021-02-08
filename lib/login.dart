@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
+import 'package:return_med/user_home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -70,13 +71,14 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                              onPressed: () {
-                                auth.resetPassword(email);
-                              },
-                              child: Text(
-                                "Forgot Password",
-                                style: TextStyle(color: Colors.green[300]),
-                              )),
+                            onPressed: () {
+                              auth.resetPassword(email);
+                            },
+                            child: Text(
+                              "Forgot Password",
+                              style: TextStyle(color: Colors.green[300]),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -91,8 +93,19 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)),
                           ),
-                          onPressed: () {
-                            auth.signIn(email, password);
+                          onPressed: () async {
+                            // String response =
+                            //     await auth.signIn(email, password);
+                            // print(response);
+                            // if (response.isEmpty) {
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => UserHome()),
+                            //   );
+                            // }
+                            loginInWith(context, "Email",
+                                email: email, password: password);
                           },
                           child: Text(
                             'Login',
@@ -142,8 +155,17 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             GestureDetector(
-                              onTap: () {
-                                auth.signInWithFacebook();
+                              onTap: () async {
+                                // String response =
+                                //     await auth.signInWithFacebook();
+                                // if (response.isEmpty) {
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => UserHome()),
+                                //   );
+                                // }
+                                loginInWith(context, "Facebook");
                               },
                               child: CircleAvatar(
                                 radius: 20,
@@ -155,8 +177,17 @@ class _LoginPageState extends State<LoginPage> {
                               width: 30,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                auth.signInWithGoogle();
+                              onTap: () async {
+                                String response = await auth.signInWithGoogle();
+                                print(response);
+                                if (response.isEmpty) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserHome()),
+                                  );
+                                }
+                                // loginInWith(context, "Google");
                               },
                               child: CircleAvatar(
                                 radius: 20,
@@ -183,5 +214,33 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<bool> loginInWith(BuildContext context, String provider,
+      {String email, String password}) async {
+    String response = "Invalid sign in provider";
+    switch (provider) {
+      case "Email":
+        if (email != null && password != null) {
+          response = await auth.signIn(email, password);
+        }
+        break;
+      case "Google":
+        response = await auth.signInWithGoogle();
+        break;
+      case "Facebook":
+        response = await auth.signInWithFacebook();
+        break;
+    }
+
+    if (response.isEmpty) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UserHome()),
+      );
+      return true;
+    }
+
+    return false;
   }
 }
