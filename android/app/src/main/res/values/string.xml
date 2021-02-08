@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReturnMed</string>
+
+    <string name="facebook_app_id">238046441261809</string>
+
+    <string name="fb_login_protocol_scheme">fb238046441261809</string>
+</resources>
