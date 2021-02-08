@@ -23,33 +23,30 @@ void main() async {
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    return StreamBuilder<User>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData) {
+            return UserHome();
+          } else {
+            return HomePage();
+          }
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+    /*final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       return Home();
     } else {
       return HomePage();
-    }
-
-    // TODO the code below is not working
-
-    // return StreamBuilder<User>(
-    //   stream: FirebaseAuth.instance.authStateChanges(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.active) {
-    //       if (snapshot.hasData) {
-    //         return LoginPage();
-    //       } else {
-    //         return UserHome(); //for testing only
-    //       }
-    //     } else {
-    //       return Scaffold(
-    //         body: Center(
-    //           child: CircularProgressIndicator(),
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
+    }*/
   }
 }
