@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:return_med/auth.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -6,13 +7,32 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  @override
-
   String country;
   List countries = [
-    "Johor", "Kedah", "Kelantan","Melaka","Negeri Sembilan","Pahang","Penang","Perak","Perlis","Sabah","Sarawak","Selangor","Terengganu"
+    "Johor",
+    "Kedah",
+    "Kelantan",
+    "Melaka",
+    "Negeri Sembilan",
+    "Pahang",
+    "Penang",
+    "Perak",
+    "Perlis",
+    "Sabah",
+    "Sarawak",
+    "Selangor",
+    "Terengganu"
   ];
 
+  // text controllers
+  final firstNameCtrl = TextEditingController();
+  final lastNameCtrl = TextEditingController();
+  final usernameCtrl = TextEditingController();
+  final emailCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
+  final address1Ctrl = TextEditingController();
+  final address2Ctrl = TextEditingController();
+  final postCodeCtrl = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,21 +51,23 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: firstNameCtrl,
                       obscureText: false,
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          labelText: 'First name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'First name',
                       ),
                     ),
                   ),
-
-                  SizedBox(width: 20,),
-
+                  SizedBox(
+                    width: 20,
+                  ),
                   Expanded(
                     child: TextField(
+                      controller: lastNameCtrl,
                       obscureText: false,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -57,12 +79,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: usernameCtrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -72,12 +95,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Username'),
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: emailCtrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -87,12 +111,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Email'),
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: passwordCtrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -102,12 +127,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Password'),
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: address1Ctrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -116,12 +142,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Address line 1'),
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: address2Ctrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -130,9 +157,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Address line 2'),
               ),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               padding: EdgeInsets.only(left: 16, right: 16),
@@ -141,30 +168,29 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: DropdownButton(
-                underline: SizedBox(),
-                isExpanded: true,
-                hint: Text('Choose state'),
-                value: country,
-                onChanged: (newCountry){
-                  setState(() {
-                    country = newCountry;
-                  });
-                },
-                items: countries.map((valueItems) {
-                  return DropdownMenuItem(
-                    value: valueItems,
-                    child: Text(valueItems),
-                  );
-                }
-                ).toList()
-              ),
+                  underline: SizedBox(),
+                  isExpanded: true,
+                  hint: Text('Choose state'),
+                  value: country,
+                  onChanged: (newCountry) {
+                    setState(() {
+                      country = newCountry;
+                    });
+                  },
+                  items: countries.map((valueItems) {
+                    return DropdownMenuItem(
+                      value: valueItems,
+                      child: Text(valueItems),
+                    );
+                  }).toList()),
             ),
-
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             Container(
               height: 45,
               child: TextField(
+                controller: postCodeCtrl,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -173,9 +199,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Post code'),
               ),
             ),
-
-            SizedBox(height: 25,),
-
+            SizedBox(
+              height: 25,
+            ),
             Container(
               child: SizedBox(
                 height: 50,
@@ -186,7 +212,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Auth().createUser(emailCtrl.text, passwordCtrl.text);
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     'Create my account',
                     style: TextStyle(

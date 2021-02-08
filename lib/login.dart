@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
-import 'package:return_med/user_home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -96,16 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(30)),
                           ),
                           onPressed: () async {
-                            // String response =
-                            //     await auth.signIn(email, password);
-                            // print(response);
-                            // if (response.isEmpty) {
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => UserHome()),
-                            //   );
-                            // }
                             await loginInWith(context, "Email",
                                 email: email, password: password);
                           },
@@ -131,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(30)),
                           ),
                           onPressed: () {
-                            auth.createUser(email, password);
+                            Navigator.pushNamed(context, '/signUp');
                           },
                           child: Text(
                             'Create new account',
@@ -158,15 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () async {
-                                // String response =
-                                //     await auth.signInWithFacebook();
-                                // if (response.isEmpty) {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => UserHome()),
-                                //   );
-                                // }
                                 await loginInWith(context, "Facebook");
                               },
                               child: CircleAvatar(
@@ -180,15 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                // String response = await auth.signInWithGoogle();
-                                // print(response);
-                                // if (response.isEmpty) {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => UserHome()),
-                                //   );
-                                // }
                                 await loginInWith(context, "Google");
                               },
                               child: CircleAvatar(
@@ -237,10 +207,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.isEmpty) {
       print(FirebaseAuth.instance.currentUser);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => UserHome()),
-      );
+      Navigator.pushReplacementNamed(context, "/userHome");
       return true;
     }
 

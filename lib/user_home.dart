@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/auth.dart';
 
 class UserHome extends StatelessWidget {
   var _backgroundColor = [
@@ -21,7 +20,7 @@ class UserHome extends StatelessWidget {
             onPressed: () async {
               await _firebase_instance.signOut();
               print(FirebaseAuth.instance.currentUser);
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, "/");
             },
           ),
           padding: EdgeInsets.all(10.0),

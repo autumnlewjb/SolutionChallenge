@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:return_med/login.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return HomePage();
-  }
-}
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
