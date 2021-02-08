@@ -13,8 +13,8 @@ class Auth {
   //Create new account
   Future<String> createUser(String email, String password) async {
     try {
-      UserCredential credential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         error = 'Password should be at least 6 characters';
@@ -35,8 +35,8 @@ class Auth {
   //Sign in with email and password
   Future<String> signIn(String email, String password) async {
     try {
-      UserCredential credential = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
         error = 'Incorrect password';
@@ -105,7 +105,6 @@ class Auth {
         error = 'An error occurred: ${result.errorMessage}';
         break;
     }
-
     return error;
   }
 
