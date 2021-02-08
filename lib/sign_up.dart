@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
+import 'package:return_med/user.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -7,8 +8,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String country;
-  List countries = [
+  String state;
+  List states = [
     "Johor",
     "Kedah",
     "Kelantan",
@@ -172,13 +173,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     underline: SizedBox(),
                     isExpanded: true,
                     hint: Text('Choose state'),
-                    value: country,
-                    onChanged: (newCountry) {
+                    value: state,
+                    onChanged: (newState) {
                       setState(() {
-                        country = newCountry;
+                        state = newState;
                       });
                     },
-                    items: countries.map((valueItems) {
+                    items: states.map((valueItems) {
                       return DropdownMenuItem(
                         value: valueItems,
                         child: Text(valueItems),
@@ -214,7 +215,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(30)),
                     ),
                     onPressed: () async {
-                      await Auth().createUser(emailCtrl.text, passwordCtrl.text);
+                      AppUser appUser = AppUser(
+                          firstNameCtrl.text,
+                          lastNameCtrl.text,
+                          usernameCtrl.text,
+                          emailCtrl.text,
+                          address1Ctrl.text,
+                          address2Ctrl.text,
+                          state,
+                          postCodeCtrl.text);
+                      await Auth().createUser(
+                          emailCtrl.text, passwordCtrl.text, appUser);
                       Navigator.pop(context);
                     },
                     child: Text(

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:return_med/user.dart';
 
 class Auth {
   String error = '';
@@ -10,11 +12,15 @@ class Auth {
     scopes: <String>['email'],
   );
 
+  CollectionReference user_db = FirebaseFirestore.instance.collection("users");
+
   //Create new account
-  Future<String> createUser(String email, String password) async {
+  Future<String> createUser(
+      String email, String password, AppUser appUser) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      await addUser(user.user.uid, appUser);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         error = 'Password should be at least 6 characters';
@@ -66,6 +72,9 @@ class Auth {
         idToken: googleSignInAuthentication.idToken,
       );
       await _firebaseAuth.signInWithCredential(credential);
+      if (!await userExist(_firebaseAuth.currentUser.uid)) {
+        error = "User not exist";
+      }
     } catch (e) {
       error = GoogleSignIn.kSignInFailedError;
       print(e);
@@ -116,5 +125,27 @@ class Auth {
 
   Future<void> resetPassword(String email) async {
     _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<void> addUser(String uid, AppUser appUser) async {
+    return user_db.doc(uid).set({
+      'first_name': appUser.firstName,
+      'last_name': appUser.lastName,
+      'username': appUser.username,
+      'email': appUser.email,
+      'address1': appUser.address1,
+      'address2': appUser.address2,
+      'state': appUser.state,
+      'postcode:': appUser.postcode
+    });
+  }
+
+  Future<bool> userExist(String uid) async {
+    DocumentSnapshot snapshot = await user_db.doc(uid).get();
+    if (snapshot.exists) {
+      return true;
+    }
+
+    return false;
   }
 }

@@ -204,11 +204,14 @@ class _LoginPageState extends State<LoginPage> {
         response = await auth.signInWithFacebook();
         break;
     }
+    print(response);
 
     if (response.isEmpty) {
       print(FirebaseAuth.instance.currentUser);
       Navigator.pushReplacementNamed(context, "/userHome");
       return true;
+    } else if (response == "User not exist") {
+      Navigator.pushReplacementNamed(context, "/signUp");
     }
 
     return false;
