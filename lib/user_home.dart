@@ -47,9 +47,7 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 15.0,
-          ),
+          SizedBox(height: 10.0,),
           CircleAvatar(
             child: Icon(
               Icons.assignment_ind,
@@ -68,7 +66,7 @@ class _HomeState extends State<Home> {
                 child: Text(
                   'Welcome $username',
                   style: TextStyle(
-                    fontSize: 40.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -82,10 +80,15 @@ class _HomeState extends State<Home> {
             height: 2.0,
             color: Colors.lightGreenAccent,
             thickness: 2.0,
+            indent: 40.0,
+            endIndent: 40.0,
           ),
           Container(
-            padding: EdgeInsets.all(50.0),
-            color: Colors.green,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.0),
+              color: Colors.green,
+            ),
+            padding: EdgeInsets.all(20.0),
             child: Column(
               children: [
                 Row(
@@ -93,14 +96,14 @@ class _HomeState extends State<Home> {
                     Text(
                       'Username:',
                       style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Expanded(
                       child: Text(
                         ' $username',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 14.0),
                       ),
                     ),
                   ],
@@ -110,14 +113,14 @@ class _HomeState extends State<Home> {
                     Text(
                       'Email:',
                       style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Expanded(
                       child: Text(
                         ' $email',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 14.0),
                       ),
                     ),
                   ],
@@ -127,14 +130,14 @@ class _HomeState extends State<Home> {
                     Text(
                       'Reward:',
                       style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Expanded(
                       child: Text(
                         ' $reward',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 14.0),
                       ),
                     ),
                   ],
