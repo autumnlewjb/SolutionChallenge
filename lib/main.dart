@@ -8,22 +8,24 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
-    home: LandingPage(),
+    home: Root(),
   ));
 }
 
-class LandingPage extends StatelessWidget {
+class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
-          if (snapshot.hasData) {
-            //TODO return main interface
-            return Home();
+          User user = snapshot.data;
+          if (user == null) {
+            return LoginPage();
+          }else{
+            //TODO change to main interface
+            return HomePage();//for testing only
           }
-          return Home();
         } else {
           return Scaffold(
             body: Center(
@@ -54,7 +56,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final auth=Auth();
+  Auth auth=Auth();
   String email = '';
   String password = '';
   @override
@@ -118,7 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                auth.resetPassword(email);
+                                auth.signOut();
+                                //auth.resetPassword(email);
                               },
                               child: Text(
                                 "Forgot Password",
