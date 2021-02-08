@@ -15,7 +15,7 @@ void main() async {
       '/': (context) => Root(),
       '/signUp': (context) => SignUpPage(),
       '/logIn': (context) => LoginPage(),
-      '/userHome': (context) => UserHome(),
+      '/userHome': (context) => Home(),
     },
   ));
 }
@@ -26,7 +26,7 @@ class Root extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      return UserHome();
+      return Home();
     } else {
       return HomePage();
     }
