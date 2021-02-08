@@ -51,15 +51,16 @@ class _HomePageState extends State<HomePage> {
           Colors.green[100]
         ];
         _headingColor = Colors.white;
-        _loginYOffSet = 230;
-        _titleXOffSet = -60;
-        _titleYOffSet = 70;
-        _iconXOffSet = 80;
-        _iconYOffSet = -10;
+        _loginYOffSet = _windowHeight* 3/10;
+        _titleXOffSet = -_windowWidth * 1.5/10;
+        _titleYOffSet = _windowHeight * 0.7/10;
+        _iconXOffSet = _windowWidth * 2.25/10;
+        _iconYOffSet = -_windowHeight * 0.4/10;
         break;
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(children: <Widget>[
         SafeArea(
           child: AnimatedContainer(
@@ -156,6 +157,7 @@ class _HomePageState extends State<HomePage> {
           onTap: () {
             setState(() {
               _pageState = 0;
+              FocusScope.of(context).unfocus();
             });
           },
           child: AnimatedContainer(
