@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -49,41 +50,55 @@ class Auth {
   }
 
   Future<String> signInWithGoogle() async {
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-    await _firebaseAuth.signInWithCredential(credential);
-    return googleSignInAccount.toString();
+    try {
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await _firebaseAuth.signInWithCredential(credential);
+    } on PlatformException catch (e) {
+      switch (e.code) {
+        case GoogleSignIn.kSignInFailedError:
+          response = 'Sign in failed';
+          break;
+        case GoogleSignIn.kSignInCanceledError:
+          response = 'Login cancelled.';
+          break;
+        case GoogleSignIn.kNetworkError:
+          response = 'Cannot connect to the server.';
+          break;
+        default:
+          response = e.toString();
+      }
+    } on NoSuchMethodError {
+      response = 'The login process terminated.';
+    }
+    return response;
   }
 
   Future<String> signInWithFacebook() async {
-    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
-    FacebookAuthCredential credential =
-        FacebookAuthProvider.credential(result.accessToken.token);
-    await _firebaseAuth.signInWithCredential(credential);
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final FacebookAccessToken accessToken = result.accessToken;
-        print('''
-         Logged in!
-
-         Token: ${accessToken.token}
-         User id: ${accessToken.userId}
-         Expires: ${accessToken.expires}
-         Permissions: ${accessToken.permissions}
-         Declined permissions: ${accessToken.declinedPermissions}
-         ''');
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        response = 'Login cancelled by the user.';
-        break;
-      case FacebookLoginStatus.error:
-        response = 'An error occurred: ${result.errorMessage}';
-        break;
+    FacebookLoginResult result;
+    try {
+      result = await facebookSignIn.logIn(['email']);
+      FacebookAuthCredential credential =
+          FacebookAuthProvider.credential(result.accessToken.token);
+      await _firebaseAuth.signInWithCredential(credential);
+    } catch (e) {
+      switch (result.status) {
+        case FacebookLoginStatus.loggedIn:
+          response = '';
+          break;
+        case FacebookLoginStatus.cancelledByUser:
+          response = 'Login cancelled.';
+          break;
+        case FacebookLoginStatus.error:
+          response = 'An error occurred: ${result.errorMessage}';
+          break;
+      }
     }
     return response;
   }
