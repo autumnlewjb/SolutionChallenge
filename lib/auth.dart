@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
-  String error = '';
+  String response = '';
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FacebookLogin facebookSignIn = FacebookLogin();
-  final GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: <String>['email'],
-  );
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   //Create new account
   Future<String> createUser(String email, String password) async {
@@ -17,19 +15,18 @@ class Auth {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        error = 'Password should be at least 6 characters';
+        response = 'Password should be at least 6 characters';
       } else if (e.code == 'email-already-in-use') {
-        error = 'An account already exists for that email.';
+        response = 'An account already exists for this email.';
       } else if (e.code == 'invalid-email') {
-        error = 'Please check your email address and try again.';
+        response = 'Please check your email address and try again.';
       } else if (e.code == 'unknown') {
-        error = 'Email and password cannot be blank';
+        response = 'Email and password cannot be blank';
       } else {
-        error = e.toString();
-        print(e.toString());
+        response = e.toString();
       }
     }
-    return error;
+    return response;
   }
 
   //Sign in with email and password
@@ -39,47 +36,30 @@ class Auth {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
-        error = 'Incorrect password';
+        response = 'Incorrect password';
+      } else if (e.code == 'invalid-email') {
+        response = 'Please check your email address and try again.';
+      } else if (e.code == 'unknown') {
+        response = 'Email and password cannot be blank';
       } else {
-        error = 'Invalid email or password';
+        response = e.toString();
       }
     }
-    print(FirebaseAuth.instance.currentUser);
-    return error;
+    return response;
   }
 
-  //Sign out
-  Future<void> signOut() async {
-    _firebaseAuth.signOut();
-    print('Signed out');
-  }
-
-  //Sign in with Google account
   Future<String> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount googleSignInAccount =
-          await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      await _firebaseAuth.signInWithCredential(credential);
-    } catch (e) {
-      error = GoogleSignIn.kSignInFailedError;
-      print(e);
-    }
-    return error;
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    await _firebaseAuth.signInWithCredential(credential);
+    return googleSignInAccount.toString();
   }
 
-  //Google sign out
-  Future<void> signOutWithGoogle() async {
-    await googleSignIn.disconnect();
-    print('Signed out.');
-  }
-
-  //Sign in with Facebook account
   Future<String> signInWithFacebook() async {
     final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
     FacebookAuthCredential credential =
@@ -99,22 +79,30 @@ class Auth {
          ''');
         break;
       case FacebookLoginStatus.cancelledByUser:
-        error = 'Login cancelled by the user.';
+        response = 'Login cancelled by the user.';
         break;
       case FacebookLoginStatus.error:
-        error = 'An error occurred: ${result.errorMessage}';
+        response = 'An error occurred: ${result.errorMessage}';
         break;
     }
-    return error;
+    return response;
   }
 
-  //Facebook sign out
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut().whenComplete(() => print('Signed out'));
+  }
+
+  Future<void> signOutWithGoogle() async {
+    await googleSignIn.signOut();
+    await signOut();
+  }
+
   Future<void> signOutWithFacebook() async {
     await facebookSignIn.logOut();
-    print('Signed out.');
+    await signOut();
   }
 
-  Future<void> resetPassword(String email) async {
-    _firebaseAuth.sendPasswordResetEmail(email: email);
-  }
+  Future<void> resetPassword(String email) async => await _firebaseAuth
+      .sendPasswordResetEmail(email: email)
+      .whenComplete(() => print('An email has been sent.'));
 }
