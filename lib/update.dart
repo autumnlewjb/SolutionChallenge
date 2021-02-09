@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/user.dart';
 
-class SignUpPage extends StatefulWidget {
+class InfoPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _InfoPageState createState() => _InfoPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _InfoPageState extends State<InfoPage> {
+  final String username = FirebaseAuth.instance.currentUser.displayName;
+  final String email = FirebaseAuth.instance.currentUser.email;
   String state;
   List states = [
     "Johor",
@@ -79,54 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                child: TextField(
-                  controller: usernameCtrl,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Icon(Icons.people_alt_rounded),
-                      labelText: 'Username'),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                child: TextField(
-                  controller: emailCtrl,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Icon(Icons.email),
-                      labelText: 'Email'),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 45,
-                child: TextField(
-                  controller: passwordCtrl,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Icon(Icons.lock),
-                      labelText: 'Password'),
                 ),
               ),
               SizedBox(
@@ -218,22 +173,50 @@ class _SignUpPageState extends State<SignUpPage> {
                       AppUser appUser = AppUser(
                           firstNameCtrl.text,
                           lastNameCtrl.text,
-                          usernameCtrl.text,
-                          emailCtrl.text,
+                          username,
+                          email,
                           address1Ctrl.text,
                           address2Ctrl.text,
                           state,
                           postCodeCtrl.text);
                       await Auth().createUser(
                           emailCtrl.text, passwordCtrl.text, appUser);
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/userHome");
                     },
                     child: Text(
-                      'Create my account',
+                      'Continue as $username',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                child: SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacementNamed(context, "/");
+                    },
+                    child: Text(
+                      'Login with Another Account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

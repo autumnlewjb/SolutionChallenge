@@ -202,15 +202,16 @@ class _LoginPageState extends State<LoginPage> {
         response = await auth.signInWithFacebook();
         break;
     }
-    print(response);
+    Navigator.pushReplacementNamed(context, '/');
+    // print(response);
 
-    if (response.isEmpty) {
-      print(FirebaseAuth.instance.currentUser);
-      Navigator.pushReplacementNamed(context, "/userHome");
-      return true;
-    } else {
-      print(response);
-    }
+    // if (response.isEmpty) {
+    //   print(FirebaseAuth.instance.currentUser);
+    //   Navigator.pushReplacementNamed(context, "/");
+    //   return true;
+    // } else {
+    //   print(response);
+    // }
 
     return false;
   }

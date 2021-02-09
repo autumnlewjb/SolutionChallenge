@@ -62,6 +62,7 @@ class Auth {
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
+    await _firebaseAuth.signInWithCredential(credential);
     return googleSignInAccount.toString();
   }
 

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:return_med/homepage.dart';
 import 'package:return_med/login.dart';
 import 'package:return_med/sign_up.dart';
+import 'package:return_med/update.dart';
 import 'package:return_med/user_home.dart';
 
 import 'auth.dart';
@@ -25,39 +26,40 @@ void main() async {
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return StreamBuilder<User>(
-    //   stream: FirebaseAuth.instance.authStateChanges(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.active) {
-    //       if (snapshot.hasData) {
-    //         print(snapshot.data.uid);
-    //         return Home();
-    //       } else {
-    //         return HomePage();
-    //       }
-    //     } else {
-    //       return Scaffold(
-    //         body: Center(
-    //           child: CircularProgressIndicator(),
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
-    final user = FirebaseAuth.instance.currentUser;
+    return StreamBuilder<User>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData) {
+            print(snapshot.data.uid);
+            return Home();
+          } else {
+            return HomePage();
+          }
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+    // final user = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      return FutureBuilder<bool>(
-          future: Auth().userExist(user.uid),
-          builder: (context, snapshot) {
-            if (snapshot.data) {
-              return Home();
-            } else {
-              return SignUpPage();
-            }
-          });
-    } else {
-      return HomePage();
-    }
+    // if (user != null) {
+    //   return FutureBuilder<bool>(
+    //       future: Auth().userExist(user.uid),
+    //       builder: (context, snapshot) {
+    //         print("sstuff" + "${snapshot.data}");
+    //         if (snapshot.data) {
+    //           return Home();
+    //         } else {
+    //           return InfoPage();
+    //         }
+    //       });
+    // } else {
+    //   return HomePage();
+    // }
   }
 }
