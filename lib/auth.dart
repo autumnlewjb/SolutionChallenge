@@ -127,12 +127,12 @@ class Auth {
     return val;
   }
 
-  Future<bool> userExist(String uid) async {
+  Future<DocumentSnapshot> userExist(String uid) async {
     DocumentSnapshot snapshot = await userDB.doc(uid).get();
     if (snapshot.exists) {
-      return true;
+      return snapshot;
     }
 
-    return false;
+    return null;
   }
 }

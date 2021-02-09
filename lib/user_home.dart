@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -169,8 +170,6 @@ class _HomeState extends State<Home> {
   _showModalBottomSheet(context) {
     final firstNameCtrl = TextEditingController();
     final lastNameCtrl = TextEditingController();
-    final emailCtrl = TextEditingController();
-    final passwordCtrl = TextEditingController();
     final address1Ctrl = TextEditingController();
     final address2Ctrl = TextEditingController();
     final postCodeCtrl = TextEditingController();
@@ -354,8 +353,13 @@ class _HomeState extends State<Home> {
   }
 
   _getUser(String uid) async {
-    if (!await Auth().userExist(uid)) {
+    DocumentSnapshot snapshot = await Auth().userExist(uid);
+    if (snapshot == null) {
       _showModalBottomSheet(context);
+    } else {
+      setState(() {
+        username = snapshot.data()['username'];
+      });
     }
   }
 }
