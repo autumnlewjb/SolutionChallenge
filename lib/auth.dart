@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-<<<<<<< HEAD
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:return_med/user.dart';
-=======
 import 'package:google_sign_in/google_sign_in.dart';
->>>>>>> main
 
 class Auth {
   String response = '';
@@ -135,5 +132,4 @@ class Auth {
 
     return false;
   }
-  
 }
