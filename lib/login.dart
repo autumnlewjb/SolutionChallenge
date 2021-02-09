@@ -63,14 +63,16 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             suffixIcon: GestureDetector(
-                                child: Tooltip(
-                                  message: "Show/Hide password",
-                                    child: Icon(isObscure ? Icons.visibility_off : Icons.visibility),
-                                ),
-                              onTap: (){
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
+                              child: Tooltip(
+                                message: "Show/Hide password",
+                                child: Icon(isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
                               },
                             ),
                             prefixIcon: Icon(Icons.lock),
@@ -215,15 +217,6 @@ class _LoginPageState extends State<LoginPage> {
         break;
     }
     Navigator.pushReplacementNamed(context, '/');
-    // print(response);
-
-    // if (response.isEmpty) {
-    //   print(FirebaseAuth.instance.currentUser);
-    //   Navigator.pushReplacementNamed(context, "/");
-    //   return true;
-    // } else {
-    //   print(response);
-    // }
 
     return false;
   }

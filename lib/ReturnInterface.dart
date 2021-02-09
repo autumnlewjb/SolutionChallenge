@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f78127854185e48944d801b3b8c502d21d6340c
 
 class Return extends StatefulWidget {
   @override
