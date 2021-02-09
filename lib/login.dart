@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Container(
                         child: Text(
-                          ' ______________ or login in with ______________',
+                          ' ______________ or login with ______________',
                           style: TextStyle(color: Colors.grey),
                         ),
                       ),
@@ -193,9 +193,7 @@ class _LoginPageState extends State<LoginPage> {
     String response = "Invalid sign in provider";
     switch (provider) {
       case "Email":
-        if (email != null && password != null) {
-          response = await auth.signIn(email, password);
-        }
+        response = await auth.signIn(email, password);
         break;
       case "Google":
         response = await auth.signInWithGoogle();
@@ -210,8 +208,8 @@ class _LoginPageState extends State<LoginPage> {
       print(FirebaseAuth.instance.currentUser);
       Navigator.pushReplacementNamed(context, "/userHome");
       return true;
-    } else if (response == "User not exist") {
-      Navigator.pushReplacementNamed(context, "/signUp");
+    } else {
+      print(response);
     }
 
     return false;
