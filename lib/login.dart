@@ -63,14 +63,16 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             suffixIcon: GestureDetector(
-                                child: Tooltip(
-                                  message: "Show/Hide password",
-                                    child: Icon(isObscure ? Icons.visibility_off : Icons.visibility),
-                                ),
-                              onTap: (){
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
+                              child: Tooltip(
+                                message: "Show/Hide password",
+                                child: Icon(isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
                               },
                             ),
                             prefixIcon: Icon(Icons.lock),
@@ -214,14 +216,7 @@ class _LoginPageState extends State<LoginPage> {
         response = await auth.signInWithFacebook();
         break;
     }
-
-    if (response.isEmpty) {
-      print(FirebaseAuth.instance.currentUser);
-      Navigator.pushReplacementNamed(context, "/userHome");
-      return true;
-    } else {
-      print(response);
-    }
+    Navigator.pushReplacementNamed(context, '/');
 
     return false;
   }

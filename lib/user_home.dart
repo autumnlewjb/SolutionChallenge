@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:return_med/auth.dart';
+import 'package:return_med/user.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,6 +16,13 @@ class _HomeState extends State<Home> {
   String username = FirebaseAuth.instance.currentUser.displayName;
   String email = FirebaseAuth.instance.currentUser.email;
   int reward = 10;
+  var exist;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUser(FirebaseAuth.instance.currentUser.uid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +57,9 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 10.0,),
+          SizedBox(
+            height: 10.0,
+          ),
           CircleAvatar(
             child: Icon(
               Icons.assignment_ind,
@@ -153,5 +165,14 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.green,
       ),
     );
+  }
+
+  _getUser(String uid) async {
+    DocumentSnapshot snapshot = await Auth().userExist(uid);
+    if (snapshot != null) {
+      setState(() {
+        username = snapshot.data()['username'];
+      });
+    }
   }
 }
