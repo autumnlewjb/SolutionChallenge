@@ -11,6 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   final auth = Auth();
   String email = '';
   String password = '';
+  bool isObscure = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 30,
                       ),
                       TextField(
-                        obscureText: true,
+                        obscureText: isObscure,
                         onChanged: (val) {
                           setState(() {
                             password = val;
@@ -60,6 +61,17 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
+                            ),
+                            suffixIcon: GestureDetector(
+                                child: Tooltip(
+                                  message: "Show/Hide password",
+                                    child: Icon(isObscure ? Icons.visibility_off : Icons.visibility),
+                                ),
+                              onTap: (){
+                                  setState(() {
+                                    isObscure = !isObscure;
+                                  });
+                              },
                             ),
                             prefixIcon: Icon(Icons.lock),
                             labelText: 'Password'),
