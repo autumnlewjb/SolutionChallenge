@@ -10,7 +10,7 @@ class Auth {
   final FacebookLogin facebookSignIn = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  CollectionReference user_db = FirebaseFirestore.instance.collection("users");
+  CollectionReference userDB = FirebaseFirestore.instance.collection("users");
 
   //Create new account
   Future<String> createUser(
@@ -113,7 +113,7 @@ class Auth {
       .whenComplete(() => print('An email has been sent.'));
 
   Future<void> addUser(String uid, AppUser appUser) async {
-    return user_db.doc(uid).set({
+    var val = userDB.doc(uid).set({
       'first_name': appUser.firstName,
       'last_name': appUser.lastName,
       'username': appUser.username,
@@ -123,10 +123,12 @@ class Auth {
       'state': appUser.state,
       'postcode:': appUser.postcode
     });
+    print(val);
+    return val;
   }
 
   Future<bool> userExist(String uid) async {
-    DocumentSnapshot snapshot = await user_db.doc(uid).get();
+    DocumentSnapshot snapshot = await userDB.doc(uid).get();
     if (snapshot.exists) {
       return true;
     }
