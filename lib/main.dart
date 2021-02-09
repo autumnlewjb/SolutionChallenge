@@ -1,11 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:return_med/homepage.dart';
 import 'package:return_med/login.dart';
 import 'package:return_med/sign_up.dart';
-import 'package:return_med/user_home.dart';
+
 import 'Dashboard/dashboard.dart';
 
 void main() async {
@@ -16,7 +16,6 @@ void main() async {
       '/': (context) => Root(),
       '/signUp': (context) => SignUpPage(),
       '/logIn': (context) => LoginPage(),
-      '/userHome': (context) => Home(),
       '/dashboard': (context) => Dashboard(),
     },
   ));

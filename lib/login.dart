@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
 
@@ -8,10 +7,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final auth = Auth();
+  String error = '';
   String email = '';
   String password = '';
   bool isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,160 +34,171 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        obscureText: false,
-                        onChanged: (val) {
-                          setState(() {
-                            email = val;
-                          });
-                        },
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            prefixIcon: Icon(Icons.email),
-                            labelText: 'Email'),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      TextField(
-                        obscureText: isObscure,
-                        onChanged: (val) {
-                          setState(() {
-                            password = val;
-                          });
-                        },
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            suffixIcon: GestureDetector(
-                              child: Tooltip(
-                                message: "Show/Hide password",
-                                child: Icon(isObscure
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  isObscure = !isObscure;
-                                });
-                              },
-                            ),
-                            prefixIcon: Icon(Icons.lock),
-                            labelText: 'Password'),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              auth.resetPassword(email);
-                            },
-                            child: Text(
-                              "Forgot Password",
-                              style: TextStyle(color: Colors.green[300]),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                          ),
-                          onPressed: () async {
-                            await loginInWith(context, "Email",
-                                email: email, password: password);
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          validator: (val) =>
+                              val.isEmpty ? 'Enter an email' : null,
+                          obscureText: false,
+                          onChanged: (val) {
+                            setState(() {
+                              email = val;
+                            });
                           },
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              prefixIcon: Icon(Icons.email),
+                              labelText: 'Email'),
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/signUp');
+                        SizedBox(
+                          height: 30,
+                        ),
+                        TextFormField(
+                          validator: (val) =>
+                              val.isEmpty ? 'Enter a password' : null,
+                          obscureText: isObscure,
+                          onChanged: (val) {
+                            setState(() {
+                              password = val;
+                            });
                           },
-                          child: Text(
-                            'Create new account',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              suffixIcon: GestureDetector(
+                                child: Tooltip(
+                                  message: "Show/Hide password",
+                                  child: Icon(isObscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    isObscure = !isObscure;
+                                  });
+                                },
+                              ),
+                              prefixIcon: Icon(Icons.lock),
+                              labelText: 'Password'),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Text(
-                          ' ______________ or login with ______________',
-                          style: TextStyle(color: Colors.grey),
+                        SizedBox(
+                          height: 4,
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () async {
-                                await loginInWith(context, "Facebook");
+                        Text(error, style: TextStyle(color: Colors.red)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                auth.resetPassword(email);
                               },
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    AssetImage('assets/facebookicon.png'),
+                              child: Text(
+                                "Forgot Password",
+                                style: TextStyle(color: Colors.green[300]),
                               ),
                             ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                await loginInWith(context, "Google");
-                              },
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    AssetImage('assets/googleicon.jpg'),
-                                foregroundColor: Colors.grey,
-                              ),
-                            )
                           ],
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          height: 40,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                await loginInWith(context, "Email",
+                                    email: email, password: password);
+                              }
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 40,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/signUp');
+                            },
+                            child: Text(
+                              'Create new account',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: Text(
+                            ' ______________ or login with ______________',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () async {
+                                  await loginInWith(context, "Facebook");
+                                },
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage:
+                                      AssetImage('assets/facebookicon.png'),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await loginInWith(context, "Google");
+                                },
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage:
+                                      AssetImage('assets/googleicon.jpg'),
+                                  foregroundColor: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -204,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<bool> loginInWith(BuildContext context, String provider,
       {String email, String password}) async {
-    String response = "Invalid sign in provider";
+    String response;
     switch (provider) {
       case "Email":
         response = await auth.signIn(email, password);
@@ -216,7 +229,9 @@ class _LoginPageState extends State<LoginPage> {
         response = await auth.signInWithFacebook();
         break;
     }
-    Navigator.pushReplacementNamed(context, '/');
+    setState(() {
+      error = response;
+    });
 
     return false;
   }

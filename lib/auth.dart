@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:return_med/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:return_med/user.dart';
 
 class Auth {
   String response = '';
@@ -110,17 +110,33 @@ class Auth {
   }
 
   Future<void> signOut() async {
+    switch (_firebaseAuth.currentUser.providerData[0].providerId) {
+      case 'google.com':
+        signOutWithGoogle();
+        print("google");
+        break;
+      case 'facebook.com':
+        signOutWithFacebook();
+        print("facebook");
+        break;
+      default:
+        signOutFromApp();
+        print("email");
+    }
+  }
+
+  Future<void> signOutFromApp() async {
     await _firebaseAuth.signOut().whenComplete(() => print('Signed out'));
   }
 
   Future<void> signOutWithGoogle() async {
     await googleSignIn.signOut();
-    await signOut();
+    await signOutFromApp();
   }
 
   Future<void> signOutWithFacebook() async {
     await facebookSignIn.logOut();
-    await signOut();
+    await signOutFromApp();
   }
 
   Future<void> resetPassword(String email) async => await _firebaseAuth
