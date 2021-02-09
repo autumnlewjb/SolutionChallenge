@@ -47,6 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             children: <Widget>[
               Container(
+                margin: EdgeInsets.only(top: 5),
                 height: 45,
                 child: Row(
                   children: [
@@ -54,7 +55,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: TextField(
                         controller: firstNameCtrl,
                         obscureText: false,
-                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -225,6 +225,19 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
+                ),
+              ),
+              SizedBox(height: 20,),
+
+              Container(
+                child: FlatButton(
+                  color: Colors.blue,
+                  child: Text("TO DASHBOARD"),
+                  onPressed: (){
+                    setState(() {
+                      Navigator.pushNamed(context, '/dashboard');
+                    });
+                  },
                 ),
               )
             ],

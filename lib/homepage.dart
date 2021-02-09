@@ -62,92 +62,94 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(children: <Widget>[
-        SafeArea(
-          child: AnimatedContainer(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: _backgroundColor,
-            )),
-            curve: Curves.fastLinearToSlowEaseIn,
-            duration: Duration(seconds: 1),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                    ),
-                    AnimatedContainer(
-                      curve: Curves.fastLinearToSlowEaseIn,
-                      duration: Duration(seconds: 1),
-                      transform: Matrix4.translationValues(
-                          _titleXOffSet, _titleYOffSet, 1),
-                      child: Text(
-                        'Return Med',
-                        style: TextStyle(
-                            color: _headingColor,
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold),
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: _backgroundColor,
+              )),
+          child: SafeArea(
+            child: AnimatedContainer(
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(seconds: 1),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 30,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    AnimatedContainer(
+                      AnimatedContainer(
                         curve: Curves.fastLinearToSlowEaseIn,
                         duration: Duration(seconds: 1),
                         transform: Matrix4.translationValues(
-                            _iconXOffSet, _iconYOffSet, 1),
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage('assets/icon.png'),
-                        )),
-                    SizedBox(
-                      height: 200,
-                    ),
-                    Container(
+                            _titleXOffSet, _titleYOffSet, 1),
                         child: Text(
-                      "INTRO HERE",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )),
-                    SizedBox(
-                      height: 150,
-                    ),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (_pageState == 1) {
-                              _pageState = 0;
-                            } else {
-                              _pageState = 1;
-                            }
-                          });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(20),
-                          padding: EdgeInsets.all(20),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.green[600]),
-                          child: Center(
-                            child: Text(
-                              'Get started',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
+                          'Return Med',
+                          style: TextStyle(
+                              color: _headingColor,
+                              fontSize: 27,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedContainer(
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          duration: Duration(seconds: 1),
+                          transform: Matrix4.translationValues(
+                              _iconXOffSet, _iconYOffSet, 1),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage('assets/icon.png'),
+                          )),
+                      SizedBox(
+                        height: 200,
+                      ),
+                      Container(
+                          child: Text(
+                        "INTRO HERE",
+                        style:
+                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
+                      SizedBox(
+                        height: 150,
+                      ),
+                      Container(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_pageState == 1) {
+                                _pageState = 0;
+                              } else {
+                                _pageState = 1;
+                              }
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(20),
+                            padding: EdgeInsets.all(20),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.green[600]),
+                            child: Center(
+                              child: Text(
+                                'Get started',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -6,6 +6,8 @@ import 'package:return_med/homepage.dart';
 import 'package:return_med/login.dart';
 import 'package:return_med/sign_up.dart';
 import 'package:return_med/user_home.dart';
+import 'Dashboard/dashboard.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +18,7 @@ void main() async {
       '/signUp': (context) => SignUpPage(),
       '/logIn': (context) => LoginPage(),
       '/userHome': (context) => Home(),
+      '/dashboard': (context) => Dashboard(),
     },
   ));
 }
