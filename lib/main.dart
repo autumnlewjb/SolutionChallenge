@@ -8,7 +8,6 @@ import 'package:return_med/sign_up.dart';
 import 'package:return_med/user_home.dart';
 import 'Dashboard/dashboard.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -31,7 +30,8 @@ class Root extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
-            return Home();
+            print(snapshot.data.uid);
+            return Dashboard();
           } else {
             return HomePage();
           }
@@ -44,12 +44,5 @@ class Root extends StatelessWidget {
         }
       },
     );
-    /*final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      return Home();
-    } else {
-      return HomePage();
-    }*/
   }
 }

@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f78127854185e48944d801b3b8c502d21d6340c
 
 class Return extends StatefulWidget {
   @override
@@ -28,20 +24,18 @@ class _ReturnState extends State<Return> {
     "Selangor",
     "Terengganu"
   ];
-  String date='Medicine Expiry Date (yyyy-mm-dd)';
+  String date = 'Medicine Expiry Date (yyyy-mm-dd)';
   DateTime selectedDate = DateTime.now();
-  _selectDate(BuildContext context)
-  async{
-    final DateTime picked=await showDatePicker(
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2000),
-        lastDate: DateTime(2050)
-    );
-    if (picked!=null && picked!=selectedDate)
+        lastDate: DateTime(2050));
+    if (picked != null && picked != selectedDate)
       setState(() {
-        selectedDate=picked;
-        date=picked.toString().substring(0,10);
+        selectedDate = picked;
+        date = picked.toString().substring(0, 10);
       });
   }
 
@@ -50,13 +44,10 @@ class _ReturnState extends State<Return> {
     return Scaffold(
       appBar: AppBar(
         title: TextButton(
-          onPressed: (){},
+          onPressed: () {},
           child: Text(
             'Return Med',
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black
-            ),
+            style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
         ),
         backgroundColor: Colors.green[400],
@@ -81,23 +72,23 @@ class _ReturnState extends State<Return> {
               hintStyle: TextStyle(
                 fontSize: 10.0,
               ),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
             ),
           ),
           GestureDetector(
-            onTap: ()=>_selectDate(context),
+            onTap: () => _selectDate(context),
             child: AbsorbPointer(
               child: TextField(
                 decoration: InputDecoration(
-                  labelText:'$date',
-                  labelStyle: TextStyle(
-                      fontSize: 13.0,
-                      color: Colors.black
+                  labelText: '$date',
+                  labelStyle: TextStyle(fontSize: 13.0, color: Colors.black),
+                  icon: Icon(
+                    Icons.calendar_today,
                   ),
-                  icon: Icon(Icons.calendar_today,),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
                 ),
-
               ),
             ),
           ),
@@ -112,7 +103,8 @@ class _ReturnState extends State<Return> {
               hintStyle: TextStyle(
                 fontSize: 10.0,
               ),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
             ),
           ),
           TextField(
@@ -126,7 +118,8 @@ class _ReturnState extends State<Return> {
               hintStyle: TextStyle(
                 fontSize: 10.0,
               ),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
             ),
           ),
           Container(
@@ -164,15 +157,15 @@ class _ReturnState extends State<Return> {
               hintStyle: TextStyle(
                 fontSize: 10.0,
               ),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
             ),
           ),
           ElevatedButton(
-              onPressed: (){},
+              onPressed: () {},
               child: Icon(
                 Icons.assignment_turned_in,
-              )
-          )
+              ))
         ],
       ),
     );
