@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:return_med/auth.dart';
+import 'package:return_med/database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
   }
 
   _getUser(String uid) async {
-    DocumentSnapshot snapshot = await Auth().userExist(uid);
+    DocumentSnapshot snapshot = await Database.userExist(uid);
     if (snapshot != null) {
       setState(() {
         username = snapshot.data()['username'];
