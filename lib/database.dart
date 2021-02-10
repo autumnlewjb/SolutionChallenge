@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:return_med/return_info.dart';
+import 'package:return_med/user.dart';
 
 class Database {
   CollectionReference schDB = FirebaseFirestore.instance
       .collection("users")
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection('schedule');
+  static CollectionReference userDB =
+      FirebaseFirestore.instance.collection("users");
 
   Future<void> updateSchDB(ReturnInfo info) async {
     return await schDB.doc(DateTime.now().toString()).set({
@@ -19,5 +22,29 @@ class Database {
       'time created': DateTime.now().toString(),
       'status': 'pending'
     });
+  }
+
+  static Future<void> addUser(String uid, AppUser appUser) async {
+    var val = userDB.doc(uid).set({
+      'first_name': appUser.firstName,
+      'last_name': appUser.lastName,
+      'username': appUser.username,
+      'email': appUser.email,
+      'address1': appUser.address1,
+      'address2': appUser.address2,
+      'state': appUser.state,
+      'postcode:': appUser.postcode
+    });
+    print(val);
+    return val;
+  }
+
+  static Future<DocumentSnapshot> userExist(String uid) async {
+    DocumentSnapshot snapshot = await userDB.doc(uid).get();
+    if (snapshot.exists) {
+      return snapshot;
+    }
+
+    return null;
   }
 }

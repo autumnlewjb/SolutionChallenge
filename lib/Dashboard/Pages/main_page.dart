@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
+import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
 
 class MainPage extends StatefulWidget {
@@ -215,10 +216,13 @@ class _MainPageState extends State<MainPage> {
               height: screenHeight * 0.15,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.green[200], Colors.green[400], Colors.green],
+                    colors: [
+                      Colors.green[200],
+                      Colors.green[400],
+                      Colors.green
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(20)
-              ),
+                  borderRadius: BorderRadius.circular(20)),
             ),
           )
         ],
@@ -436,7 +440,7 @@ class _MainPageState extends State<MainPage> {
                                 address2Ctrl.text,
                                 state,
                                 postCodeCtrl.text);
-                            await Auth().addUser(
+                            await Database.addUser(
                                 FirebaseAuth.instance.currentUser.uid, appUser);
                             Navigator.pop(context);
                           }
@@ -459,7 +463,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   _getUser(String uid) async {
-    DocumentSnapshot snapshot = await Auth().userExist(uid);
+    DocumentSnapshot snapshot = await Database.userExist(uid);
     // TODO JBLew change the code after debugging
 
     // if (snapshot == null) {
