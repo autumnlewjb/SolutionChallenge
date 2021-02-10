@@ -21,16 +21,21 @@ class Auth {
           email: email, password: password);
       await addUser(user.user.uid, appUser);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        response = 'Password should be at least 6 characters';
-      } else if (e.code == 'email-already-in-use') {
-        response = 'An account already exists for this email.';
-      } else if (e.code == 'invalid-email') {
-        response = 'Please check your email address and try again.';
-      } else if (e.code == 'unknown') {
-        response = 'Email and password cannot be blank';
-      } else {
-        response = e.toString();
+      switch (e.code) {
+        case 'weak-password':
+          response = 'Password should be at least 6 characters';
+          break;
+        case 'email-already-in-use':
+          response = 'An account already exists for this email.';
+          break;
+        case 'invalid-email':
+          response = 'Please check your email address and try again.';
+          break;
+        case 'unknown':
+          response = 'Email and password cannot be blank';
+          break;
+        default:
+          response = e.toString();
       }
     }
     return response;
@@ -42,14 +47,18 @@ class Auth {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'wrong-password') {
-        response = 'Incorrect password';
-      } else if (e.code == 'invalid-email') {
-        response = 'Please check your email address and try again.';
-      } else if (e.code == 'unknown') {
-        response = 'Email and password cannot be blank';
-      } else {
-        response = e.toString();
+      switch (e.code) {
+        case 'wrong-password':
+          response = 'Incorrect password';
+          break;
+        case 'invalid-email':
+          response = 'Please check your email address and try again.';
+          break;
+        case 'unknown':
+          response = 'Email and password cannot be blank';
+          break;
+        default:
+          response = e.toString();
       }
     }
     return response;
@@ -113,15 +122,12 @@ class Auth {
     switch (_firebaseAuth.currentUser.providerData[0].providerId) {
       case 'google.com':
         signOutWithGoogle();
-        print("google");
         break;
       case 'facebook.com':
         signOutWithFacebook();
-        print("facebook");
         break;
       default:
         signOutFromApp();
-        print("email");
     }
   }
 

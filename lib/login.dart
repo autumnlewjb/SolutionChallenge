@@ -8,7 +8,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final auth = Auth();
   String error = '';
   String email = '';
   String password = '';
@@ -35,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Form(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter an email' : null,
                           obscureText: false,
@@ -59,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30,
                         ),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter a password' : null,
                           obscureText: isObscure,
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                auth.resetPassword(email);
+                                Auth().resetPassword(email);
                               },
                               child: Text(
                                 "Forgot Password",
@@ -218,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> loginInWith(BuildContext context, String provider,
       {String email, String password}) async {
     String response;
+    Auth auth = Auth();
     switch (provider) {
       case "Email":
         response = await auth.signIn(email, password);
@@ -232,7 +233,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       error = response;
     });
-
     return false;
   }
 }

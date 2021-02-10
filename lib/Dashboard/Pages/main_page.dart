@@ -10,7 +10,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Auth auth = Auth();
   User user = FirebaseAuth.instance.currentUser;
   String username = FirebaseAuth.instance.currentUser.displayName;
   String email = FirebaseAuth.instance.currentUser.email;
@@ -50,7 +49,7 @@ class _MainPageState extends State<MainPage> {
                     alignment: Alignment.topRight,
                     child: FlatButton(
                       onPressed: () async {
-                        await auth.signOut();
+                        await Auth().signOut();
                         Navigator.pushReplacementNamed(context, "/");
                       },
                       child: Text("Logout"),

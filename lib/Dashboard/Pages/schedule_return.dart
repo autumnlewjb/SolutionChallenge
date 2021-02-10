@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
 
 class ScheduleReturn extends StatefulWidget {
@@ -47,7 +48,6 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
       });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +59,13 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
             backgroundColor: Colors.green[400]),
         body: Container(
           child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Text(
                     'Schedule a return',
                     style: TextStyle(
@@ -72,8 +73,11 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       labelText: 'Medicine Name',
@@ -94,16 +98,22 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       });
                     },
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   GestureDetector(
                     onTap: () => _selectDate(context),
                     child: AbsorbPointer(
                       child: TextFormField(
-                        validator: (val) => date=="Medicine Expiry Date (yyyy-mm-dd)"? 'Field required' : null,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            date == "Medicine Expiry Date (yyyy-mm-dd)"
+                                ? 'Field required'
+                                : null,
                         decoration: InputDecoration(
                           labelText: '$date',
                           labelStyle:
-                          TextStyle(fontSize: 13.0, color: Colors.black),
+                              TextStyle(fontSize: 13.0, color: Colors.black),
                           icon: Icon(
                             Icons.calendar_today,
                           ),
@@ -114,8 +124,9 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(height: 10.0),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       labelText: 'Address Line 1',
@@ -136,8 +147,11 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       });
                     },
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       labelText: 'Address Line 2',
@@ -158,7 +172,9 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       });
                     },
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                       height: 50,
                       padding: EdgeInsets.only(left: 16, right: 16),
@@ -168,10 +184,12 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       ),
                       child: Center(
                         child: DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              errorStyle: TextStyle(height: 0, fontSize: 0),
-                            ),
-                            validator: (value) => value == null ? '' : null,
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) => value == null
+                                ? 'Please select your state'
+                                : null,
                             isExpanded: true,
                             hint: Text('Choose state'),
                             value: state,
@@ -187,8 +205,11 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                               );
                             }).toList()),
                       )),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       labelText: 'Post Code',
@@ -209,12 +230,17 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       });
                     },
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          //ReturnInfo(medName, selectedDate, address1, address2,
-                          //    state, postcode);
+                          await Database()
+                              .updateSchDB(ReturnInfo(medName, selectedDate,
+                                  address1, address2, state, postcode))
+                              .whenComplete(
+                                  () => {_formKey.currentState.reset()});
                         }
                       },
                       child: Icon(
