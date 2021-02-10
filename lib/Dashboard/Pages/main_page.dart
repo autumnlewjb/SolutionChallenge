@@ -464,21 +464,20 @@ class _MainPageState extends State<MainPage> {
 
   _getUser(String uid) async {
     DocumentSnapshot snapshot = await Database.userExist(uid);
-    // TODO JBLew change the code after debugging
 
-    // if (snapshot == null) {
-    //   _showModalBottomSheet(context);
-    // } else {
-    //   setState(() {
-    //     username = snapshot.data()['username'];
-    //   });
-    // }
-
-    if (snapshot != null) {
+    if (snapshot == null) {
+      _showModalBottomSheet(context);
+    } else {
       setState(() {
         username = snapshot.data()['username'];
       });
     }
-    _showModalBottomSheet(context);
+
+    // if (snapshot != null) {
+    //   setState(() {
+    //     username = snapshot.data()['username'];
+    //   });
+    // }
+    // _showModalBottomSheet(context);
   }
 }
