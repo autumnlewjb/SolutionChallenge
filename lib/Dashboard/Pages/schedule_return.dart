@@ -58,6 +58,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
             ),
             backgroundColor: Colors.green[400]),
         body: Container(
+          padding: EdgeInsets.fromLTRB(30,20,30,20),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -80,6 +81,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                       labelText: 'Medicine Name',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -90,7 +92,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         fontSize: 10.0,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                     ),
                     onChanged: (val) {
                       setState(() {
@@ -99,7 +101,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     },
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   GestureDetector(
                     onTap: () => _selectDate(context),
@@ -111,6 +113,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                                 ? 'Field required'
                                 : null,
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                           labelText: '$date',
                           labelStyle:
                               TextStyle(fontSize: 13.0, color: Colors.black),
@@ -118,17 +121,18 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                             Icons.calendar_today,
                           ),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
+                              borderRadius: BorderRadius.circular(20.0)),
                         ),
                         keyboardType: null,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 15.0),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                       labelText: 'Address Line 1',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -139,7 +143,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         fontSize: 10.0,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                     ),
                     onChanged: (val) {
                       setState(() {
@@ -154,6 +158,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                       labelText: 'Address Line 2',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -164,7 +169,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         fontSize: 10.0,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                     ),
                     onChanged: (val) {
                       setState(() {
@@ -173,11 +178,10 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     },
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   Container(
-                      height: 50,
-                      padding: EdgeInsets.only(left: 16, right: 16),
+                      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
                         borderRadius: BorderRadius.circular(20),
@@ -206,12 +210,13 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                             }).toList()),
                       )),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                       labelText: 'Post Code',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -222,7 +227,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         fontSize: 10.0,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                     ),
                     onChanged: (val) {
                       setState(() {
@@ -231,21 +236,66 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     },
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 30.0,
                   ),
-                  ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState.validate()) {
-                          await Database()
-                              .updateSchDB(ReturnInfo(medName, selectedDate,
-                                  address1, address2, state, postcode))
-                              .whenComplete(
-                                  () => {_formKey.currentState.reset()});
-                        }
-                      },
-                      child: Icon(
-                        Icons.assignment_turned_in,
-                      ))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton.icon(
+                        icon: Icon(
+                            Icons.check,
+                          color: Colors.white,
+                        ),
+                          label: Text(
+                              "Confirm",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              color: Colors.white
+                            ),
+                          ),
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              await Database()
+                                  .updateSchDB(ReturnInfo(medName, selectedDate,
+                                      address1, address2, state, postcode))
+                                  .whenComplete(
+                                      () => {_formKey.currentState.reset()});
+                            }
+                          },
+                          ),
+
+                      SizedBox(width: 40,),
+
+                      FlatButton.icon(
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "Cancel",
+                          style: TextStyle(
+                            fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                        onPressed: () async {},
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

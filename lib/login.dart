@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: 'Email'),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -86,9 +86,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               prefixIcon: Icon(Icons.lock),
                               labelText: 'Password'),
-                        ),
-                        SizedBox(
-                          height: 4,
                         ),
                         Text(error, style: TextStyle(color: Colors.red)),
                         Row(
@@ -161,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Container(
                           child: Text(
-                            ' ______________ or login with ______________',
+                            ' __________________ or login with __________________',
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),

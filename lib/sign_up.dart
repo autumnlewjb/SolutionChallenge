@@ -251,6 +251,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Container(
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     validator: (text) {
                       if (text == null || text.isEmpty) {
                         return 'Cannot leave blank';
@@ -307,18 +308,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: 20,),
-
-                Container(
-                  child: FlatButton(
-                    color: Colors.blue,
-                    child: Text("TO DASHBOARD"),
-                    onPressed: (){
-                      setState(() {
-                        Navigator.pushNamed(context, '/dashboard');
-                      });
-                    },
-                  ),
-                )
               ],
             ),
           ),

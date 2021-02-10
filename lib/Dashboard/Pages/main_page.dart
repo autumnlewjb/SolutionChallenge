@@ -25,8 +25,33 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          iconSize: 30,
+          onPressed: () {},
+        ),
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 15, 15, 10),
+            child: FlatButton(
+              onPressed: () async {
+                await Auth().signOut();
+                Navigator.pushReplacementNamed(context, "/");
+              },
+              child: Text("Logout"),
+              color: Colors.green[100],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+        ],
         elevation: 0,
         backgroundColor: Colors.green,
       ),
@@ -46,29 +71,153 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    alignment: Alignment.topRight,
-                    child: FlatButton(
-                      onPressed: () async {
-                        await Auth().signOut();
-                        Navigator.pushReplacementNamed(context, "/");
-                      },
-                      child: Text("Logout"),
-                      color: Colors.green[100],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
+                    width: screenWidth * 0.8,
+                    height: screenHeight * 0.06,
+                    decoration: BoxDecoration(
+                        color: Colors.green[100],
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
+                        )),
+                    child: Center(
+                      child: Text(
+                        'Welcome to Return Med',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  Text(
-                    'Hello there',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: screenHeight * 0.03,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          "Do you have any disposable medicine?",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                        child: Text(
+                          "This is where you can start to dispose of your medicine without any worries",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.people_rounded),
+                        label: Text("Go to profile"),
+                        color: Colors.lightGreen[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                      FlatButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.question_answer_rounded),
+                        label: Text("Need help?"),
+                        color: Colors.lightGreen[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Text(
+                    "Steps to be taken",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                                radius: 40, backgroundImage: AssetImage("")),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Image 1")
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                                radius: 40, backgroundImage: AssetImage("")),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Image 2")
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                                radius: 40, backgroundImage: AssetImage("")),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Image 3")
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              height: screenHeight * 0.15,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.green[200], Colors.green[400], Colors.green],
+                  ),
+                  borderRadius: BorderRadius.circular(20)
               ),
             ),
           )
@@ -248,6 +397,7 @@ class _MainPageState extends State<MainPage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return 'Cannot leave blank';
