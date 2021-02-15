@@ -1,6 +1,8 @@
+import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
+import 'package:return_med/Dashboard/bottom_navi_bar.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override
@@ -58,7 +60,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
             ),
             backgroundColor: Colors.green[400]),
         body: Container(
-          padding: EdgeInsets.fromLTRB(30,20,30,20),
+          padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -81,7 +83,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
                       labelText: 'Medicine Name',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -113,7 +116,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                                 ? 'Field required'
                                 : null,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           labelText: '$date',
                           labelStyle:
                               TextStyle(fontSize: 13.0, color: Colors.black),
@@ -132,7 +136,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
                       labelText: 'Address Line 1',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -158,7 +163,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
                       labelText: 'Address Line 2',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -181,7 +187,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 15.0,
                   ),
                   Container(
-                      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
                         borderRadius: BorderRadius.circular(20),
@@ -216,7 +223,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
                       labelText: 'Post Code',
                       labelStyle: TextStyle(
                         fontSize: 13.0,
@@ -243,48 +251,15 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     children: [
                       FlatButton.icon(
                         icon: Icon(
-                            Icons.check,
-                          color: Colors.white,
-                        ),
-                          label: Text(
-                              "Confirm",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              color: Colors.white
-                            ),
-                          ),
-                        color: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              await Database()
-                                  .updateSchDB(ReturnInfo(medName, selectedDate,
-                                      address1, address2, state, postcode))
-                                  .whenComplete(
-                                      () => {_formKey.currentState.reset()});
-                            }
-                          },
-                          ),
-
-                      SizedBox(width: 40,),
-
-                      FlatButton.icon(
-                        icon: Icon(
-                          Icons.cancel,
+                          Icons.check,
                           color: Colors.white,
                         ),
                         label: Text(
-                          "Cancel",
+                          "Confirm",
                           style: TextStyle(
-                            fontSize: 18,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white
-                          ),
+                              color: Colors.white),
                         ),
                         color: Colors.green,
                         shape: RoundedRectangleBorder(
@@ -292,7 +267,17 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                             Radius.circular(10.0),
                           ),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            await Database()
+                                .updateSchDB(ReturnInfo(medName, selectedDate,
+                                    address1, address2, state, postcode))
+                                .whenComplete(
+                                    () => {_formKey.currentState.reset(),
+                                    successDialog(context, "Your information has been recorded")
+                                    });
+                          }
+                        },
                       ),
                     ],
                   )
