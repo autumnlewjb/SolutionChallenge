@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:return_med/return_info.dart';
 import 'package:return_med/user.dart';
 
@@ -14,13 +15,13 @@ class Database {
   Future<void> updateSchDB(ReturnInfo info) async {
     return await schDB.doc(DateTime.now().toString()).set({
       'medicine': info.medName,
-      'expiry date': info.selectedDate,
+      'expiry date': DateFormat.yMMMd().format(info.selectedDate),
       'address1': info.address1,
       'address2': info.address2,
       'state': info.state,
       'postcode': info.postcode,
-      'time created': DateTime.now().toString(),
-      'status': 'pending'
+      'time created': DateFormat.yMMMd().add_jm().format(DateTime.now()),
+      'status': 'Pending'
     });
   }
 

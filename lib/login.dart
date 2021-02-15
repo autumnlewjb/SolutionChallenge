@@ -8,9 +8,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final email = TextEditingController();
+  final password = TextEditingController();
   String error = '';
-  String email = '';
-  String password = '';
   bool isObscure = true;
 
   @override
@@ -38,15 +38,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          controller: email,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter an email' : null,
                           obscureText: false,
-                          onChanged: (val) {
-                            setState(() {
-                              email = val;
-                            });
-                          },
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -58,15 +54,11 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: password,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter a password' : null,
                           obscureText: isObscure,
-                          onChanged: (val) {
-                            setState(() {
-                              password = val;
-                            });
-                          },
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -87,13 +79,15 @@ class _LoginPageState extends State<LoginPage> {
                               prefixIcon: Icon(Icons.lock),
                               labelText: 'Password'),
                         ),
-                        Text(error, style: TextStyle(color: Colors.red)),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Flexible(
+                                child: Text(error,
+                                    style: TextStyle(color: Colors.red))),
                             TextButton(
                               onPressed: () {
-                                Auth().resetPassword(email);
+                                Auth().resetPassword(email.text);
                               },
                               child: Text(
                                 "Forgot Password",
@@ -117,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 await loginInWith(context, "Email",
-                                    email: email, password: password);
+                                    email: email.text, password: password.text);
                               }
                             },
                             child: Text(

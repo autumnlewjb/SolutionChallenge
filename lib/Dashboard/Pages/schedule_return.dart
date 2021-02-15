@@ -2,7 +2,6 @@ import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
-import 'package:return_med/Dashboard/bottom_navi_bar.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override
@@ -272,9 +271,10 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                             await Database()
                                 .updateSchDB(ReturnInfo(medName, selectedDate,
                                     address1, address2, state, postcode))
-                                .whenComplete(
-                                    () => {_formKey.currentState.reset(),
-                                    successDialog(context, "Your information has been recorded")
+                                .then((_) => {
+                                      _formKey.currentState.reset(),
+                                      successDialog(context,
+                                          "Your information has been recorded")
                                     });
                           }
                         },

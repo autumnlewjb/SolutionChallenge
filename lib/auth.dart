@@ -52,6 +52,9 @@ class Auth {
         case 'invalid-email':
           response = 'Please check your email address and try again.';
           break;
+        case 'user-not-found':
+          response = "Couldn't find your account";
+          break;
         case 'unknown':
           response = 'Email and password cannot be blank';
           break;
@@ -130,7 +133,7 @@ class Auth {
   }
 
   Future<void> signOutFromApp() async {
-    await _firebaseAuth.signOut().whenComplete(() => print('Signed out'));
+    await _firebaseAuth.signOut().then((_) => print('Signed out'));
   }
 
   Future<void> signOutWithGoogle() async {
@@ -145,5 +148,5 @@ class Auth {
 
   Future<void> resetPassword(String email) async => await _firebaseAuth
       .sendPasswordResetEmail(email: email)
-      .whenComplete(() => print('An email has been sent.'));
+      .then((_) => print('An email has been sent.'));
 }
