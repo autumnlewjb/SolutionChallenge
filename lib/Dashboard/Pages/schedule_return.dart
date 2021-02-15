@@ -11,11 +11,11 @@ class ScheduleReturn extends StatefulWidget {
 class _ScheduleReturnState extends State<ScheduleReturn> {
   //For state drop down box
   final _formKey = GlobalKey<FormState>();
-  String medName;
-  String address1;
-  String address2;
+  final medName = TextEditingController();
+  final address1 = TextEditingController();
+  final address2 = TextEditingController();
+  final postcode = TextEditingController();
   String state;
-  String postcode;
   List states = [
     "Johor",
     "Kedah",
@@ -51,6 +51,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
 
   @override
   Widget build(BuildContext context) {
+    print('rebuild');
     return Scaffold(
         appBar: AppBar(
             title: Text(
@@ -79,6 +80,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 20.0,
                   ),
                   TextFormField(
+                    controller: medName,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
@@ -96,11 +98,6 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onChanged: (val) {
-                      setState(() {
-                        medName = val;
-                      });
-                    },
                   ),
                   SizedBox(
                     height: 15.0,
@@ -111,15 +108,15 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (val) =>
-                            date == "Medicine Expiry Date (yyyy-mm-dd)"
-                                ? 'Field required'
-                                : null,
+                        date == "Medicine Expiry Date (yyyy-mm-dd)"
+                            ? 'Field required'
+                            : null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           labelText: '$date',
                           labelStyle:
-                              TextStyle(fontSize: 13.0, color: Colors.black),
+                          TextStyle(fontSize: 13.0, color: Colors.black),
                           icon: Icon(
                             Icons.calendar_today,
                           ),
@@ -132,6 +129,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                   ),
                   SizedBox(height: 15.0),
                   TextFormField(
+                    controller: address1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
@@ -149,16 +147,12 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onChanged: (val) {
-                      setState(() {
-                        address1 = val;
-                      });
-                    },
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   TextFormField(
+                    controller: address2,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
@@ -176,11 +170,6 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onChanged: (val) {
-                      setState(() {
-                        address2 = val;
-                      });
-                    },
                   ),
                   SizedBox(
                     height: 15.0,
@@ -196,7 +185,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         child: DropdownButtonFormField(
                             decoration: InputDecoration.collapsed(hintText: ''),
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.onUserInteraction,
                             validator: (value) => value == null
                                 ? 'Please select your state'
                                 : null,
@@ -219,6 +208,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 15.0,
                   ),
                   TextFormField(
+                    controller: postcode,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
@@ -236,11 +226,6 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                     ),
-                    onChanged: (val) {
-                      setState(() {
-                        postcode = val;
-                      });
-                    },
                   ),
                   SizedBox(
                     height: 30.0,
@@ -269,10 +254,24 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             await Database()
-                                .updateSchDB(ReturnInfo(medName, selectedDate,
-                                    address1, address2, state, postcode))
-                                .then((_) => {
-                                      _formKey.currentState.reset(),
+                                .updateSchDB(ReturnInfo(
+                                    medName.text,
+                                    selectedDate,
+                                    address1.text,
+                                    address2.text,
+                                    state,
+                                    postcode.text))
+                                .then((_) =>
+                            {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder:
+                                                (context, ani1, ani2) =>
+                                                    ScheduleReturn(),
+                                            transitionDuration:
+                                                Duration(seconds: 0),
+                                          )),
                                       successDialog(context,
                                           "Your information has been recorded")
                                     });
