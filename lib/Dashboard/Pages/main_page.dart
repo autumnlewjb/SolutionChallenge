@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
+import 'package:return_med/Dashboard/Pages/drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -29,12 +30,8 @@ class _MainPageState extends State<MainPage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      drawer: drawer(),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          iconSize: 30,
-          onPressed: () {},
-        ),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.fromLTRB(0, 15, 15, 10),
