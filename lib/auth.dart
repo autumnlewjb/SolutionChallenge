@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
 
 class Auth {
@@ -11,15 +11,13 @@ class Auth {
   final FacebookLogin facebookSignIn = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  CollectionReference userDB = FirebaseFirestore.instance.collection("users");
-
   //Create new account
   Future<String> createUser(
       String email, String password, AppUser appUser) async {
     try {
       UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await addUser(user.user.uid, appUser);
+      await Database.addUser(user.user.uid, appUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
@@ -148,28 +146,4 @@ class Auth {
   Future<void> resetPassword(String email) async => await _firebaseAuth
       .sendPasswordResetEmail(email: email)
       .whenComplete(() => print('An email has been sent.'));
-
-  Future<void> addUser(String uid, AppUser appUser) async {
-    var val = userDB.doc(uid).set({
-      'first_name': appUser.firstName,
-      'last_name': appUser.lastName,
-      'username': appUser.username,
-      'email': appUser.email,
-      'address1': appUser.address1,
-      'address2': appUser.address2,
-      'state': appUser.state,
-      'postcode:': appUser.postcode
-    });
-    print(val);
-    return val;
-  }
-
-  Future<DocumentSnapshot> userExist(String uid) async {
-    DocumentSnapshot snapshot = await userDB.doc(uid).get();
-    if (snapshot.exists) {
-      return snapshot;
-    }
-
-    return null;
-  }
 }
