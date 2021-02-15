@@ -106,17 +106,18 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     onTap: () => _selectDate(context),
                     child: AbsorbPointer(
                       child: TextFormField(
+                        initialValue: null,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (val) =>
-                        date == "Medicine Expiry Date (yyyy-mm-dd)"
-                            ? 'Field required'
-                            : null,
+                            date == "Medicine Expiry Date (yyyy-mm-dd)"
+                                ? 'Field required'
+                                : null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           labelText: '$date',
                           labelStyle:
-                          TextStyle(fontSize: 13.0, color: Colors.black),
+                              TextStyle(fontSize: 13.0, color: Colors.black),
                           icon: Icon(
                             Icons.calendar_today,
                           ),
@@ -185,7 +186,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                         child: DropdownButtonFormField(
                             decoration: InputDecoration.collapsed(hintText: ''),
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                             validator: (value) => value == null
                                 ? 'Please select your state'
                                 : null,
@@ -261,17 +262,25 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                                     address2.text,
                                     state,
                                     postcode.text))
-                                .then((_) =>
-                            {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder:
-                                                (context, ani1, ani2) =>
-                                                    ScheduleReturn(),
-                                            transitionDuration:
-                                                Duration(seconds: 0),
-                                          )),
+                                .then((_) => {
+                                      // Navigator.pushReplacement(
+                                      //     context,
+                                      //     PageRouteBuilder(
+                                      //       pageBuilder:
+                                      //           (context, ani1, ani2) =>
+                                      //               ScheduleReturn(),
+                                      //       transitionDuration:
+                                      //           Duration(seconds: 0),
+                                      //     )),
+                                      setState(() {
+                                        date =
+                                            "Medicine Expiry Date (yyyy-mm-dd)";
+                                        state = null;
+                                        medName.clear();
+                                        postcode.clear();
+                                        address1.clear();
+                                        address2.clear();
+                                      }),
                                       successDialog(context,
                                           "Your information has been recorded")
                                     });
