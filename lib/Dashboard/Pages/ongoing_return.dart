@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 
@@ -23,6 +24,19 @@ class _OngoingState extends State<Ongoing> {
       ));
     }
 
+    MaterialColor getColor(dynamic text) {
+      if (text == 'Pending') {
+        return Colors.grey;
+      }
+      if (text == 'Accepted') {
+        return Colors.green;
+      }
+      if (text == 'Rejected') {
+        return Colors.red;
+      }
+      return Colors.black;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -35,10 +49,10 @@ class _OngoingState extends State<Ongoing> {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: _backgroundColor,
-            )),
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: _backgroundColor,
+        )),
         child: Container(
           child: Center(
               child: StreamBuilder<QuerySnapshot>(
@@ -59,58 +73,55 @@ class _OngoingState extends State<Ongoing> {
                     return ListView.builder(
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
+                          Map<String, dynamic> info =
+                              snapshot.data.docs[index].data();
                           return Card(
                               elevation: 5,
                               child: ExpansionTile(
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Expiry date : ' +
-                                              snapshot.data.docs[index]
-                                                  .data()['expiry date']),
-                                          Text('Address : ' +
-                                              snapshot.data.docs[index]
-                                                  .data()['address1']),
-                                          Text(snapshot.data.docs[index]
-                                              .data()['address2']),
-                                          Text('Postcode : ' +
-                                              snapshot.data.docs[index]
-                                                  .data()['postcode']),
-                                          Text('State : ' +
-                                              snapshot.data.docs[index]
-                                                  .data()['state']),
-                                        ],
+                                  children: <Widget>[
+                                    Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 0, 0, 10),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Expiry date : ' +
+                                                info['expiry date']),
+                                            Text('Address : ' +
+                                                info['address1']),
+                                            Text(info['address2']),
+                                            Text('Postcode : ' +
+                                                info['postcode']),
+                                            Text('State : ' + info['state']),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: TextButton.icon(
-                                          onPressed: () {
-                                            snapshot.data.docs[index].reference
-                                                .delete()
-                                                .then((_) => showSnackBar());
-                                          },
-                                          icon: Icon(Icons.delete),
-                                          label: Text("Delete")),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: TextButton.icon(
+                                            onPressed: () {
+                                              snapshot
+                                                  .data.docs[index].reference
+                                                  .delete()
+                                                  .then((_) => showSnackBar());
+                                            },
+                                            icon: Icon(Icons.delete),
+                                            label: Text("Delete")),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                                title: Text(snapshot.data.docs[index]
-                                    .data()['medicine']),
-                                subtitle: Text(snapshot.data.docs[index]
-                                    .data()['time created']),
-                                trailing: Text(
-                                    snapshot.data.docs[index].data()['status']),
-                              ));
+                                  ],
+                                  title: Text(info['medicine']),
+                                  subtitle: Text(info['time created']),
+                                  trailing: Text(info['status'],
+                                      style: TextStyle(
+                                        color: getColor(info['status']),
+                                      ))));
                         });
                   })),
         ),

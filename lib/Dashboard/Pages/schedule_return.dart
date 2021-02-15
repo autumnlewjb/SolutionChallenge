@@ -1,4 +1,5 @@
 import 'package:commons/commons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
@@ -9,13 +10,14 @@ class ScheduleReturn extends StatefulWidget {
 }
 
 class _ScheduleReturnState extends State<ScheduleReturn> {
-  //For state drop down box
   final _formKey = GlobalKey<FormState>();
-  final medName = TextEditingController();
-  final address1 = TextEditingController();
-  final address2 = TextEditingController();
-  final postcode = TextEditingController();
+  TextEditingController medName = TextEditingController();
+  TextEditingController address1 = TextEditingController();
+  TextEditingController address2 = TextEditingController();
+  TextEditingController postcode = TextEditingController();
   String state;
+
+  //For state drop down box
   List states = [
     "Johor",
     "Kedah",
@@ -31,6 +33,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
     "Selangor",
     "Terengganu"
   ];
+
+  AutovalidateMode _autoValidate = AutovalidateMode.disabled;
 
   //For choosing the date using a calender widget
   String date = 'Medicine Expiry Date (yyyy-mm-dd)';
@@ -80,8 +84,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 20.0,
                   ),
                   TextFormField(
+                    autovalidateMode: _autoValidate,
                     controller: medName,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -106,8 +110,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     onTap: () => _selectDate(context),
                     child: AbsorbPointer(
                       child: TextFormField(
+                        autovalidateMode: _autoValidate,
                         initialValue: null,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (val) =>
                             date == "Medicine Expiry Date (yyyy-mm-dd)"
                                 ? 'Field required'
@@ -130,8 +134,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                   ),
                   SizedBox(height: 15.0),
                   TextFormField(
+                    autovalidateMode: _autoValidate,
                     controller: address1,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -153,8 +157,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 10.0,
                   ),
                   TextFormField(
+                    autovalidateMode: _autoValidate,
                     controller: address2,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -184,9 +188,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                       ),
                       child: Center(
                         child: DropdownButtonFormField(
+                            autovalidateMode: _autoValidate,
                             decoration: InputDecoration.collapsed(hintText: ''),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
                             validator: (value) => value == null
                                 ? 'Please select your state'
                                 : null,
@@ -209,8 +212,8 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                     height: 15.0,
                   ),
                   TextFormField(
+                    autovalidateMode: _autoValidate,
                     controller: postcode,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (val) => val.isEmpty ? 'Field required' : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
@@ -273,6 +276,7 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                                       //           Duration(seconds: 0),
                                       //     )),
                                       setState(() {
+                                        _formKey.currentState.reset();
                                         date =
                                             "Medicine Expiry Date (yyyy-mm-dd)";
                                         state = null;
@@ -284,6 +288,11 @@ class _ScheduleReturnState extends State<ScheduleReturn> {
                                       successDialog(context,
                                           "Your information has been recorded")
                                     });
+                          } else {
+                            setState(() {
+                              _autoValidate =
+                                  AutovalidateMode.onUserInteraction;
+                            });
                           }
                         },
                       ),
