@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:return_med/dashboard/pages/reward.dart';
+
 import 'Pages/main_page.dart';
 import 'Pages/ongoing_return.dart';
 import 'Pages/schedule_return.dart';
@@ -10,12 +11,8 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  List<Widget> _screen = [
-    MainPage(),
-    ScheduleReturn(),
-    Ongoing(),
-    Reward()
-  ];
+  final pageController = PageController();
+  List<Widget> _screen = [MainPage(), ScheduleReturn(), Ongoing(), Reward()];
 
   List isSelected = [true, false, false, false];
 
@@ -24,9 +21,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
+      body: PageView(
+        controller: pageController,
         children: _screen,
-        index: currentIndex,
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -83,6 +81,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ],
         onTap: (index) {
           setState(() {
+            pageController.jumpToPage(index);
             currentIndex = index;
             for (int i = 0; i < 4; i++) {
               isSelected[i] = false;

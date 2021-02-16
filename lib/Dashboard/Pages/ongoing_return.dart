@@ -8,7 +8,7 @@ class Ongoing extends StatefulWidget {
   _OngoingState createState() => _OngoingState();
 }
 
-class _OngoingState extends State<Ongoing> {
+class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   /*var _backgroundColor = [
     Colors.green[200],
     Colors.green[300],
@@ -17,10 +17,11 @@ class _OngoingState extends State<Ongoing> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     void showSnackBar() {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('Successfully deleted!'),
-        duration: Duration(seconds: 1),
+        duration: Duration(seconds: 2),
       ));
     }
 
@@ -48,7 +49,7 @@ class _OngoingState extends State<Ongoing> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-       /* decoration: BoxDecoration(
+        /* decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -74,7 +75,7 @@ class _OngoingState extends State<Ongoing> {
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
                         Map<String, dynamic> info =
-                            snapshot.data.docs[index].data();
+                        snapshot.data.docs[index].data();
                         return Card(
                             elevation: 5,
                             margin: EdgeInsets.all(5),
@@ -82,12 +83,12 @@ class _OngoingState extends State<Ongoing> {
                                 children: <Widget>[
                                   Container(
                                     padding:
-                                        EdgeInsets.fromLTRB(10, 0, 0, 10),
+                                    EdgeInsets.fromLTRB(10, 0, 0, 10),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text('Expiry date : ' +
                                               info['expiry date']),
@@ -128,4 +129,7 @@ class _OngoingState extends State<Ongoing> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

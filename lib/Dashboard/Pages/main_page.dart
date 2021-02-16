@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
-import 'package:return_med/Dashboard/Pages/drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>
+    with AutomaticKeepAliveClientMixin {
   User user = FirebaseAuth.instance.currentUser;
   String username = FirebaseAuth.instance.currentUser.displayName;
   String email = FirebaseAuth.instance.currentUser.email;
@@ -26,6 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -38,7 +40,6 @@ class _MainPageState extends State<MainPage> {
             child: FlatButton(
               onPressed: () async {
                 await Auth().signOut();
-                Navigator.pushReplacementNamed(context, "/");
               },
               child: Text("Logout"),
               color: Colors.green[100],
@@ -61,12 +62,12 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.green,
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 50,
-                        color: Colors.grey.withOpacity(0.5))
-                  ],
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.5))
+                ],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40),
@@ -499,4 +500,7 @@ class _MainPageState extends State<MainPage> {
     // }
     // _showModalBottomSheet(context);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
