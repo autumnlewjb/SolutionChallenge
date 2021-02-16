@@ -122,7 +122,9 @@ class _MainPageState extends State<MainPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
                         icon: Icon(Icons.people_rounded),
                         label: Text("Go to profile"),
                         color: Colors.lightGreen[200],

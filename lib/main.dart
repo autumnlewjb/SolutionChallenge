@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Dashboard/Pages/profile.dart';
 import 'package:return_med/homepage.dart';
 import 'package:return_med/login.dart';
 import 'package:return_med/sign_up.dart';
@@ -17,6 +18,7 @@ void main() async {
       '/signUp': (context) => SignUpPage(),
       '/logIn': (context) => LoginPage(),
       '/dashboard': (context) => Dashboard(),
+      '/profile': (context) => Profile(),
     },
   ));
 }
