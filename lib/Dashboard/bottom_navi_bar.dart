@@ -10,7 +10,13 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  List _screen = [MainPage(), ScheduleReturn(), Ongoing(), Reward()];
+  final pageController=PageController();
+  List<Widget> _screen = [
+    MainPage(),
+    ScheduleReturn(),
+    Ongoing(),
+    Reward()
+  ];
 
   List isSelected = [true, false, false, false];
 
@@ -19,7 +25,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screen[currentIndex],
+      body: PageView(
+        controller: pageController,
+        children: _screen,
+        physics: NeverScrollableScrollPhysics(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -37,8 +47,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.home_rounded),
             ),
-            title: Text(''),
+            label: '',
           ),
+
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -47,8 +58,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.assignment_return_rounded),
             ),
-            title: Text(''),
+            label: '',
           ),
+
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -57,8 +69,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.arrow_back_rounded),
             ),
-            title: Text(''),
+            label: '',
           ),
+
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -67,11 +80,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.card_giftcard_rounded),
             ),
-            title: Text(''),
+            label: '',
           ),
         ],
         onTap: (index) {
           setState(() {
+            pageController.jumpToPage(index);
             currentIndex = index;
             for (int i = 0; i < 4; i++) {
               isSelected[i] = false;

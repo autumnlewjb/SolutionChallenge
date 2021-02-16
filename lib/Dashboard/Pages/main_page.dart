@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/Dashboard/Pages/profile.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
@@ -12,7 +11,7 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin{
   User user = FirebaseAuth.instance.currentUser;
   String username = FirebaseAuth.instance.currentUser.displayName;
   String email = FirebaseAuth.instance.currentUser.email;
@@ -27,6 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -500,4 +500,7 @@ class _MainPageState extends State<MainPage> {
     // }
     // _showModalBottomSheet(context);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
