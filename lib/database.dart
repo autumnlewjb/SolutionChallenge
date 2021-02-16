@@ -43,6 +43,11 @@ class Database {
     return val;
   }
 
+  static Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    var val = userDB.doc(uid).update(data);
+    return val;
+  }
+
   static Future<DocumentSnapshot> getUser(String uid) async {
     DocumentSnapshot snapshot = await userDB.doc(uid).get();
     if (snapshot.exists) {
@@ -50,6 +55,12 @@ class Database {
     }
 
     return null;
+  }
+
+  static Stream<DocumentSnapshot> getUserStream(String uid) {
+    Stream<DocumentSnapshot> stream = userDB.doc(uid).snapshots();
+
+    return stream;
   }
 
   static Future<List<DocumentSnapshot>> getAllHospitals() async {

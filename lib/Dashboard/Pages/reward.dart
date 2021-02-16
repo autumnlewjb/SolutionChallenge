@@ -10,8 +10,8 @@ class Reward extends StatefulWidget {
 
 class _RewardState extends State<Reward> {
   int reward;
-  Future<DocumentSnapshot> _future =
-      Database.getUser(FirebaseAuth.instance.currentUser.uid);
+  Stream<DocumentSnapshot> _stream =
+      Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
   List<DocumentSnapshot> _allHospitals;
   List<DocumentSnapshot> _services;
 
@@ -23,22 +23,22 @@ class _RewardState extends State<Reward> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _future,
+    return StreamBuilder<DocumentSnapshot>(
+        stream: _stream,
         builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            print("has data");
-            reward = snapshot.data.data()['reward_points'];
-            return _showList();
-          } else if (snapshot.hasError) {
+          if (snapshot.hasError) {
             return Scaffold(
               body: Center(
                 child: Text("You're not registered."),
               ),
             );
-          } else {
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
+          print("has data");
+          reward = snapshot.data.data()['reward_points'];
+          return _showList();
         });
   }
 
@@ -123,13 +123,18 @@ class _RewardState extends State<Reward> {
         isScrollControlled: false,
         context: context,
         builder: (BuildContext context) {
-          return ListView.builder(
-            padding: EdgeInsets.all(20.0),
-            itemCount: _services.length,
-            itemBuilder: (context, index) {
-              Map<String, dynamic> data = _services[index].data();
-              return _rewardList(data['title'], data['cost']);
-            },
+          return Container(
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setter) {
+              return ListView.builder(
+                padding: EdgeInsets.all(20.0),
+                itemCount: _services.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> data = _services[index].data();
+                  return _rewardList(data['title'], data['cost']);
+                },
+              );
+            }),
           );
         });
   }
@@ -169,7 +174,9 @@ class _RewardState extends State<Reward> {
     //To deduct the reward points after claiming
     if (reward >= a) {
       setState(() {
-        return reward -= a;
+        reward -= a;
+        var data = {"reward_points": reward};
+        Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
       });
     }
   }
