@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:return_med/dashboard/pages/reward.dart';
-import 'Pages/reward.dart';
 import 'Pages/main_page.dart';
 import 'Pages/ongoing_return.dart';
 import 'Pages/schedule_return.dart';

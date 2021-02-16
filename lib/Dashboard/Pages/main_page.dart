@@ -255,6 +255,8 @@ class _MainPageState extends State<MainPage> {
     String state;
     showModalBottomSheet(
       isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
       context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -262,7 +264,9 @@ class _MainPageState extends State<MainPage> {
         topRight: Radius.circular(30),
       )),
       builder: (BuildContext context) {
-        return Padding(
+        return WillPopScope(
+          onWillPop: () {},
+          child: Padding(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Form(
@@ -456,7 +460,9 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
-            ));
+            ),
+          ),
+        );
       },
     );
   }

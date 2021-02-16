@@ -34,7 +34,8 @@ class Database {
       'address1': appUser.address1,
       'address2': appUser.address2,
       'state': appUser.state,
-      'postcode:': appUser.postcode
+      'postcode:': appUser.postcode,
+      'reward_points': 0,
     });
     print(val);
     return val;
