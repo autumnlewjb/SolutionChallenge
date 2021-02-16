@@ -11,7 +11,7 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin{
+class _MainPageState extends State<MainPage> {
   User user = FirebaseAuth.instance.currentUser;
   String username = FirebaseAuth.instance.currentUser.displayName;
   String email = FirebaseAuth.instance.currentUser.email;
@@ -26,7 +26,6 @@ class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -500,7 +499,4 @@ class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin{
     // }
     // _showModalBottomSheet(context);
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

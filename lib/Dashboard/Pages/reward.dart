@@ -8,7 +8,7 @@ class Reward extends StatefulWidget {
   _RewardState createState() => _RewardState();
 }
 
-class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin{
+class _RewardState extends State<Reward> {
   int reward;
   Stream<DocumentSnapshot> _stream =
       Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
@@ -23,7 +23,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return StreamBuilder<DocumentSnapshot>(
         stream: _stream,
         builder: (BuildContext context, snapshot) {
@@ -188,7 +187,4 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin{
       _allHospitals = temp;
     });
   }
-
-  @override
-  bool get wantKeepAlive => false;
 }

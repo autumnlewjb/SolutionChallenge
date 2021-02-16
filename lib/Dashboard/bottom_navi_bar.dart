@@ -10,7 +10,6 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final pageController=PageController();
   List<Widget> _screen = [
     MainPage(),
     ScheduleReturn(),
@@ -25,10 +24,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: pageController,
+      body: IndexedStack(
         children: _screen,
-        physics: NeverScrollableScrollPhysics(),
+        index: currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -85,7 +83,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ],
         onTap: (index) {
           setState(() {
-            pageController.jumpToPage(index);
             currentIndex = index;
             for (int i = 0; i < 4; i++) {
               isSelected[i] = false;

@@ -9,7 +9,7 @@ class ScheduleReturn extends StatefulWidget {
   _ScheduleReturnState createState() => _ScheduleReturnState();
 }
 
-class _ScheduleReturnState extends State<ScheduleReturn> with AutomaticKeepAliveClientMixin {
+class _ScheduleReturnState extends State<ScheduleReturn> {
   final _formKey = GlobalKey<FormState>();
   final medName = TextEditingController();
   final address1 = TextEditingController();
@@ -55,7 +55,6 @@ class _ScheduleReturnState extends State<ScheduleReturn> with AutomaticKeepAlive
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         appBar: AppBar(
             title: Text(
@@ -304,7 +303,4 @@ class _ScheduleReturnState extends State<ScheduleReturn> with AutomaticKeepAlive
           ),
         ));
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

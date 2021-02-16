@@ -8,7 +8,7 @@ class Ongoing extends StatefulWidget {
   _OngoingState createState() => _OngoingState();
 }
 
-class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin{
+class _OngoingState extends State<Ongoing> {
   /*var _backgroundColor = [
     Colors.green[200],
     Colors.green[300],
@@ -17,11 +17,10 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     void showSnackBar() {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('Successfully deleted!'),
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 1),
       ));
     }
 
@@ -129,7 +128,4 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin{
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
