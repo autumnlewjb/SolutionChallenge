@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:confetti/confetti.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
@@ -9,6 +10,7 @@ class Reward extends StatefulWidget {
 }
 
 class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
+  ConfettiController control;
   int reward;
   Stream<DocumentSnapshot> _stream =
       Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
@@ -17,8 +19,14 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   @override
   void initState() {
+    control = ConfettiController(duration: const Duration(seconds: 2));
     super.initState();
     _getHospitals();
+  }
+
+  void dispose(){
+    control.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,6 +81,25 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ],
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: ConfettiWidget(
+                confettiController: control,
+                blastDirectionality: BlastDirectionality.explosive,
+                minimumSize: const Size(10,10),
+                maximumSize: const Size(40,40),
+                shouldLoop: false,
+                colors: const [
+                  Colors.green,
+                  Colors.blue,
+                  Colors.pink,
+                  Colors.orange,
+                  Colors.purple,
+                  Colors.yellow,
+                  Colors.red,
+                ], // manually specify the colors to be used
+              ),
             ),
             Expanded(
                 child: ListView.builder(
@@ -177,6 +204,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
       setState(() {
         reward -= a;
         var data = {"reward_points": reward};
+        control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
       });
     }
