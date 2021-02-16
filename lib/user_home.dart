@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
   }
 
   _getUser(String uid) async {
-    DocumentSnapshot snapshot = await Database.userExist(uid);
+    DocumentSnapshot snapshot = await Database.getUser(uid);
     if (snapshot != null) {
       setState(() {
         username = snapshot.data()['username'];

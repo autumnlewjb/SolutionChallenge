@@ -11,6 +11,8 @@ class Database {
       .collection('schedule');
   static CollectionReference userDB =
       FirebaseFirestore.instance.collection("users");
+  static CollectionReference rewardDB =
+      FirebaseFirestore.instance.collection("rewards");
 
   Future<void> updateSchDB(ReturnInfo info) async {
     return await schDB.doc(DateTime.now().toString()).set({
@@ -41,12 +43,25 @@ class Database {
     return val;
   }
 
-  static Future<DocumentSnapshot> userExist(String uid) async {
+  static Future<DocumentSnapshot> getUser(String uid) async {
     DocumentSnapshot snapshot = await userDB.doc(uid).get();
     if (snapshot.exists) {
       return snapshot;
     }
 
     return null;
+  }
+
+  static Future<List<DocumentSnapshot>> getAllHospitals() async {
+    QuerySnapshot snapshots = await rewardDB.get();
+
+    return snapshots.docs;
+  }
+
+  static Future<List<DocumentSnapshot>> getServices(String doc_id) async {
+    QuerySnapshot snapshots =
+        await rewardDB.doc(doc_id).collection("offers").get();
+
+    return snapshots.docs;
   }
 }

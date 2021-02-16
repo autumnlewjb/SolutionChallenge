@@ -468,7 +468,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   _getUser(String uid) async {
-    DocumentSnapshot snapshot = await Database.userExist(uid);
+    DocumentSnapshot snapshot = await Database.getUser(uid);
 
     if (snapshot == null) {
       _showModalBottomSheet(context);
