@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile.dart';
 
 class drawer extends StatefulWidget {
   @override
@@ -13,30 +14,30 @@ class _drawerState extends State<drawer> {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Text(
-              "THIS IS THE HEADER"
+            padding: EdgeInsets.all(20),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(""),
             ),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.green[500], Colors.green[800]]
-              )
-            ),
+                gradient: LinearGradient(
+                    colors: [Colors.green[500], Colors.green[800]])),
           ),
           ListTile(
-            title: Text('This is tile 1'),
-            onTap: (){
-              Navigator.pop(context);
-            },
-          ),
+              title: Text('Profile'),
+              leading: Icon(Icons.people_rounded),
+              onTap: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Profile()));
+              }),
           ListTile(
             title: Text('This is tile 2'),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             title: Text('This is tile 3'),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
           ),

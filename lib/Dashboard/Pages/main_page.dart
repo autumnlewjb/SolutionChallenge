@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Dashboard/Pages/profile.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/user.dart';
@@ -61,6 +62,12 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.green,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 5),
+                        blurRadius: 50,
+                        color: Colors.grey.withOpacity(0.5))
+                  ],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40),
@@ -72,6 +79,12 @@ class _MainPageState extends State<MainPage> {
                     width: screenWidth * 0.8,
                     height: screenHeight * 0.06,
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 5),
+                              blurRadius: 50,
+                              color: Colors.grey.withOpacity(0.5))
+                        ],
                         color: Colors.green[100],
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
@@ -121,19 +134,21 @@ class _MainPageState extends State<MainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      FlatButton.icon(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/profile');
-                        },
-                        icon: Icon(Icons.people_rounded),
-                        label: Text("Go to profile"),
-                        color: Colors.lightGreen[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                      ),
+                      // FlatButton.icon(
+                      //   onPressed: () {
+                      //     Navigator.push(context, new MaterialPageRoute(
+                      //         builder: (context) => new Profile())
+                      //     );
+                      //   },
+                      //   icon: Icon(Icons.people_rounded),
+                      //   label: Text("Go to profile"),
+                      //   color: Colors.lightGreen[200],
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(10.0),
+                      //     ),
+                      //   ),
+                      // ),
                       FlatButton.icon(
                         onPressed: () {},
                         icon: Icon(Icons.question_answer_rounded),

@@ -51,11 +51,11 @@ class _HomePageState extends State<HomePage> {
           Colors.green[100]
         ];
         _headingColor = Colors.white;
-        _loginYOffSet = _windowHeight* 3/10;
-        _titleXOffSet = -_windowWidth * 1.5/10;
-        _titleYOffSet = _windowHeight * 0.7/10;
-        _iconXOffSet = _windowWidth * 2.25/10;
-        _iconYOffSet = -_windowHeight * 0.4/10;
+        _loginYOffSet = _windowHeight * 3 / 10;
+        _titleXOffSet = -_windowWidth * 1.5 / 10;
+        _titleYOffSet = _windowHeight * 0.7 / 10;
+        _iconXOffSet = _windowWidth * 2.25 / 10;
+        _iconYOffSet = -_windowHeight * 0.4 / 10;
         break;
     }
 
@@ -65,10 +65,10 @@ class _HomePageState extends State<HomePage> {
         Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: _backgroundColor,
-              )),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: _backgroundColor,
+          )),
           child: SafeArea(
             child: AnimatedContainer(
               curve: Curves.fastLinearToSlowEaseIn,
@@ -112,8 +112,8 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           child: Text(
                         "INTRO HERE",
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       )),
                       SizedBox(
                         height: 150,
@@ -134,6 +134,12 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.all(20),
                             width: double.infinity,
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(0, 5),
+                                      blurRadius: 50,
+                                      color: Colors.green[700].withOpacity(0.4))
+                                ],
                                 borderRadius: BorderRadius.circular(30),
                                 color: Colors.green[600]),
                             child: Center(
