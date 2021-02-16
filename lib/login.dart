@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: Text(
                                 "Forgot Password",
-                                style: TextStyle(color: Colors.green[300]),
+                                style: TextStyle(color: Colors.deepPurple),
                               ),
                             ),
                           ],
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
+                              primary: Colors.deepPurple,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                             ),
@@ -129,9 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 40,
                           width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(color: Colors.deepPurple, width: 1),
+                              backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                             ),
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               'Create new account',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.deepPurple,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),

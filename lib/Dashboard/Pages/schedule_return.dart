@@ -59,11 +59,13 @@ class _ScheduleReturnState extends State<ScheduleReturn>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+            elevation: 10,
             title: Text(
               'Return Med',
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
+              style: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
-            backgroundColor: Colors.green[400]),
+            backgroundColor: Colors.deepPurple),
         body: Container(
           padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
           child: Form(
@@ -250,7 +252,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        color: Colors.green,
+                        color: Colors.deepPurple,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(10.0),

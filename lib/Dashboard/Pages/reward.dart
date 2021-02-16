@@ -54,11 +54,13 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   Widget _showList() {
     return Scaffold(
       appBar: AppBar(
+        elevation: 10,
+        centerTitle: true,
         title: Text(
           'Return Med',
-          style: TextStyle(fontSize: 20.0, color: Colors.black),
+          style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(30.0),

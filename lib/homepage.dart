@@ -8,9 +8,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _backgroundColor = [
-    Colors.green[200],
-    Colors.green[300],
-    Colors.green[500]
+    Colors.deepPurple[300],
+    Colors.deepPurple,
+    Colors.deepPurple[600]
   ];
   var _headingColor = Colors.black;
   double _loginYOffSet = 0;
@@ -38,17 +38,17 @@ class _HomePageState extends State<HomePage> {
         _iconXOffSet = 0;
         _iconYOffSet = 0;
         _backgroundColor = [
-          Colors.green[200],
-          Colors.green[300],
-          Colors.green[500]
+          Colors.deepPurple[300],
+          Colors.deepPurple,
+          Colors.deepPurple[600]
         ];
-        _headingColor = Colors.black;
+        _headingColor = Colors.white;
         break;
       case 1:
         _backgroundColor = [
-          Colors.green[800],
-          Colors.green[300],
-          Colors.green[100]
+          Colors.deepPurple[500],
+          Colors.deepPurple,
+          Colors.deepPurple[300]
         ];
         _headingColor = Colors.white;
         _loginYOffSet = _windowHeight * 3 / 10;
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                         "INTRO HERE",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       )),
                       SizedBox(
                         height: 150,
@@ -138,15 +138,15 @@ class _HomePageState extends State<HomePage> {
                                   BoxShadow(
                                       offset: Offset(0, 5),
                                       blurRadius: 50,
-                                      color: Colors.green[700].withOpacity(0.4))
+                                      color: Colors.black.withOpacity(0.4))
                                 ],
                                 borderRadius: BorderRadius.circular(30),
-                                color: Colors.green[600]),
+                                color: Colors.white),
                             child: Center(
                               child: Text(
                                 'Get started',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.deepPurple,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),

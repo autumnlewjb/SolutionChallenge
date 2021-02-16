@@ -9,11 +9,6 @@ class Ongoing extends StatefulWidget {
 }
 
 class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
-  /*var _backgroundColor = [
-    Colors.green[200],
-    Colors.green[300],
-    Colors.green[500]
-  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +35,13 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 10,
         title: Text(
           "On going return",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.deepPurple,
       ),
       body: Container(
         padding: EdgeInsets.all(10),

@@ -17,10 +17,10 @@ class _ProfileState extends State<Profile> {
         title: Text(
           "Profile Page",
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
         ),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.deepPurple[300],
         elevation: 0,
       ),
       body: Column(
@@ -33,7 +33,11 @@ class _ProfileState extends State<Profile> {
                 height: height * 0.3 - 50,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.green,
+                  gradient: LinearGradient(
+                      colors: [Colors.deepPurple[300], Colors.deepPurple[400], Colors.deepPurple, Colors.deepPurple[600]],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter
+                  ),
                     boxShadow: [
                       BoxShadow(
                           offset: Offset(0, 5),

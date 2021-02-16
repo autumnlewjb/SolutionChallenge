@@ -20,11 +20,11 @@ class _drawerState extends State<drawer> {
             ),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.green[500], Colors.green[800]])),
+                    colors: [Colors.deepPurple[300], Colors.deepPurple[600]])),
           ),
           ListTile(
               title: Text('Profile'),
-              leading: Icon(Icons.people_rounded),
+              leading: Icon(Icons.people_rounded,color: Colors.deepPurple,),
               onTap: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) => new Profile()));

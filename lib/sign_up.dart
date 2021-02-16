@@ -40,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.deepPurple,
         title: Text("Create a new account"),
         centerTitle: true,
       ),
@@ -277,7 +277,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
+                        primary: Colors.deepPurple,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
                       ),

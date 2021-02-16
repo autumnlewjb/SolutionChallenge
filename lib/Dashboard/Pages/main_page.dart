@@ -41,8 +41,8 @@ class _MainPageState extends State<MainPage>
               onPressed: () async {
                 await Auth().signOut();
               },
-              child: Text("Logout"),
-              color: Colors.green[100],
+              child: Text("Logout",style: TextStyle(color: Colors.deepPurple),),
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.0),
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage>
           ),
         ],
         elevation: 0,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.deepPurple,
       ),
       body: CustomScrollView(
         physics: ClampingScrollPhysics(),
@@ -61,7 +61,11 @@ class _MainPageState extends State<MainPage>
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.green,
+                gradient: LinearGradient(
+                  colors: [Colors.deepPurple, Colors.deepPurple[400], Colors.deepPurple[300]],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter
+                ),
                 boxShadow: [
                   BoxShadow(
                       offset: Offset(0, 5),
@@ -76,25 +80,11 @@ class _MainPageState extends State<MainPage>
               child: Column(
                 children: <Widget>[
                   Container(
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.06,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 50,
-                              color: Colors.grey.withOpacity(0.5))
-                        ],
-                        color: Colors.green[100],
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        )),
                     child: Center(
                       child: Text(
                         'Welcome to Return Med',
                         style: TextStyle(
-                            color: Colors.black87,
+                            color: Colors.white,
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
                       ),
@@ -153,7 +143,7 @@ class _MainPageState extends State<MainPage>
                         onPressed: () {},
                         icon: Icon(Icons.question_answer_rounded),
                         label: Text("Need help?"),
-                        color: Colors.lightGreen[200],
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(10.0),
@@ -231,9 +221,9 @@ class _MainPageState extends State<MainPage>
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.green[200],
-                      Colors.green[400],
-                      Colors.green
+                      Colors.deepPurple[200],
+                      Colors.deepPurple[400],
+                      Colors.deepPurple
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20)),

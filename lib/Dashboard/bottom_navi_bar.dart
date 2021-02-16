@@ -39,7 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               decoration: BoxDecoration(
-                  color: isSelected[0] ? Colors.green : Colors.transparent,
+                  color: isSelected[0] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.home_rounded),
             ),
@@ -50,7 +50,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               decoration: BoxDecoration(
-                  color: isSelected[1] ? Colors.green : Colors.transparent,
+                  color: isSelected[1] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.assignment_return_rounded),
             ),
@@ -61,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               decoration: BoxDecoration(
-                  color: isSelected[2] ? Colors.green : Colors.transparent,
+                  color: isSelected[2] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.arrow_back_rounded),
             ),
@@ -72,7 +72,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               decoration: BoxDecoration(
-                  color: isSelected[3] ? Colors.green : Colors.transparent,
+                  color: isSelected[3] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
               child: Icon(Icons.card_giftcard_rounded),
             ),
