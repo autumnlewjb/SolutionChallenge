@@ -24,7 +24,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     _getHospitals();
   }
 
-  void dispose(){
+  void dispose() {
     control.dispose();
     super.dispose();
   }
@@ -89,8 +89,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               child: ConfettiWidget(
                 confettiController: control,
                 blastDirectionality: BlastDirectionality.explosive,
-                minimumSize: const Size(10,10),
-                maximumSize: const Size(40,40),
+                minimumSize: const Size(10, 10),
+                maximumSize: const Size(40, 40),
                 shouldLoop: false,
                 colors: const [
                   Colors.green,
@@ -209,6 +209,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
       });
+      Navigator.pop(context);
     }
   }
 
