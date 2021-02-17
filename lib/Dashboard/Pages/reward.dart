@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 
@@ -13,7 +14,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
   int reward;
   Stream<DocumentSnapshot> _stream =
-      Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
+  Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
   List<DocumentSnapshot> _allHospitals;
   List<DocumentSnapshot> _services;
 
@@ -24,7 +25,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     _getHospitals();
   }
 
-  @override
   void dispose() {
     control.dispose();
     super.dispose();
@@ -118,31 +118,47 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   // list hospitals
+  //Later add a new String parameter for the image
   Widget _orgList(String a, [DocumentSnapshot hospital]) {
     return Container(
         padding: EdgeInsets.only(top: 20.0),
         child: Container(
           decoration: BoxDecoration(
-              shape: BoxShape.rectangle, color: Colors.amberAccent),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              shape: BoxShape.rectangle, color: Colors.indigo[200]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                '$a',
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
+              Image(
+                image: AssetImage('assets/HSB.jpg'),//later change the parameter accepted inside for different hospitals images
+                fit: BoxFit.fill,
+                height: 250,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.red, onPrimary: Colors.white),
-                onPressed: () async {
-                  _services = await Database.getServices(hospital.id);
-                  _showModalBottomSheet();
-                },
-                child: Text(
-                  'Show More',
-                ),
+              Divider(
+                height: 10,
+                thickness: 2.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+
+                  Text(
+                    '$a',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.purple[200], onPrimary: Colors.white),
+                    onPressed: () async {
+                      _services = await Database.getServices(hospital.id);
+                      _showModalBottomSheet();
+                    },
+                    child: Text(
+                      'Show More',
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -155,56 +171,64 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         context: context,
         builder: (BuildContext context) {
           return Container(
+            decoration: BoxDecoration(
+              color: Colors.deepPurple[50],
+            ),
             child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter setter) {
-              return ListView.builder(
-                padding: EdgeInsets.all(20.0),
-                itemCount: _services.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> data = _services[index].data();
-                  return _rewardList(
-                      data['title'], data['cost'], _services[index].reference);
-                },
-              );
-            }),
+                  return ListView.builder(
+                    padding: EdgeInsets.all(20.0),
+                    itemCount: _services.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> data = _services[index].data();
+                      return _rewardList(data['title'], data['cost']);
+                    },
+                  );
+                }),
           );
         });
   }
 
   //The widget build for every rewards which are the same
   //String a for the name and int b for the points needed
-  Widget _rewardList(String a, int b, DocumentReference reference) {
+  //Later add a new String parameter for the image
+  Widget _rewardList(String a, int b) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Container(
-        decoration:
-            BoxDecoration(shape: BoxShape.rectangle, color: Colors.amberAccent),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              '$a ($b)',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image(
+            image: AssetImage("assets/mask.jpg"), //later change the parameter accepted inside for different reward images
+            height: 200,
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '$a',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red, onPrimary: Colors.white),
+                  onPressed: reward >= b ? () => press(b) : null,
+                  child: Text(
+                    'Redeem ($b)',
+                  ),
+                ),
+              ],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.red, onPrimary: Colors.white),
-              onPressed: () {
-                press(b, reference);
-              },
-              child: Text(
-                'Claim',
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  void press(int a, DocumentReference reference) {
+  void press(int a) {
     //To deduct the reward points after claiming
     if (reward >= a) {
       setState(() {
@@ -212,7 +236,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         var data = {"reward_points": reward};
         control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
-        Database.addClaimedReward(reference);
       });
       Navigator.pop(context);
     }
