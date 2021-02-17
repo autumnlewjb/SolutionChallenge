@@ -175,7 +175,7 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("")),
+                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
@@ -187,7 +187,7 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("")),
+                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
@@ -199,7 +199,7 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("")),
+                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
