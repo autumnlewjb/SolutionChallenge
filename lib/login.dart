@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: TextStyle(color: Colors.red))),
                             TextButton(
                               onPressed: () {
-                                Auth().resetPassword(email.text);
+                                Auth().resetPassword(context, email.text);
                               },
                               child: Text(
                                 "Forgot Password",

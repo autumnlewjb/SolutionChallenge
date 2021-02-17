@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -146,7 +147,17 @@ class Auth {
     await signOutFromApp();
   }
 
-  Future<void> resetPassword(String email) async => await _firebaseAuth
-      .sendPasswordResetEmail(email: email)
-      .then((_) => print('An email has been sent.'));
+  Future<void> resetPassword(BuildContext context, String email) async =>
+      await _firebaseAuth
+          .sendPasswordResetEmail(email: email)
+          .then((_) => showDialog(
+              context: context,
+              builder: (context) {
+                Future.delayed(Duration(seconds: 2), () {
+                  Navigator.pop(context);
+                });
+                return AlertDialog(
+                  content: Text('An email has been sent.'),
+                );
+              }));
 }

@@ -13,26 +13,6 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    void showSnackBar() {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Successfully deleted!'),
-        duration: Duration(seconds: 2),
-      ));
-    }
-
-    MaterialColor getColor(dynamic text) {
-      if (text == 'Pending') {
-        return Colors.grey;
-      }
-      if (text == 'Accepted') {
-        return Colors.green;
-      }
-      if (text == 'Rejected') {
-        return Colors.red;
-      }
-      return Colors.black;
-    }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -53,8 +33,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
             )),*/
         child: Center(
             child: StreamBuilder<QuerySnapshot>(
-                stream: Database()
-                    .schDB
+                stream: Database.schDB
                     .orderBy('time created', descending: true)
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
@@ -104,10 +83,36 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                       alignment: Alignment.topRight,
                                       child: TextButton.icon(
                                           onPressed: () {
-                                            snapshot
-                                                .data.docs[index].reference
-                                                .delete()
-                                                .then((_) => showSnackBar());
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    title: Text('Warning'),
+                                                    content: Text(
+                                                        'Are you sure you want to delete?'),
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        child: Text('Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                      FlatButton(
+                                                        child: Text('Confirm'),
+                                                        onPressed: () async {
+                                                          await snapshot
+                                                              .data
+                                                              .docs[index]
+                                                              .reference
+                                                              .delete()
+                                                              .then((_) =>
+                                                                  showSnackBar());
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
                                           },
                                           icon: Icon(Icons.delete),
                                           label: Text("Delete")),
@@ -124,6 +129,26 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                 })),
       ),
     );
+  }
+
+  void showSnackBar() {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('Successfully deleted!'),
+      duration: Duration(seconds: 2),
+    ));
+  }
+
+  MaterialColor getColor(dynamic text) {
+    if (text == 'Pending') {
+      return Colors.grey;
+    }
+    if (text == 'Accepted') {
+      return Colors.green;
+    }
+    if (text == 'Rejected') {
+      return Colors.red;
+    }
+    return Colors.black;
   }
 
   @override
