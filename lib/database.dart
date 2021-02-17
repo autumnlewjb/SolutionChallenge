@@ -1,28 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:commons/commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:return_med/return_info.dart';
 import 'package:return_med/user.dart';
 
 class Database {
-  CollectionReference schDB = FirebaseFirestore.instance
-      .collection("users")
+  static CollectionReference userDB =
+      FirebaseFirestore.instance.collection('users');
+  static CollectionReference rewardDB =
+      FirebaseFirestore.instance.collection('rewards');
+  static CollectionReference schDB = FirebaseFirestore.instance
+      .collection('users')
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection('schedule');
-  static CollectionReference userDB =
-      FirebaseFirestore.instance.collection("users");
-  static CollectionReference rewardDB =
-      FirebaseFirestore.instance.collection("rewards");
+  static CollectionReference claimedRewardDB = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser.uid)
+      .collection('rewards');
 
-  Future<void> updateSchDB(ReturnInfo info) async {
+  static Future<void> addSch(ReturnInfo info) async {
     return await schDB.doc(DateTime.now().toString()).set({
       'medicine': info.medName,
-      'expiry date': DateFormat.yMMMd().format(info.selectedDate),
+      'expiryDate': DateFormat.yMMMd().format(info.selectedDate),
       'address1': info.address1,
       'address2': info.address2,
       'state': info.state,
       'postcode': info.postcode,
-      'time created': DateFormat.yMMMd().add_jm().format(DateTime.now()),
+      'timeCreated': DateFormat.yMMMd().add_jm().format(DateTime.now()),
       'status': 'Pending'
     });
   }
@@ -74,5 +79,22 @@ class Database {
         await rewardDB.doc(doc_id).collection("offers").get();
 
     return snapshots.docs;
+  }
+
+  static Stream<DocumentSnapshot> getRewardDetails(
+      String hospitalId, String rewardId) {
+    return rewardDB
+        .doc(hospitalId)
+        .collection("offers")
+        .doc(rewardId)
+        .snapshots();
+  }
+
+  static Future<void> addClaimedReward(DocumentReference reference) async {
+    return await claimedRewardDB.doc(DateTime.now().toString()).set({
+      'hospitalId': reference.parent.parent.id,
+      'rewardId': reference.id,
+      'timeClaimed': DateFormat.yMMMd().add_jm().format(DateTime.now())
+    });
   }
 }

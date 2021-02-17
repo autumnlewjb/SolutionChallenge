@@ -59,7 +59,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
+            centerTitle: true,
             elevation: 10,
             title: Text(
               'Return Med',
@@ -116,15 +116,15 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                         autovalidateMode: _autoValidate,
                         initialValue: null,
                         validator: (val) =>
-                        date == "Medicine Expiry Date (yyyy-mm-dd)"
-                            ? 'Field required'
-                            : null,
+                            date == "Medicine Expiry Date (yyyy-mm-dd)"
+                                ? 'Field required'
+                                : null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           labelText: '$date',
                           labelStyle:
-                          TextStyle(fontSize: 13.0, color: Colors.black),
+                              TextStyle(fontSize: 13.0, color: Colors.black),
                           icon: Icon(
                             Icons.calendar_today,
                           ),
@@ -148,7 +148,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                         fontSize: 13.0,
                         color: Colors.black,
                       ),
-                      hintText: 'taman admin',
+                      hintText: 'Taman Admin',
                       hintStyle: TextStyle(
                         fontSize: 10.0,
                       ),
@@ -171,7 +171,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                         fontSize: 13.0,
                         color: Colors.black,
                       ),
-                      hintText: 'jalan admin',
+                      hintText: 'Jalan Admin',
                       hintStyle: TextStyle(
                         fontSize: 10.0,
                       ),
@@ -260,37 +260,27 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            await Database()
-                                .updateSchDB(ReturnInfo(
-                                medName.text,
-                                selectedDate,
-                                address1.text,
-                                address2.text,
-                                state,
-                                postcode.text))
+                            await Database.addSch(ReturnInfo(
+                                    medName.text,
+                                    selectedDate,
+                                    address1.text,
+                                    address2.text,
+                                    state,
+                                    postcode.text))
                                 .then((_) => {
-                              // Navigator.pushReplacement(
-                              //     context,
-                              //     PageRouteBuilder(
-                              //       pageBuilder:
-                              //           (context, ani1, ani2) =>
-                              //               ScheduleReturn(),
-                              //       transitionDuration:
-                              //           Duration(seconds: 0),
-                              //     )),
-                              setState(() {
-                                _formKey.currentState.reset();
-                                date =
-                                "Medicine Expiry Date (yyyy-mm-dd)";
-                                state = null;
-                                medName.clear();
-                                postcode.clear();
-                                address1.clear();
-                                address2.clear();
-                              }),
-                              successDialog(context,
-                                  "Your information has been recorded")
-                            });
+                                      setState(() {
+                                        _formKey.currentState.reset();
+                                        date =
+                                            "Medicine Expiry Date (yyyy-mm-dd)";
+                                        state = null;
+                                        medName.clear();
+                                        postcode.clear();
+                                        address1.clear();
+                                        address2.clear();
+                                      }),
+                                      successDialog(context,
+                                          "Your information has been recorded")
+                                    });
                           } else {
                             setState(() {
                               _autoValidate =

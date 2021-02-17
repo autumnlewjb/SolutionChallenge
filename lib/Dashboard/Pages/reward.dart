@@ -24,7 +24,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     _getHospitals();
   }
 
-  void dispose(){
+  @override
+  void dispose() {
     control.dispose();
     super.dispose();
   }
@@ -89,8 +90,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               child: ConfettiWidget(
                 confettiController: control,
                 blastDirectionality: BlastDirectionality.explosive,
-                minimumSize: const Size(10,10),
-                maximumSize: const Size(40,40),
+                minimumSize: const Size(10, 10),
+                maximumSize: const Size(40, 40),
                 shouldLoop: false,
                 colors: const [
                   Colors.green,
@@ -161,7 +162,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 itemCount: _services.length,
                 itemBuilder: (context, index) {
                   Map<String, dynamic> data = _services[index].data();
-                  return _rewardList(data['title'], data['cost']);
+                  return _rewardList(
+                      data['title'], data['cost'], _services[index].reference);
                 },
               );
             }),
@@ -171,7 +173,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   //The widget build for every rewards which are the same
   //String a for the name and int b for the points needed
-  Widget _rewardList(String a, int b) {
+  Widget _rewardList(String a, int b, DocumentReference reference) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Container(
@@ -189,7 +191,9 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.red, onPrimary: Colors.white),
-              onPressed: reward >= b ? () => press(b) : null,
+              onPressed: () {
+                press(b, reference);
+              },
               child: Text(
                 'Claim',
               ),
@@ -200,14 +204,16 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  void press(int a) {
+  void press(int a, DocumentReference reference) {
     //To deduct the reward points after claiming
     if (reward >= a) {
       setState(() {
         reward -= a;
         var data = {"reward_points": reward};
+        Navigator.pop(context);
         control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
+        Database.addClaimedReward(reference);
       });
     }
   }

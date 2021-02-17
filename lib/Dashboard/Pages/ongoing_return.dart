@@ -28,7 +28,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
         child: Center(
             child: StreamBuilder<QuerySnapshot>(
                 stream: Database.schDB
-                    .orderBy('time created', descending: true)
+                    .orderBy('timeCreated', descending: true)
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.hasError) {
@@ -59,7 +59,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text('Expiry date : ' +
-                                              info['expiry date']),
+                                              info['expiryDate']),
                                           Text('Address : ' + info['address1']),
                                           Text(info['address2']),
                                           Text(
@@ -93,6 +93,8 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                                       FlatButton(
                                                         child: Text('Confirm'),
                                                         onPressed: () async {
+                                                          Navigator.pop(
+                                                              context);
                                                           await snapshot
                                                               .data
                                                               .docs[index]
@@ -112,7 +114,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                   ),
                                 ],
                                 title: Text(info['medicine']),
-                                subtitle: Text(info['time created']),
+                                subtitle: Text(info['timeCreated']),
                                 trailing: Text(info['status'],
                                     style: TextStyle(
                                       color: getColor(info['status']),
@@ -126,7 +128,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   void showSnackBar() {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text('Successfully deleted!'),
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
     ));
   }
 

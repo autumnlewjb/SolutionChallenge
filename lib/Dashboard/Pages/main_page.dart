@@ -482,15 +482,8 @@ class _MainPageState extends State<MainPage>
         username = snapshot.data()['username'];
       });
     }
-
-    // if (snapshot != null) {
-    //   setState(() {
-    //     username = snapshot.data()['username'];
-    //   });
-    // }
-    // _showModalBottomSheet(context);
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }
