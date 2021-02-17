@@ -52,7 +52,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                   color: isSelected[1] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
-              child: Icon(Icons.assignment_return_rounded),
+              child: Icon(Icons.timer),
             ),
             label: '',
           ),
@@ -63,7 +63,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                   color: isSelected[2] ? Colors.deepPurple : Colors.transparent,
                   borderRadius: BorderRadius.circular(20)),
-              child: Icon(Icons.arrow_back_rounded),
+              child: Icon(Icons.trending_up),
             ),
             label: '',
           ),

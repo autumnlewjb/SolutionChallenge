@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 
+import 'drawer.dart';
+
 class Ongoing extends StatefulWidget {
   @override
   _OngoingState createState() => _OngoingState();
@@ -13,17 +15,25 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      drawer: drawer(),
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         title: Text(
           "On going return",
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.deepPurple,
       ),
       body: Container(
-        color: Colors.deepPurple,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.deepPurple,
+            Colors.deepPurple[400],
+            Colors.deepPurple[300],
+            Colors.deepPurple[200]
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+        ),
         padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
         child: Center(
             child: StreamBuilder<QuerySnapshot>(
@@ -38,7 +48,14 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                     return CircularProgressIndicator();
                   }
                   if (snapshot.data.size == 0) {
-                    return Text('No ongoing return found.');
+                    return Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Text(
+                        'No ongoing return found. Feel free to schedule a return now! :)',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    );
                   }
                   return ListView.builder(
                       itemCount: snapshot.data.docs.length,
@@ -58,13 +75,44 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Expiry date : ' +
-                                              info['expiryDate']),
-                                          Text('Address : ' + info['address1']),
-                                          Text(info['address2']),
-                                          Text(
-                                              'Postcode : ' + info['postcode']),
-                                          Text('State : ' + info['state']),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Expiry date : ',
+                                              style: DefaultTextStyle.of(context).style,
+                                              children: <TextSpan>[
+                                                TextSpan(text: info['expiryDate'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Address : ',
+                                              style: DefaultTextStyle.of(context).style,
+                                              children: <TextSpan>[
+                                                TextSpan(text: info['address1'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(text: ', ', style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(text: info['address2'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Postcode : ',
+                                              style: DefaultTextStyle.of(context).style,
+                                              children: <TextSpan>[
+                                                TextSpan(text: info['postcode'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'State : ',
+                                              style: DefaultTextStyle.of(context).style,
+                                              children: <TextSpan>[
+                                                TextSpan(text: info['state'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

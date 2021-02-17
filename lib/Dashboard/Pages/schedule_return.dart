@@ -1,6 +1,7 @@
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
 
@@ -58,6 +59,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      drawer: drawer(),
         appBar: AppBar(
             centerTitle: true,
             elevation: 10,

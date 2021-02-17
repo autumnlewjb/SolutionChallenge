@@ -34,23 +34,6 @@ class _MainPageState extends State<MainPage>
     return Scaffold(
       drawer: drawer(),
       appBar: AppBar(
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 15, 15, 10),
-            child: FlatButton(
-              onPressed: () async {
-                await Auth().signOut();
-              },
-              child: Text("Logout",style: TextStyle(color: Colors.deepPurple),),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-            ),
-          ),
-        ],
         elevation: 0,
         backgroundColor: Colors.deepPurple,
       ),
@@ -109,7 +92,7 @@ class _MainPageState extends State<MainPage>
                       Container(
                         padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
                         child: Text(
-                          "This is where you can start to dispose of your medicine without any worries",
+                          "This is where you can start to dispose of your medicine without any worries. Let's start now!",
                           style: TextStyle(
                               color: Colors.white70,
                               fontSize: 14,
@@ -122,23 +105,8 @@ class _MainPageState extends State<MainPage>
                     height: screenHeight * 0.03,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      // FlatButton.icon(
-                      //   onPressed: () {
-                      //     Navigator.push(context, new MaterialPageRoute(
-                      //         builder: (context) => new Profile())
-                      //     );
-                      //   },
-                      //   icon: Icon(Icons.people_rounded),
-                      //   label: Text("Go to profile"),
-                      //   color: Colors.lightGreen[200],
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(10.0),
-                      //     ),
-                      //   ),
-                      // ),
                       FlatButton.icon(
                         onPressed: () {},
                         icon: Icon(Icons.question_answer_rounded),

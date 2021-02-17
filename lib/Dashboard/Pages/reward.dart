@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
 
+import 'drawer.dart';
+
 class Reward extends StatefulWidget {
   @override
   _RewardState createState() => _RewardState();
@@ -55,6 +57,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   Widget _showList() {
     return Scaffold(
+      drawer: drawer(),
       appBar: AppBar(
         elevation: 10,
         centerTitle: true,

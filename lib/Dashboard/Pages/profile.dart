@@ -53,7 +53,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     CircleAvatar(
                       radius: 52,
-                      backgroundImage: AssetImage(""),
+                      backgroundImage: AssetImage("assets/icon.png"),
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
           ),
           Container(
             margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(30),
             width: width,
             height: height * 0.45,
             decoration: BoxDecoration(

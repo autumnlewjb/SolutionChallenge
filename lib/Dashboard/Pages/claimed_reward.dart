@@ -15,13 +15,21 @@ class _ClaimedRewardState extends State<ClaimedReward> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
-        elevation: 10,
+        elevation: 0,
         title: Text(
           'Claimed Reward',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
+        padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.deepPurple, Colors.deepPurple[400], Colors.deepPurple[300], Colors.deepPurple[200]],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+          ),
+        ),
           child: StreamBuilder<QuerySnapshot>(
               stream: Database.claimedRewardDB
                   .orderBy('timeClaimed', descending: true)
@@ -53,6 +61,9 @@ class _ClaimedRewardState extends State<ClaimedReward> {
                             }
                             return Card(
                                 elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 margin: EdgeInsets.all(5),
                                 child: ListTile(
                                   title: Text(snapshot.data.data()['title']),
