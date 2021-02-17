@@ -14,7 +14,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
   int reward;
   Stream<DocumentSnapshot> _stream =
-  Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
+      Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
   List<DocumentSnapshot> _allHospitals;
   List<DocumentSnapshot> _services;
 
@@ -25,6 +25,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     _getHospitals();
   }
 
+  @override
   void dispose() {
     control.dispose();
     super.dispose();
@@ -129,7 +130,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image(
-                image: AssetImage('assets/HSB.jpg'),//later change the parameter accepted inside for different hospitals images
+                image: AssetImage('assets/HSB.jpg'),
+                //later change the parameter accepted inside for different hospitals images
                 fit: BoxFit.fill,
                 height: 250,
               ),
@@ -140,7 +142,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-
                   Text(
                     '$a',
                     style: TextStyle(
@@ -176,15 +177,16 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             ),
             child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter setter) {
-                  return ListView.builder(
-                    padding: EdgeInsets.all(20.0),
-                    itemCount: _services.length,
-                    itemBuilder: (context, index) {
-                      Map<String, dynamic> data = _services[index].data();
-                      return _rewardList(data['title'], data['cost']);
-                    },
-                  );
-                }),
+              return ListView.builder(
+                padding: EdgeInsets.all(20.0),
+                itemCount: _services.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> data = _services[index].data();
+                  return _rewardList(
+                      data['title'], data['cost'], _services[index].reference);
+                },
+              );
+            }),
           );
         });
   }
@@ -192,14 +194,15 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   //The widget build for every rewards which are the same
   //String a for the name and int b for the points needed
   //Later add a new String parameter for the image
-  Widget _rewardList(String a, int b) {
+  Widget _rewardList(String a, int b, DocumentReference reference) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image(
-            image: AssetImage("assets/mask.jpg"), //later change the parameter accepted inside for different reward images
+            image: AssetImage("assets/mask.jpg"),
+            //later change the parameter accepted inside for different reward images
             height: 200,
           ),
           Container(
@@ -215,7 +218,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red, onPrimary: Colors.white),
-                  onPressed: reward >= b ? () => press(b) : null,
+                  onPressed: reward >= b ? () => press(b, reference) : null,
                   child: Text(
                     'Redeem ($b)',
                   ),
@@ -228,7 +231,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  void press(int a) {
+  void press(int a, DocumentReference reference) {
     //To deduct the reward points after claiming
     if (reward >= a) {
       setState(() {
@@ -236,6 +239,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         var data = {"reward_points": reward};
         control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
+        Database.addClaimedReward(reference);
       });
       Navigator.pop(context);
     }
