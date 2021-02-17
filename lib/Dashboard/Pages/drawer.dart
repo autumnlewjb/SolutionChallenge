@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Dashboard/Pages/claimed_reward.dart';
 import 'profile.dart';
 
 class drawer extends StatefulWidget {
@@ -14,9 +16,18 @@ class _drawerState extends State<drawer> {
       child: ListView(
         children: [
           DrawerHeader(
-            padding: EdgeInsets.all(20),
-            child: CircleAvatar(
-              backgroundImage: AssetImage(""),
+            padding: EdgeInsets.fromLTRB(0,20,0,20),
+            child: Column(
+              children: [
+                Container(
+                  child: CircleAvatar(
+                    radius: 45,
+                    backgroundImage: AssetImage("assets/icon.png"),
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Text('USERNAME',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
+              ],
             ),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -30,11 +41,12 @@ class _drawerState extends State<drawer> {
                     new MaterialPageRoute(builder: (context) => new Profile()));
               }),
           ListTile(
-            title: Text('This is tile 2'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+              title: Text('Claimed reward'),
+              leading: Icon(Icons.card_giftcard_rounded,color: Colors.deepPurple,),
+              onTap: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new ClaimedReward()));
+              }),
           ListTile(
             title: Text('This is tile 3'),
             onTap: () {

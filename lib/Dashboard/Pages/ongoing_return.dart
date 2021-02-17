@@ -9,28 +9,22 @@ class Ongoing extends StatefulWidget {
 }
 
 class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        elevation: 10,
+        elevation: 0,
         title: Text(
           "On going return",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
         ),
-        centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
-        /* decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: _backgroundColor,
-            )),*/
+        color: Colors.deepPurple,
+        padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
         child: Center(
             child: StreamBuilder<QuerySnapshot>(
                 stream: Database.schDB
@@ -50,28 +44,26 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
                         Map<String, dynamic> info =
-                        snapshot.data.docs[index].data();
+                            snapshot.data.docs[index].data();
                         return Card(
                             elevation: 5,
                             margin: EdgeInsets.all(5),
                             child: ExpansionTile(
                                 children: <Widget>[
                                   Container(
-                                    padding:
-                                    EdgeInsets.fromLTRB(10, 0, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text('Expiry date : ' +
                                               info['expiry date']),
-                                          Text('Address : ' +
-                                              info['address1']),
+                                          Text('Address : ' + info['address1']),
                                           Text(info['address2']),
-                                          Text('Postcode : ' +
-                                              info['postcode']),
+                                          Text(
+                                              'Postcode : ' + info['postcode']),
                                           Text('State : ' + info['state']),
                                         ],
                                       ),
