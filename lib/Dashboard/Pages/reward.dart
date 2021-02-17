@@ -210,11 +210,11 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
       setState(() {
         reward -= a;
         var data = {"reward_points": reward};
-        Navigator.pop(context);
         control.play();
         Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
         Database.addClaimedReward(reference);
       });
+      Navigator.pop(context);
     }
   }
 
