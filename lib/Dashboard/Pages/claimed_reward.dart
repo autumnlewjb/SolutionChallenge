@@ -22,14 +22,15 @@ class _ClaimedRewardState extends State<ClaimedReward> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.deepPurple[400], Colors.deepPurple[300], Colors.deepPurple[200]],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
+          padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Colors.deepPurple,
+              Colors.deepPurple[400],
+              Colors.deepPurple[300],
+              Colors.deepPurple[200]
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
-        ),
           child: StreamBuilder<QuerySnapshot>(
               stream: Database.claimedRewardDB
                   .orderBy('timeClaimed', descending: true)
@@ -42,7 +43,7 @@ class _ClaimedRewardState extends State<ClaimedReward> {
                   return CircularProgressIndicator();
                 }
                 if (snapshot.data.size == 0) {
-                  return Text("Haven't claimed any reward.");
+                  return Center(child: Text("Haven't claimed any reward."));
                 }
                 return ListView.builder(
                     itemCount: snapshot.data.docs.length,
