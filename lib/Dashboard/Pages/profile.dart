@@ -11,6 +11,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Map<String, dynamic> user;
+  String photoUrl = "";
   @override
   void initState() {
     super.initState();
@@ -64,7 +65,9 @@ class _ProfileState extends State<Profile> {
                   children: [
                     CircleAvatar(
                       radius: 52,
-                      backgroundImage: AssetImage("assets/icon.png"),
+                      backgroundImage: photoUrl.isEmpty
+                          ? AssetImage("assets/icon.png")
+                          : NetworkImage(photoUrl),
                     ),
                   ],
                 ),
@@ -259,6 +262,7 @@ class _ProfileState extends State<Profile> {
     var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
     setState(() {
       user = doc.data();
+      photoUrl = FirebaseAuth.instance.currentUser.photoURL;
     });
   }
 }

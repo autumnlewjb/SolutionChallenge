@@ -14,6 +14,7 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   String username = "";
+  String photoUrl = "";
   @override
   void initState() {
     super.initState();
@@ -67,7 +68,9 @@ class _drawerState extends State<drawer> {
                 Container(
                   child: CircleAvatar(
                     radius: 45,
-                    backgroundImage: AssetImage("assets/icon.png"),
+                    backgroundImage: photoUrl.isEmpty
+                        ? AssetImage("assets/icon.png")
+                        : NetworkImage(photoUrl),
                   ),
                 ),
                 SizedBox(
@@ -135,6 +138,7 @@ class _drawerState extends State<drawer> {
     var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
     setState(() {
       username = doc.data()['username'];
+      photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
     });
   }
 }
