@@ -38,6 +38,8 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
         child: Center(
             child: StreamBuilder<QuerySnapshot>(
                 stream: Database.schDB
+                    .where('status', isEqualTo: 'Pending')
+                    .where('status', isEqualTo: 'Accepted')
                     .orderBy('timeCreated', descending: true)
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
