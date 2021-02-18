@@ -13,8 +13,8 @@ class drawer extends StatefulWidget {
 }
 
 class _drawerState extends State<drawer> {
-  String username = "";
-  String photoUrl = "";
+  String username = FirebaseAuth.instance.currentUser.displayName;
+  String photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
   @override
   void initState() {
     super.initState();

@@ -11,7 +11,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Map<String, dynamic> user;
-  String photoUrl = "";
+  String photoUrl = FirebaseAuth.instance.currentUser.photoURL;
   @override
   void initState() {
     super.initState();

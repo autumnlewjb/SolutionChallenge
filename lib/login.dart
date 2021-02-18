@@ -131,7 +131,8 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: Colors.deepPurple, width: 1),
+                              side: BorderSide(
+                                  color: Colors.deepPurple, width: 1),
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
@@ -225,6 +226,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       error = response;
     });
+    print(error);
     return false;
   }
 }
