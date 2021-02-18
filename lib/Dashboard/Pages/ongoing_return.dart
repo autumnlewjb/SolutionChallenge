@@ -41,13 +41,19 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                     .orderBy('timeCreated', descending: true)
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
+                  List<DocumentSnapshot> valid = [];
                   if (snapshot.hasError) {
                     return Text('Something went wrong');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
-                  if (snapshot.data.size == 0) {
+                  snapshot.data.docs.forEach((doc) {
+                    if (doc.data()['status'] != "Completed") {
+                      valid.add(doc);
+                    }
+                  });
+                  if (valid.length == 0) {
                     return Padding(
                       padding: const EdgeInsets.all(30),
                       child: Text(
@@ -57,152 +63,148 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                       ),
                     );
                   }
+
                   return ListView.builder(
-                      itemCount: snapshot.data.docs.length,
+                      itemCount: valid.length,
                       itemBuilder: (context, index) {
-                        Map<String, dynamic> info =
-                            snapshot.data.docs[index].data();
-                        if (info['status'] != 'Completed') {
-                          return Card(
-                              elevation: 5,
-                              margin: EdgeInsets.all(5),
-                              child: ExpansionTile(
-                                  children: <Widget>[
-                                    Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 10),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            RichText(
-                                              text: TextSpan(
-                                                text: 'Expiry date : ',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: info['expiryDate'],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
+                        Map<String, dynamic> info = valid[index].data();
+                        return Card(
+                            elevation: 5,
+                            margin: EdgeInsets.all(5),
+                            child: ExpansionTile(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Expiry date : ',
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: info['expiryDate'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                text: 'Address : ',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: info['address1'],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  TextSpan(
-                                                      text: ', ',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  TextSpan(
-                                                      text: info['address2'],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Address : ',
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: info['address1'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: ', ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['address2'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                text: 'Postcode : ',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: info['postcode'],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Postcode : ',
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: info['postcode'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                text: 'State : ',
-                                                style:
-                                                    DefaultTextStyle.of(context)
-                                                        .style,
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: info['state'],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'State : ',
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: info['state'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Align(
-                                        alignment: Alignment.topRight,
-                                        child: TextButton.icon(
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      title: Text('Warning'),
-                                                      content: Text(
-                                                          'Are you sure you want to delete?'),
-                                                      actions: <Widget>[
-                                                        FlatButton(
-                                                          child: Text('Cancel'),
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                        ),
-                                                        FlatButton(
-                                                          child:
-                                                              Text('Confirm'),
-                                                          onPressed: () async {
-                                                            Navigator.pop(
-                                                                context);
-                                                            await snapshot
-                                                                .data
-                                                                .docs[index]
-                                                                .reference
-                                                                .delete()
-                                                                .then((_) =>
-                                                                    showSnackBar());
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
-                                                  });
-                                            },
-                                            icon: Icon(Icons.delete),
-                                            label: Text("Delete")),
-                                      ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    title: Text('Warning'),
+                                                    content: Text(
+                                                        'Are you sure you want to delete?'),
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        child: Text('Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                      FlatButton(
+                                                        child: Text('Confirm'),
+                                                        onPressed: () async {
+                                                          Navigator.pop(
+                                                              context);
+                                                          await snapshot
+                                                              .data
+                                                              .docs[index]
+                                                              .reference
+                                                              .delete()
+                                                              .then((_) =>
+                                                                  showSnackBar());
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          icon: Icon(Icons.delete),
+                                          label: Text("Delete")),
                                     ),
-                                  ],
-                                  title: Text(info['medicine']),
-                                  subtitle: Text(info['timeCreated']),
-                                  trailing: Text(info['status'],
-                                      style: TextStyle(
-                                        color: getColor(info['status']),
-                                      ))));
-                        }
+                                  ),
+                                ],
+                                title: Text(info['medicine']),
+                                subtitle: Text(info['timeCreated']),
+                                trailing: Text(info['status'],
+                                    style: TextStyle(
+                                      color: getColor(info['status']),
+                                    ))));
                       });
                 })),
       ),

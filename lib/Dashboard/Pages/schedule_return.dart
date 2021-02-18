@@ -59,7 +59,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      drawer: drawer(),
+        drawer: drawer(),
         appBar: AppBar(
             centerTitle: true,
             elevation: 10,
@@ -201,7 +201,8 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                         child: Center(
                           child: DropdownButtonFormField(
                               autovalidateMode: _autoValidate,
-                              decoration: InputDecoration.collapsed(hintText: ''),
+                              decoration:
+                                  InputDecoration.collapsed(hintText: ''),
                               validator: (value) => value == null
                                   ? 'Please select your state'
                                   : null,
@@ -287,6 +288,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                                           address1.clear();
                                           address2.clear();
                                         }),
+                                        FocusScope.of(context).unfocus(),
                                         successDialog(context,
                                             "Your information has been recorded")
                                       });
