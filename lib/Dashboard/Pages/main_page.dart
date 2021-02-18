@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/auth.dart';
 import 'package:return_med/database.dart';
@@ -44,11 +45,11 @@ class _MainPageState extends State<MainPage>
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple, Colors.deepPurple[400], Colors.deepPurple[300]],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter
-                ),
+                gradient: LinearGradient(colors: [
+                  Colors.deepPurple,
+                  Colors.deepPurple[400],
+                  Colors.deepPurple[300]
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 boxShadow: [
                   BoxShadow(
                       offset: Offset(0, 5),
@@ -108,7 +109,7 @@ class _MainPageState extends State<MainPage>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () => _launchURL(context),
                         icon: Icon(Icons.question_answer_rounded),
                         label: Text("Need help?"),
                         color: Colors.white,
@@ -143,7 +144,8 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
+                                radius: 40,
+                                backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
@@ -155,7 +157,8 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
+                                radius: 40,
+                                backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
@@ -167,7 +170,8 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40, backgroundImage: AssetImage("assets/icon.png")),
+                                radius: 40,
+                                backgroundImage: AssetImage("assets/icon.png")),
                             SizedBox(
                               height: 10,
                             ),
@@ -449,6 +453,29 @@ class _MainPageState extends State<MainPage>
       setState(() {
         username = snapshot.data()['username'];
       });
+    }
+  }
+
+  void _launchURL(BuildContext context) async {
+    const url = 'https://tawk.to/chat/5fda273aa8a254155ab3f4a1/1epm2ig2o';
+    try {
+      await launch(
+        url,
+        option: new CustomTabsOption(
+          toolbarColor: Colors.deepPurple,
+          showPageTitle: false,
+          enableDefaultShare: true,
+          animation: new CustomTabsAnimation.slideIn(),
+          extraCustomTabs: <String>[
+            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+            'org.mozilla.firefox',
+            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+            'com.microsoft.emmx',
+          ],
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
