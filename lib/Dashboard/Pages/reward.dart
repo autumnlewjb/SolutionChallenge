@@ -14,7 +14,7 @@ class Reward extends StatefulWidget {
 
 class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
-  int reward;
+  var reward;
   Stream<DocumentSnapshot> _stream =
       Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
   List<DocumentSnapshot> _allHospitals;
@@ -50,7 +50,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             return Center(child: CircularProgressIndicator());
           }
           print("has data");
-          reward = snapshot.data.data()['reward_points'];
+          reward = snapshot.data.data()['reward_points'].toInt();
           return _showList();
         });
   }

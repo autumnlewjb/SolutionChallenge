@@ -78,38 +78,70 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                                           RichText(
                                             text: TextSpan(
                                               text: 'Expiry date : ',
-                                              style: DefaultTextStyle.of(context).style,
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
                                               children: <TextSpan>[
-                                                TextSpan(text: info['expiryDate'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['expiryDate'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               ],
                                             ),
                                           ),
                                           RichText(
                                             text: TextSpan(
                                               text: 'Address : ',
-                                              style: DefaultTextStyle.of(context).style,
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
                                               children: <TextSpan>[
-                                                TextSpan(text: info['address1'], style: TextStyle(fontWeight: FontWeight.bold)),
-                                                TextSpan(text: ', ', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                TextSpan(text: info['address2'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['address1'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: ', ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['address2'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               ],
                                             ),
                                           ),
                                           RichText(
                                             text: TextSpan(
                                               text: 'Postcode : ',
-                                              style: DefaultTextStyle.of(context).style,
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
                                               children: <TextSpan>[
-                                                TextSpan(text: info['postcode'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['postcode'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               ],
                                             ),
                                           ),
                                           RichText(
                                             text: TextSpan(
                                               text: 'State : ',
-                                              style: DefaultTextStyle.of(context).style,
+                                              style:
+                                                  DefaultTextStyle.of(context)
+                                                      .style,
                                               children: <TextSpan>[
-                                                TextSpan(text: info['state'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                                TextSpan(
+                                                    text: info['state'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               ],
                                             ),
                                           ),
@@ -180,7 +212,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
     ));
   }
 
-  MaterialColor getColor(dynamic text) {
+  Color getColor(dynamic text) {
     if (text == 'Pending') {
       return Colors.grey;
     }
