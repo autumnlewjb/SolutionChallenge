@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/Dashboard/Pages/History.dart';
 import 'package:return_med/Dashboard/Pages/claimed_reward.dart';
 import '../../auth.dart';
+import '../../database.dart';
 import 'profile.dart';
 
 class drawer extends StatefulWidget {
@@ -11,6 +13,13 @@ class drawer extends StatefulWidget {
 }
 
 class _drawerState extends State<drawer> {
+  String username = "";
+  @override
+  void initState() {
+    super.initState();
+    _getUser();
+  }
+
   @override
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -65,7 +74,7 @@ class _drawerState extends State<drawer> {
                   height: 15,
                 ),
                 Text(
-                  'USERNAME',
+                  '$username',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 )
@@ -104,10 +113,8 @@ class _drawerState extends State<drawer> {
                 color: Colors.deepPurple,
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new History()));
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new History()));
               }),
           ListTile(
             title: Text('Logout'),
@@ -122,5 +129,12 @@ class _drawerState extends State<drawer> {
         ],
       ),
     );
+  }
+
+  void _getUser() async {
+    var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
+    setState(() {
+      username = doc.data()['username'];
+    });
   }
 }
