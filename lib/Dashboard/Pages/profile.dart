@@ -95,13 +95,13 @@ class _ProfileState extends State<Profile> {
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.terrain_rounded),
+                            Icon(Icons.perm_identity_rounded),
                             SizedBox(
                               width: width * 0.03,
                             ),
                             Text(
                               _getInfo('username'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ],
                         )),
@@ -114,8 +114,8 @@ class _ProfileState extends State<Profile> {
                               width: width * 0.03,
                             ),
                             Text(
-                              _getInfo('reward_points'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              'Point(s): ${_getInfo('reward_points')}',
+                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
                             ),
                           ],
                         )),
