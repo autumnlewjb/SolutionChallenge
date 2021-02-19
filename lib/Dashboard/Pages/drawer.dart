@@ -60,6 +60,7 @@ class _drawerState extends State<drawer> {
     return Drawer(
       elevation: 20,
       child: ListView(
+        padding: const EdgeInsets.all(0),
         children: [
           DrawerHeader(
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
