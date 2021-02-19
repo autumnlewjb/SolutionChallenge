@@ -11,7 +11,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Map<String, dynamic> user;
-  String photoUrl = FirebaseAuth.instance.currentUser.photoURL;
+  String photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
   @override
   void initState() {
     super.initState();
@@ -262,7 +262,7 @@ class _ProfileState extends State<Profile> {
     var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
     setState(() {
       user = doc.data();
-      photoUrl = FirebaseAuth.instance.currentUser.photoURL;
+      photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
     });
   }
 }
