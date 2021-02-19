@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/database.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'drawer.dart';
 
@@ -49,9 +50,10 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          print("has data");
           reward = snapshot.data.data()['reward_points'].toInt();
-          return _showList();
+          if (snapshot.connectionState == ConnectionState.active) {
+            return _showList();
+          }
         });
   }
 
@@ -108,17 +110,52 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ], // manually specify the colors to be used
               ),
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: _allHospitals?.length ?? 0,
-                    itemBuilder: (context, i) {
-                      return _orgList(
-                          _allHospitals[i].data()['name'], _allHospitals[i]);
-                    }))
+            Expanded(child: _showHospitals())
           ],
         ),
       ),
     );
+  }
+
+  Widget _showHospitals() {
+    if (_allHospitals != null) {
+      return ListView.builder(
+          itemCount: _allHospitals?.length ?? 0,
+          itemBuilder: (context, i) {
+            return _orgList(_allHospitals[i].data()['name'], _allHospitals[i]);
+          });
+    } else {
+      return Shimmer.fromColors(
+          baseColor: Colors.grey[200],
+          highlightColor: Colors.grey[300],
+          period: Duration(milliseconds: 1000),
+          child: ListView(physics: NeverScrollableScrollPhysics(), children: [
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                height: 260,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                height: 260,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                height: 260,
+              ),
+            )
+          ]));
+    }
   }
 
   // list hospitals
@@ -250,8 +287,12 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   void _getHospitals() async {
     List<DocumentSnapshot> temp = await Database.getAllHospitals();
-    setState(() {
-      _allHospitals = temp;
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      if (this.mounted) {
+        setState(() {
+          _allHospitals = temp;
+        });
+      }
     });
   }
 
