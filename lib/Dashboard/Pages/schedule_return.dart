@@ -1,6 +1,7 @@
 import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/database.dart';
 import 'package:return_med/return_info.dart';
@@ -11,13 +12,15 @@ class ScheduleReturn extends StatefulWidget {
 }
 
 class _ScheduleReturnState extends State<ScheduleReturn>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final medName = TextEditingController();
   final address1 = TextEditingController();
   final address2 = TextEditingController();
   final postcode = TextEditingController();
   String state;
+
+  var subscribingID;
 
   //For state drop down box
   List states = [
@@ -53,6 +56,18 @@ class _ScheduleReturnState extends State<ScheduleReturn>
         selectedDate = picked;
         date = picked.toString().substring(0, 10);
       });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    subscribingID = KeyboardVisibilityNotification().addNewListener(
+        onChange: (bool visible) {
+      if (!visible) {
+        FocusManager.instance.primaryFocus.unfocus();
+      }
+    });
   }
 
   @override
@@ -288,7 +303,8 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                                           address1.clear();
                                           address2.clear();
                                         }),
-                                        FocusScope.of(context).unfocus(),
+                                        FocusManager.instance.primaryFocus
+                                            .unfocus(),
                                         successDialog(context,
                                             "Your information has been recorded")
                                       });
@@ -308,6 +324,12 @@ class _ScheduleReturnState extends State<ScheduleReturn>
             ),
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    KeyboardVisibilityNotification().removeListener(subscribingID);
   }
 
   @override

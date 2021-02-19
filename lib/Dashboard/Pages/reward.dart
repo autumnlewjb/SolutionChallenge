@@ -131,7 +131,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
       return Shimmer.fromColors(
           baseColor: Colors.grey[200],
           highlightColor: Colors.grey[300],
-          period: Duration(milliseconds: 500),
+          period: Duration(milliseconds: 1000),
           child: ListView(physics: NeverScrollableScrollPhysics(), children: [
             Container(
               padding: EdgeInsets.only(top: 20.0),
