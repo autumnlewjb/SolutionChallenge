@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:return_med/return_info.dart';
-import 'package:return_med/user.dart';
+
+import 'Models/return_info.dart';
+import 'Models/user.dart';
 
 class Database {
   static CollectionReference userDB =
@@ -20,16 +21,27 @@ class Database {
       .collection('rewards');
 
   static Future<void> addSch(ReturnInfo info) async {
-    return await schDB.doc(DateTime.now().toString()).set({
+    return await schDB.doc(info.timeCreated).set({
       'medicine': info.medName,
-      'expiryDate': DateFormat.yMMMd().format(info.selectedDate),
+      'expiryDate': info.expiryDate,
       'address1': info.address1,
       'address2': info.address2,
       'state': info.state,
       'postcode': info.postcode,
-      'timeCreated': DateFormat.yMMMd().add_jm().format(DateTime.now()),
-      'status': 'Pending'
+      'status': info.status,
+      'timeCreated': info.timeCreated
     });
+  }
+
+  static Future<void> deleteSch(String id) async {
+    return await schDB.doc(id).delete();
+  }
+
+  static Stream<List<ReturnInfo>> getReturnInfo() {
+    return schDB.orderBy('timeCreated', descending: true).snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => ReturnInfo.fromMap(doc.data()))
+            .toList());
   }
 
   static Future<void> addUser(String uid, AppUser appUser) async {

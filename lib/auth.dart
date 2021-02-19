@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:return_med/database.dart';
-import 'package:return_med/user.dart';
+
+import 'Models/user.dart';
 
 class Auth {
   String response = '';
@@ -22,7 +23,7 @@ class Auth {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
-          response = 'Password should be at least 6 characters';
+          response = 'Password should be at least 8 characters';
           break;
         case 'email-already-in-use':
           response = 'An account already exists for this email.';

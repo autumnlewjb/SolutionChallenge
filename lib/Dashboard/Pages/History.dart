@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../database.dart';
 
 class History extends StatefulWidget {
   @override
@@ -17,7 +14,7 @@ class _HistoryState extends State<History> {
         backgroundColor: Colors.deepPurple,
       ),
       body: Center(
-          child: StreamBuilder<QuerySnapshot>(
+          /*child: StreamBuilder<QuerySnapshot>(
               stream: Database.schDB
                   .where('status', isEqualTo: "Completed")
                   .orderBy('timeCreated', descending: true)
@@ -44,133 +41,11 @@ class _HistoryState extends State<History> {
                     itemBuilder: (context, index) {
                       Map<String, dynamic> info =
                           snapshot.data.docs[index].data();
-                      return Card(
-                          elevation: 5,
-                          margin: EdgeInsets.all(5),
-                          child: ExpansionTile(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Expiry date : ',
-                                            style: DefaultTextStyle.of(context)
-                                                .style,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: info['expiryDate'],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Address : ',
-                                            style: DefaultTextStyle.of(context)
-                                                .style,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: info['address1'],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              TextSpan(
-                                                  text: ', ',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              TextSpan(
-                                                  text: info['address2'],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Postcode : ',
-                                            style: DefaultTextStyle.of(context)
-                                                .style,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: info['postcode'],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'State : ',
-                                            style: DefaultTextStyle.of(context)
-                                                .style,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: info['state'],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: TextButton.icon(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text('Warning'),
-                                                  content: Text(
-                                                      'Are you sure you want to delete?'),
-                                                  actions: <Widget>[
-                                                    FlatButton(
-                                                      child: Text('Cancel'),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                    FlatButton(
-                                                      child: Text('Confirm'),
-                                                      onPressed: () async {
-                                                        Navigator.pop(context);
-                                                        await snapshot
-                                                            .data
-                                                            .docs[index]
-                                                            .reference
-                                                            .delete();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              });
-                                        },
-                                        icon: Icon(Icons.delete),
-                                        label: Text("Delete")),
-                                  ),
-                                ),
-                              ],
-                              title: Text(info['medicine']),
-                              subtitle: Text(info['timeCreated'])));
+                      return WidgetModel()
+                          .schReturnTile(this.context,context, info,index);
                     });
-              })),
+              })*/
+          ),
     );
   }
 }

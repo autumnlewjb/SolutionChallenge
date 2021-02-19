@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
-import 'package:return_med/auth.dart';
+import 'package:return_med/Models/user.dart';
 import 'package:return_med/database.dart';
-import 'package:return_med/user.dart';
 
 class MainPage extends StatefulWidget {
   @override
