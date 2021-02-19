@@ -50,11 +50,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          print("has data");
           reward = snapshot.data.data()['reward_points'].toInt();
-          print("reach");
           if (snapshot.connectionState == ConnectionState.active) {
-            print("build");
             return _showList();
           }
         });
@@ -291,10 +288,11 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   void _getHospitals() async {
     List<DocumentSnapshot> temp = await Database.getAllHospitals();
     Future.delayed(const Duration(milliseconds: 1000), () {
-      setState(() {
-        _allHospitals = temp;
-        print("set");
-      });
+      if (this.mounted) {
+        setState(() {
+          _allHospitals = temp;
+        });
+      }
     });
   }
 

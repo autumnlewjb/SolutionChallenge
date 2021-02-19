@@ -28,7 +28,6 @@ class Root extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
-            print(snapshot.data.uid);
             return Dashboard();
           } else {
             return HomePage();
