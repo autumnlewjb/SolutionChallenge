@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
@@ -145,11 +146,15 @@ class _MainPageState extends State<MainPage>
                           children: [
                             CircleAvatar(
                                 radius: 40,
-                                backgroundImage: AssetImage("assets/icon.png")),
+                                backgroundColor: Colors.purple[100],
+                                child: Icon(
+                                  Icons.timer,
+                                  color: Colors.black,
+                                )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Image 1")
+                            Text("Step 1: Click")
                           ],
                         ),
                       ),
@@ -158,11 +163,15 @@ class _MainPageState extends State<MainPage>
                           children: [
                             CircleAvatar(
                                 radius: 40,
-                                backgroundImage: AssetImage("assets/icon.png")),
+                                backgroundColor: Colors.purple[100],
+                                child: Icon(
+                                  Icons.assignment_rounded,
+                                  color: Colors.black,
+                                )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Image 2")
+                            Text("Step 2: Fill")
                           ],
                         ),
                       ),
@@ -171,11 +180,15 @@ class _MainPageState extends State<MainPage>
                           children: [
                             CircleAvatar(
                                 radius: 40,
-                                backgroundImage: AssetImage("assets/icon.png")),
+                                backgroundColor: Colors.purple[100],
+                                child: Icon(
+                                  Icons.assignment_turned_in_rounded,
+                                  color: Colors.black,
+                                )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Image 3")
+                            Text("Step 3: Submit")
                           ],
                         ),
                       )
@@ -187,6 +200,17 @@ class _MainPageState extends State<MainPage>
           ),
           SliverToBoxAdapter(
             child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(padding: const EdgeInsets.all(20.0)),
+                  //Text('Step 1: CLick the return icon',style: TextStyle(fontSize: 15.0,color: Colors.white)),
+                  //Text('Step 2: Fill up the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
+                  //Text('Step 3: Sumbit the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
+                  //SizedBox(height: 10.0,),
+                  Center(child: Text('Fulfill Your Need Not Your Greed',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.white)))
+                ],
+              ),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               height: screenHeight * 0.15,

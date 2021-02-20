@@ -70,7 +70,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             Row(
@@ -163,47 +163,56 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   Widget _orgList(String a, [DocumentSnapshot hospital]) {
     return Container(
         padding: EdgeInsets.only(top: 20.0),
-        child: Container(
-          decoration: BoxDecoration(
-              shape: BoxShape.rectangle, color: Colors.indigo[200]),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image(
-                image: AssetImage('assets/HSB.jpg'),
-                //later change the parameter accepted inside for different hospitals images
-                fit: BoxFit.fill,
-                height: 250,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image(
+                  image: AssetImage('assets/HSB.jpg'),
+                  //later change the parameter accepted inside for different hospitals images
+                  fit: BoxFit.fill,
+                  height: 250,
+                ),
               ),
               Divider(
-                height: 10,
+                height: 5,
                 thickness: 2.0,
+                indent: 20.0,
+                endIndent: 20.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    '$a',
-                    style: TextStyle(
-                      fontSize: 20.0,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.indigo[100]
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      '$a',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.purple[200], onPrimary: Colors.white),
-                    onPressed: () async {
-                      _services = await Database.getServices(hospital.id);
-                      _showModalBottomSheet();
-                    },
-                    child: Text(
-                      'Show More',
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.purple[200], onPrimary: Colors.white),
+                      onPressed: () async {
+                        _services = await Database.getServices(hospital.id);
+                        _showModalBottomSheet();
+                      },
+                      child: Text(
+                        'Show More',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              SizedBox(height: 10.0,)
             ],
           ),
-        ));
+        );
   }
 
   _showModalBottomSheet() {
