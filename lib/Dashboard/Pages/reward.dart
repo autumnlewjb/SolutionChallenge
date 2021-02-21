@@ -65,7 +65,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Consumer<AppUser>(builder: (_, user, __) {
-                  reward = int.parse(user?.rewardPoint);
+                  reward = user?.rewardPoint;
                   return Text(
                     'Current Point(s): $reward',
                     style:
@@ -149,57 +149,58 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   //Later add a new String parameter for the image
   Widget _orgList(String a, Hospital hospital) {
     return Container(
-        padding: EdgeInsets.only(top: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ClipRRect(
+      padding: EdgeInsets.only(top: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image(
+              image: AssetImage('assets/HSB.jpg'),
+              //later change the parameter accepted inside for different hospitals images
+              fit: BoxFit.fill,
+              height: 250,
+            ),
+          ),
+          Divider(
+            height: 5,
+            thickness: 2.0,
+            indent: 20.0,
+            endIndent: 20.0,
+          ),
+          Container(
+            decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image(
-                  image: AssetImage('assets/HSB.jpg'),
-                  //later change the parameter accepted inside for different hospitals images
-                  fit: BoxFit.fill,
-                  height: 250,
+                color: Colors.indigo[100]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  '$a',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-              Divider(
-                height: 5,
-                thickness: 2.0,
-                indent: 20.0,
-                endIndent: 20.0,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.indigo[100]
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      '$a',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.purple[200], onPrimary: Colors.white),
-                      onPressed: () async {
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.purple[200], onPrimary: Colors.white),
+                  onPressed: () async {
                     //_services = await Database.getServices(hospital.id);
                     _showModalBottomSheet();
                   },
-                      child: Text(
-                        'Show More',
-                      ),
-                    ),
-                  ],
+                  child: Text(
+                    'Show More',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.0,)
-            ],
+              ],
+            ),
           ),
-        );
+          SizedBox(
+            height: 10.0,
+          )
+        ],
+      ),
+    );
   }
 
   _showModalBottomSheet() {

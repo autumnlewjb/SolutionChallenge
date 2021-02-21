@@ -11,7 +11,7 @@ class AppUser with ChangeNotifier {
   String state;
   String postcode;
   String photoUrl;
-  String rewardPoint;
+  int rewardPoint;
 
   AppUser(
       {this.uid = 'N/A',
@@ -24,7 +24,7 @@ class AppUser with ChangeNotifier {
       this.state = 'N/A',
       this.postcode = 'N/A',
       this.photoUrl = '',
-      this.rewardPoint = '0'});
+      this.rewardPoint = 0});
 
   factory AppUser.fromMap(Map data) {
     return AppUser(
@@ -37,6 +37,6 @@ class AppUser with ChangeNotifier {
         state: data['state'] ?? 'N/A',
         postcode: data['postcode'] ?? 'N/A',
         photoUrl: data['photoUrl'] ?? '',
-        rewardPoint: data['reward_points'] ?? '0');
+        rewardPoint: data['reward_points'] ?? 0);
   }
 }

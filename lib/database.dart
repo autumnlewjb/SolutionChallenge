@@ -41,6 +41,7 @@ class Database {
   }
 
   static Stream<AppUser> getUserStream(String uid) {
+    print(uid);
     return userDB
         .doc(uid)
         .snapshots()
