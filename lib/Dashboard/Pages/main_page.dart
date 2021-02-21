@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/Models/user.dart';
 import 'package:return_med/database.dart';
@@ -13,16 +15,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with AutomaticKeepAliveClientMixin {
-  User user = FirebaseAuth.instance.currentUser;
-  String username = FirebaseAuth.instance.currentUser.displayName;
-  String email = FirebaseAuth.instance.currentUser.email;
   int reward = 10;
   var exist;
 
   @override
   void initState() {
     super.initState();
-    _getUser(FirebaseAuth.instance.currentUser.uid);
+    _checkIfUserExists();
   }
 
   @override
@@ -30,7 +29,6 @@ class _MainPageState extends State<MainPage>
     super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       drawer: drawer(),
       appBar: AppBar(
@@ -410,17 +408,13 @@ class _MainPageState extends State<MainPage>
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            AppUser appUser = AppUser(
-                                firstNameCtrl.text,
-                                lastNameCtrl.text,
-                                username,
-                                email,
-                                address1Ctrl.text,
-                                address2Ctrl.text,
-                                state,
-                                postCodeCtrl.text);
-                            await Database.addUser(
-                                FirebaseAuth.instance.currentUser.uid, appUser);
+                            final appUser = context.read<AppUser>();
+                            appUser.firstName = firstNameCtrl.text;
+                            appUser.lastName = lastNameCtrl.text;
+                            appUser.address1 = address1Ctrl.text;
+                            appUser.address2 = address2Ctrl.text;
+                            appUser.state = state;
+                            appUser.postcode = postCodeCtrl.text;
                             Navigator.pop(context);
                           }
                         },
@@ -440,18 +434,26 @@ class _MainPageState extends State<MainPage>
           ),
         );
       },
-    );
+    ).whenComplete(() => Database.addUser(this.context.read<AppUser>()));
   }
 
-  _getUser(String uid) async {
-    DocumentSnapshot snapshot = await Database.getUser(uid);
+  _checkIfUserExists() async {
+    final appUser = context.read<AppUser>();
+    final user = context.read<User>();
+    DocumentSnapshot snapshot = await Database.getUser(user.uid);
 
+    //If the current user is new user
     if (snapshot == null) {
-      _showModalBottomSheet(context);
-    } else {
-      setState(() {
-        username = snapshot.data()['username'];
-      });
+      //If sign in by google or fb
+      appUser.uid = user.uid;
+      if (appUser.username == 'N/A') {
+        appUser.username = user.displayName;
+        appUser.email = user.email;
+        appUser.photoUrl = user.photoURL;
+        _showModalBottomSheet(context);
+      } else {
+        Database.addUser(appUser);
+      }
     }
   }
 

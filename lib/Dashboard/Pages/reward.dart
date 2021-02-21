@@ -1,8 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:return_med/Models/available_reward.dart';
+import 'package:return_med/Models/hospital.dart';
+import 'package:return_med/Models/user.dart';
 import 'package:return_med/database.dart';
 
 import 'drawer.dart';
@@ -15,16 +17,12 @@ class Reward extends StatefulWidget {
 class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
   var reward;
-  Stream<DocumentSnapshot> _stream =
-      Database.getUserStream(FirebaseAuth.instance.currentUser.uid);
-  List<DocumentSnapshot> _allHospitals;
-  List<DocumentSnapshot> _services;
+  List<AvailableReward> _services;
 
   @override
   void initState() {
     control = ConfettiController(duration: const Duration(seconds: 2));
     super.initState();
-    _getHospitals();
   }
 
   @override
@@ -36,26 +34,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return StreamBuilder<DocumentSnapshot>(
-        stream: _stream,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasError) {
-            return Scaffold(
-              body: Center(
-                child: Text("You're not registered."),
-              ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          print("has data");
-          reward = snapshot.data.data()['reward_points'].toInt();
-          return _showList();
-        });
-  }
-
-  Widget _showList() {
     return Scaffold(
       drawer: drawer(),
       appBar: AppBar(
@@ -83,10 +61,14 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Current Point(s): $reward',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
+                Consumer<AppUser>(builder: (_, user, __) {
+                  reward = int.parse(user?.rewardPoint);
+                  return Text(
+                    'Current Point(s): $reward',
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  );
+                }),
               ],
             ),
             Align(
@@ -108,13 +90,15 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ], // manually specify the colors to be used
               ),
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: _allHospitals?.length ?? 0,
+            Expanded(child: Consumer<List<Hospital>>(
+              builder: (_, hospitalList, __) {
+                return ListView.builder(
+                    itemCount: hospitalList?.length ?? 0,
                     itemBuilder: (context, i) {
-                      return _orgList(
-                          _allHospitals[i].data()['name'], _allHospitals[i]);
-                    }))
+                      return _orgList(hospitalList[i].name, hospitalList[i]);
+                    });
+              },
+            ))
           ],
         ),
       ),
@@ -123,7 +107,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   // list hospitals
   //Later add a new String parameter for the image
-  Widget _orgList(String a, [DocumentSnapshot hospital]) {
+  Widget _orgList(String a, Hospital hospital) {
     return Container(
         padding: EdgeInsets.only(top: 20.0),
         child: Container(
@@ -155,7 +139,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.purple[200], onPrimary: Colors.white),
                     onPressed: () async {
-                      _services = await Database.getServices(hospital.id);
+                      //_services =hospital.reward;
                       _showModalBottomSheet();
                     },
                     child: Text(
@@ -180,15 +164,16 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             ),
             child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter setter) {
-              return ListView.builder(
-                padding: EdgeInsets.all(20.0),
-                itemCount: _services.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> data = _services[index].data();
-                  return _rewardList(
-                      data['title'], data['cost'], _services[index].reference);
-                },
-              );
+              return Consumer<List<AvailableReward>>(builder: (_, reward, __) {
+                return ListView.builder(
+                  padding: EdgeInsets.all(20.0),
+                  itemCount: reward?.length,
+                  itemBuilder: (context, index) {
+                    return _rewardList(reward[index]?.title,
+                        reward[index]?.cost /*, _services[index].id*/);
+                  },
+                );
+              });
             }),
           );
         });
@@ -197,7 +182,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   //The widget build for every rewards which are the same
   //String a for the name and int b for the points needed
   //Later add a new String parameter for the image
-  Widget _rewardList(String a, int b, DocumentReference reference) {
+  Widget _rewardList(String a, int b /*, DocumentReference reference*/) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
@@ -221,7 +206,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red, onPrimary: Colors.white),
-                  onPressed: reward >= b ? () => press(b, reference) : null,
+                  onPressed:
+                      reward >= b ? () => press(b /*, reference*/) : null,
                   child: Text(
                     'Redeem ($b)',
                   ),
@@ -234,25 +220,18 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  void press(int a, DocumentReference reference) {
+  void press(int a /*, DocumentReference reference*/) {
     //To deduct the reward points after claiming
     if (reward >= a) {
       setState(() {
         reward -= a;
         var data = {"reward_points": reward};
         control.play();
-        Database.updateUser(FirebaseAuth.instance.currentUser.uid, data);
-        Database.addClaimedReward(reference);
+        Database.updateUser(context.read<AppUser>().uid, data);
+        //Database.addClaimedReward(reference);
       });
       Navigator.pop(context);
     }
-  }
-
-  void _getHospitals() async {
-    List<DocumentSnapshot> temp = await Database.getAllHospitals();
-    setState(() {
-      _allHospitals = temp;
-    });
   }
 
   @override

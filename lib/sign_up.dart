@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:return_med/auth.dart';
 
 import 'Models/user.dart';
@@ -35,9 +36,22 @@ class _SignUpPageState extends State<SignUpPage> {
   final address1Ctrl = TextEditingController();
   final address2Ctrl = TextEditingController();
   final postCodeCtrl = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  final _formKey =  GlobalKey<FormState>();
+  @override
+  void dispose() {
+    firstNameCtrl.dispose();
+    lastNameCtrl.dispose();
+    usernameCtrl.dispose();
+    emailCtrl.dispose();
+    passwordCtrl.dispose();
+    address1Ctrl.dispose();
+    address2Ctrl.dispose();
+    postCodeCtrl.dispose();
+    super.dispose();
+  }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -75,7 +89,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: firstNameCtrl,
                             obscureText: false,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -97,7 +112,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: lastNameCtrl,
                             obscureText: false,
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -110,7 +126,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     height: 15,
                   ),
-
                   Container(
                     child: TextFormField(
                       validator: (text) {
@@ -122,7 +137,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: emailCtrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -130,11 +146,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           labelText: 'Email'),
                     ),
                   ),
-
                   SizedBox(
                     height: 15,
                   ),
-
                   Container(
                     child: TextFormField(
                       validator: (text) {
@@ -146,7 +160,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: usernameCtrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -154,18 +169,15 @@ class _SignUpPageState extends State<SignUpPage> {
                           labelText: 'Username'),
                     ),
                   ),
-
                   SizedBox(
                     height: 15,
                   ),
-
                   Container(
                     child: TextFormField(
                       validator: (password) {
                         if (password == null || password.isEmpty) {
                           return 'Cannot leave blank';
-                        }
-                        else if (password.length < 8){
+                        } else if (password.length < 8) {
                           return "Password must be more than 8 characters";
                         }
                         return null;
@@ -173,7 +185,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: passwordCtrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -195,7 +208,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: address1Ctrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -216,7 +230,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: address2Ctrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -227,18 +242,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 15,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: DropdownButtonFormField(
-                      validator: (choice){
-                        if (choice == null){
-                          return "Please select your state";
-                        }
-                        return null;
-                      },
+                        validator: (choice) {
+                          if (choice == null) {
+                            return "Please select your state";
+                          }
+                          return null;
+                        },
                         isExpanded: true,
                         decoration: InputDecoration.collapsed(hintText: ''),
                         hint: Text('Choose state'),
@@ -270,7 +286,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: postCodeCtrl,
                       obscureText: false,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -292,17 +309,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            AppUser appUser = AppUser(
-                                firstNameCtrl.text,
-                                lastNameCtrl.text,
-                                usernameCtrl.text,
-                                emailCtrl.text,
-                                address1Ctrl.text,
-                                address2Ctrl.text,
-                                state,
-                                postCodeCtrl.text);
-                            await Auth().createUser(
-                                emailCtrl.text, passwordCtrl.text, appUser);
+                            final appUser = context.read<AppUser>();
+                            appUser.firstName = firstNameCtrl.text;
+                            appUser.lastName = lastNameCtrl.text;
+                            appUser.username = usernameCtrl.text;
+                            appUser.email = emailCtrl.text;
+                            appUser.address1 = address1Ctrl.text;
+                            appUser.address2 = address2Ctrl.text;
+                            appUser.state = state;
+                            appUser.postcode = postCodeCtrl.text;
+                            await context
+                                .read<Auth>()
+                                .createUser(emailCtrl.text, passwordCtrl.text);
                             Navigator.pop(context);
                           }
                         },
@@ -316,7 +334,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  //TODO show error message
+                  /*Consumer<Auth>(builder: (_, auth, __) {
+                    return Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(auth.response ?? '',
+                            style: TextStyle(color: Colors.red)));
+                  }),*/
                 ],
               ),
             ),

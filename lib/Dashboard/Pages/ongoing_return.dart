@@ -14,12 +14,13 @@ class Ongoing extends StatefulWidget {
 class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    List<ReturnInfo> pendingReturn = Provider.of<List<ReturnInfo>>(context)
-        .where((element) => element.status == 'Pending')
-        .toList();
+    //todo to consumer
     List<ReturnInfo> acceptedReturn = Provider.of<List<ReturnInfo>>(context)
-        .where((element) => element.status == 'Accepted')
-        .toList();
+        ?.where((element) => element.status == 'Accepted')
+        ?.toList();
+    List<ReturnInfo> pendingReturn = Provider.of<List<ReturnInfo>>(context)
+        ?.where((element) => element.status == 'Pending')
+        ?.toList();
     super.build(context);
     return Scaffold(
       drawer: drawer(),

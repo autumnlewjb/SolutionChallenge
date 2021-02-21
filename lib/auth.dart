@@ -3,23 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:return_med/database.dart';
 
-import 'Models/user.dart';
+class Auth with ChangeNotifier {
+  Auth(this.firebaseAuth);
 
-class Auth {
-  String response = '';
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  String response;
+  final FirebaseAuth firebaseAuth;
   final FacebookLogin facebookSignIn = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
+  Stream<User> get user {
+    return firebaseAuth.idTokenChanges();
+  }
+
   //Create new account
-  Future<String> createUser(
-      String email, String password, AppUser appUser) async {
+  Future<void> createUser(String email, String password) async {
     try {
-      UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
+      await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await Database.addUser(user.user.uid, appUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
@@ -37,14 +38,14 @@ class Auth {
         default:
           response = e.toString();
       }
+      notifyListeners();
     }
-    return response;
   }
 
   //Sign in with email and password
-  Future<String> signIn(String email, String password) async {
+  Future<void> signIn(String email, String password) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -57,17 +58,21 @@ class Auth {
         case 'user-not-found':
           response = "Couldn't find your account";
           break;
+        case 'too-many-requests':
+          response =
+              'Too many requests sent from this device. Please try again later.';
+          break;
         case 'unknown':
           response = 'Email and password cannot be blank';
           break;
         default:
           response = e.toString();
       }
+      notifyListeners();
     }
-    return response;
   }
 
-  Future<String> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn();
@@ -77,7 +82,7 @@ class Auth {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      await _firebaseAuth.signInWithCredential(credential);
+      await firebaseAuth.signInWithCredential(credential);
     } on PlatformException catch (e) {
       switch (e.code) {
         case GoogleSignIn.kSignInFailedError:
@@ -92,19 +97,20 @@ class Auth {
         default:
           response = e.toString();
       }
+      notifyListeners();
     } on NoSuchMethodError {
       response = 'The login process terminated.';
+      notifyListeners();
     }
-    return response;
   }
 
-  Future<String> signInWithFacebook() async {
+  Future<void> signInWithFacebook() async {
     FacebookLoginResult result;
     try {
       result = await facebookSignIn.logIn(['email']);
       FacebookAuthCredential credential =
           FacebookAuthProvider.credential(result.accessToken.token);
-      await _firebaseAuth.signInWithCredential(credential);
+      await firebaseAuth.signInWithCredential(credential);
     } catch (e) {
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:
@@ -116,13 +122,15 @@ class Auth {
         case FacebookLoginStatus.error:
           response = 'An error occurred: ${result.errorMessage}';
           break;
+        default:
+          response = e.toString();
       }
+      notifyListeners();
     }
-    return response;
   }
 
   Future<void> signOut() async {
-    switch (_firebaseAuth.currentUser.providerData[0].providerId) {
+    switch (firebaseAuth.currentUser.providerData[0].providerId) {
       case 'google.com':
         signOutWithGoogle();
         break;
@@ -135,7 +143,7 @@ class Auth {
   }
 
   Future<void> signOutFromApp() async {
-    await _firebaseAuth.signOut().then((_) => print('Signed out'));
+    await firebaseAuth.signOut().then((_) => print('Signed out'));
   }
 
   Future<void> signOutWithGoogle() async {
@@ -149,7 +157,7 @@ class Auth {
   }
 
   Future<void> resetPassword(BuildContext context, String email) async =>
-      await _firebaseAuth
+      await firebaseAuth
           .sendPasswordResetEmail(email: email)
           .then((_) => showDialog(
               context: context,

@@ -95,8 +95,7 @@ class WidgetModel {
                                         child: Text('Confirm'),
                                         onPressed: () async {
                                           Navigator.pop(context);
-                                          await Database.deleteSch(
-                                                  info.timeCreated)
+                                          Database.deleteSch(info.timeCreated)
                                               .then((_) =>
                                                   Scaffold.of(scaffoldContext)
                                                       .showSnackBar(SnackBar(

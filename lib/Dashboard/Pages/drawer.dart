@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/Dashboard/Pages/History.dart';
+import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/claimed_reward.dart';
+import 'package:return_med/Dashboard/Pages/history.dart';
+import 'package:return_med/Models/user.dart';
+
 import '../../auth.dart';
-import '../../database.dart';
 import 'profile.dart';
 
 class drawer extends StatefulWidget {
@@ -13,15 +14,6 @@ class drawer extends StatefulWidget {
 }
 
 class _drawerState extends State<drawer> {
-  String username = FirebaseAuth.instance.currentUser.displayName;
-  String photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
-  @override
-  void initState() {
-    super.initState();
-    _getUser();
-  }
-
-  @override
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -46,7 +38,7 @@ class _drawerState extends State<drawer> {
             TextButton(
               child: Text('Yes'),
               onPressed: () async {
-                await Auth().signOut();
+                await this.context.read<Auth>().signOut();
                 Navigator.of(context).pop();
               },
             ),
@@ -66,20 +58,25 @@ class _drawerState extends State<drawer> {
             child: Column(
               children: [
                 Container(
-                  child: CircleAvatar(
-                    radius: 45,
-                    backgroundImage: photoUrl.isEmpty
-                        ? AssetImage("assets/icon.png")
-                        : NetworkImage(photoUrl),
-                  ),
+                  child: Consumer<AppUser>(builder: (_, user, __) {
+                    return CircleAvatar(
+                        radius: 45,
+                        backgroundImage: user.photoUrl.isEmpty
+                            ? AssetImage("assets/icon.png")
+                            : NetworkImage(user.photoUrl));
+                  }),
                 ),
                 SizedBox(
                   height: 15,
                 ),
-                Text(
-                  '$username',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                Consumer<AppUser>(
+                  builder: (_, user, __) {
+                    return Text(
+                      '${user?.username}',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    );
+                  },
                 )
               ],
             ),
@@ -132,13 +129,5 @@ class _drawerState extends State<drawer> {
         ],
       ),
     );
-  }
-
-  void _getUser() async {
-    var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
-    setState(() {
-      username = doc.data()['username'];
-      photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
-    });
   }
 }
