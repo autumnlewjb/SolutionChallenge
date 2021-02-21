@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/database.dart';
+import 'package:provider/provider.dart';
+import 'package:return_med/Models/user.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,14 +9,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Map<String, dynamic> user;
-  String photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
-  @override
-  void initState() {
-    super.initState();
-    _getUser();
-  }
-
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -63,12 +54,13 @@ class _ProfileState extends State<Profile> {
                 ),
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 52,
-                      backgroundImage: photoUrl.isEmpty
-                          ? AssetImage("assets/icon.png")
-                          : NetworkImage(photoUrl),
-                    ),
+                    Consumer<AppUser>(builder: (_, user, __) {
+                      return CircleAvatar(
+                          radius: 52,
+                          backgroundImage: user.photoUrl.isEmpty
+                              ? AssetImage("assets/icon.png")
+                              : NetworkImage(user.photoUrl));
+                    }),
                   ],
                 ),
               ),
@@ -99,10 +91,12 @@ class _ProfileState extends State<Profile> {
                             SizedBox(
                               width: width * 0.03,
                             ),
-                            Text(
-                              _getInfo('username'),
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
+                            Consumer<AppUser>(builder: (_, user, __) {
+                              return Text(
+                                user.username,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                              );
+                            }),
                           ],
                         )),
                         Container(
@@ -113,10 +107,12 @@ class _ProfileState extends State<Profile> {
                             SizedBox(
                               width: width * 0.03,
                             ),
-                            Text(
-                              'Point(s): ${_getInfo('reward_points')}',
-                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
-                            ),
+                            Consumer<AppUser>(builder: (_, user, __) {
+                              return Text(
+                                'Point(s): ${user.rewardPoint}',
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                              );
+                            }),
                           ],
                         )),
                       ],
@@ -160,11 +156,13 @@ class _ProfileState extends State<Profile> {
                             "FIRST NAME",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
-                          Text(
-                            _getInfo('first_name'),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )
+                          Consumer<AppUser>(builder: (_, user, __) {
+                            return Text(
+                              user.firstName,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            );
+                          }),
                         ],
                       )),
                       SizedBox(
@@ -178,11 +176,13 @@ class _ProfileState extends State<Profile> {
                             "LAST NAME",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
-                          Text(
-                            _getInfo('last_name'),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )
+                          Consumer<AppUser>(builder: (_, user, __) {
+                            return Text(
+                              user.lastName,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            );
+                          }),
                         ],
                       )),
                     ],
@@ -208,11 +208,13 @@ class _ProfileState extends State<Profile> {
                           "EMAIL ADDRESS",
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
-                        Text(
-                          _getInfo('email'),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )
+                        Consumer<AppUser>(builder: (_, user, __) {
+                          return Text(
+                            user.email,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          );
+                        }),
                       ],
                     ),
                   ],
@@ -237,11 +239,13 @@ class _ProfileState extends State<Profile> {
                           "ADDRESS",
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
-                        Text(
-                          "${_getInfo('address1')}\n${_getInfo('address2')}\n${_getInfo('postcode')} ${_getInfo('state')}",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )
+                        Consumer<AppUser>(builder: (_, user, __) {
+                          return Text(
+                            "${user.address1}\n${user.address2}\n${user.postcode} ${user.state}",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          );
+                        }),
                       ],
                     ),
                   ],
@@ -252,17 +256,5 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
-  }
-
-  String _getInfo(String field) {
-    return user == null ? "Not set" : "${user[field]}";
-  }
-
-  void _getUser() async {
-    var doc = await Database.getUser(FirebaseAuth.instance.currentUser.uid);
-    setState(() {
-      user = doc.data();
-      photoUrl = FirebaseAuth.instance.currentUser.photoURL ?? "";
-    });
   }
 }

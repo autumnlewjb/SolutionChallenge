@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:return_med/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,8 +11,14 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final email = TextEditingController();
   final password = TextEditingController();
-  String error = '';
   bool isObscure = true;
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         TextFormField(
                           controller: email,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter an email' : null,
                           obscureText: false,
@@ -55,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextFormField(
                           controller: password,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (val) =>
                               val.isEmpty ? 'Enter a password' : null,
                           obscureText: isObscure,
@@ -82,12 +87,16 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                                child: Text(error,
-                                    style: TextStyle(color: Colors.red))),
+                            Consumer<Auth>(builder: (_, auth, __) {
+                              return Flexible(
+                                  child: Text(auth.response ?? '',
+                                      style: TextStyle(color: Colors.red)));
+                            }),
                             TextButton(
                               onPressed: () {
-                                Auth().resetPassword(context, email.text);
+                                context
+                                    .read<Auth>()
+                                    .resetPassword(context, email.text);
                               },
                               child: Text(
                                 "Forgot Password",
@@ -110,8 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                await loginInWith(context, "Email",
-                                    email: email.text, password: password.text);
+                                context.read<Auth>().response = null;
+                                await context
+                                    .read<Auth>()
+                                    .signIn(email.text, password.text);
                               }
                             },
                             child: Text(
@@ -165,7 +176,9 @@ class _LoginPageState extends State<LoginPage> {
                             children: <Widget>[
                               GestureDetector(
                                 onTap: () async {
-                                  await loginInWith(context, "Facebook");
+                                  await context
+                                      .read<Auth>()
+                                      .signInWithFacebook();
                                 },
                                 child: CircleAvatar(
                                   radius: 20,
@@ -178,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  await loginInWith(context, "Google");
+                                  await context.read<Auth>().signInWithGoogle();
                                 },
                                 child: CircleAvatar(
                                   radius: 20,
@@ -195,38 +208,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[],
-                ),
-              )
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<bool> loginInWith(BuildContext context, String provider,
-      {String email, String password}) async {
-    String response;
-    Auth auth = Auth();
-    switch (provider) {
-      case "Email":
-        response = await auth.signIn(email, password);
-        break;
-      case "Google":
-        response = await auth.signInWithGoogle();
-        break;
-      case "Facebook":
-        response = await auth.signInWithFacebook();
-        break;
-    }
-    setState(() {
-      error = response;
-    });
-    print(error);
-    return false;
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
+import 'package:return_med/Models/return_info.dart';
 import 'package:return_med/database.dart';
-import 'package:return_med/return_info.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override
@@ -285,7 +285,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              await Database.addSch(ReturnInfo(
+                              await Database.addSch(ReturnInfo.toMap(
                                       medName.text,
                                       selectedDate,
                                       address1.text,
@@ -294,6 +294,8 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                                       postcode.text))
                                   .then((_) => {
                                         setState(() {
+                                          _autoValidate =
+                                              AutovalidateMode.disabled;
                                           _formKey.currentState.reset();
                                           date =
                                               "Medicine Expiry Date (yyyy-mm-dd)";
