@@ -1,14 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AvailableReward {
-  String id;
+  DocumentReference reference;
   String title;
   String description;
   int cost;
 
-  AvailableReward({this.id, this.title, this.description, this.cost});
+  AvailableReward({this.reference, this.title, this.description, this.cost});
 
-  factory AvailableReward.fromMap(Map data, String id) {
+  factory AvailableReward.fromMap(Map data, DocumentReference reference) {
     return AvailableReward(
-        id: id,
+        reference: reference,
         title: data['title'] ?? 'N/A',
         description: data['description'] ?? 'N/A',
         cost: data['cost'] ?? double.nan);

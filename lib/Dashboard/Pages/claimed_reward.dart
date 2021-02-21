@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:return_med/Services/database.dart';
 
 class ClaimedReward extends StatefulWidget {
   @override
@@ -30,8 +32,7 @@ class _ClaimedRewardState extends State<ClaimedReward> {
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
           child: Center(
-              //todo
-              /*child: StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder<QuerySnapshot>(
                 stream: Database.claimedRewardDB
                     .orderBy('timeClaimed', descending: true)
                     .snapshots(),
@@ -82,8 +83,8 @@ class _ClaimedRewardState extends State<ClaimedReward> {
                               }),
                         );
                       });
-                }),*/
-              )),
+                }),
+          )),
     );
   }
 }

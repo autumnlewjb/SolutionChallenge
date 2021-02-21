@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Models/available_reward.dart';
 import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/user.dart';
 import 'package:return_med/Services/database.dart';
@@ -18,8 +18,6 @@ class Reward extends StatefulWidget {
 class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
   var reward;
-  List<AvailableReward> _services;
-  List<Hospital> _allHospitals;
 
   @override
   void initState() {
@@ -35,7 +33,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    _allHospitals = Provider.of<List<Hospital>>(context);
     super.build(context);
     return Scaffold(
       drawer: drawer(),
@@ -69,7 +66,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                   return Text(
                     'Current Point(s): $reward',
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   );
                 }),
               ],
@@ -101,53 +98,53 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _showHospitals() {
-    if (_allHospitals != null) {
-      return Consumer<List<Hospital>>(
-        builder: (_, hospitalList, __) {
-          return ListView.builder(
-              itemCount: hospitalList?.length ?? 0,
-              itemBuilder: (context, i) {
-                return _orgList(hospitalList[i].name, hospitalList[i]);
-              });
-        },
-      );
-    } else {
-      return Shimmer.fromColors(
-          baseColor: Colors.grey[200],
-          highlightColor: Colors.grey[300],
-          period: Duration(milliseconds: 1000),
-          child: ListView(physics: NeverScrollableScrollPhysics(), children: [
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
-                height: 260,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
-                height: 260,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle, color: Colors.indigo[200]),
-                height: 260,
-              ),
-            )
-          ]));
-    }
+    return Consumer<List<Hospital>>(
+      builder: (_, hospitalList, __) {
+        if (hospitalList == null) {
+          return Shimmer.fromColors(
+              baseColor: Colors.grey[200],
+              highlightColor: Colors.grey[300],
+              period: Duration(milliseconds: 1000),
+              child:
+                  ListView(physics: NeverScrollableScrollPhysics(), children: [
+                Container(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                    height: 260,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                    height: 260,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle, color: Colors.indigo[200]),
+                    height: 260,
+                  ),
+                )
+              ]));
+        }
+        return ListView.builder(
+            itemCount: hospitalList.length,
+            itemBuilder: (context, i) {
+              return _orgList(hospitalList[i]);
+            });
+      },
+    );
   }
 
   // list hospitals
   //Later add a new String parameter for the image
-  Widget _orgList(String a, Hospital hospital) {
+  Widget _orgList(Hospital hospital) {
     return Container(
       padding: EdgeInsets.only(top: 20.0),
       child: Column(
@@ -176,7 +173,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  '$a',
+                  '${hospital.name}',
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -185,8 +182,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                   style: ElevatedButton.styleFrom(
                       primary: Colors.deepPurple, onPrimary: Colors.white),
                   onPressed: () async {
-                    //_services = await Database.getServices(hospital.id);
-                    _showModalBottomSheet();
+                    _showModalBottomSheet(hospital);
                   },
                   child: Text(
                     'Show More',
@@ -203,36 +199,41 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  _showModalBottomSheet() {
+  _showModalBottomSheet(Hospital hospital) {
     showModalBottomSheet(
         isScrollControlled: false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: BoxDecoration(
-              color: Colors.deepPurple[50],
-            ),
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setter) {
-              return Consumer<List<AvailableReward>>(builder: (_, reward, __) {
-                return ListView.builder(
-                  padding: EdgeInsets.all(20.0),
-                  itemCount: reward?.length,
-                  itemBuilder: (context, index) {
-                    return _rewardList(reward[index]?.title,
-                        reward[index]?.cost /*, _services[index].id*/);
-                  },
-                );
-              });
-            }),
-          );
+              decoration: BoxDecoration(
+                color: Colors.deepPurple[50],
+              ),
+              child: Center(
+                child: FutureBuilder<List<DocumentSnapshot>>(
+                    future: Database.getServices(hospital.reference.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+                      return ListView.builder(
+                        padding: EdgeInsets.all(20.0),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          Map<String, dynamic> data =
+                              snapshot.data[index].data();
+                          return _rewardList(data['title'], data['cost'],
+                              snapshot.data[index].reference);
+                        },
+                      );
+                    }),
+              ));
         });
   }
 
   //The widget build for every rewards which are the same
   //String a for the name and int b for the points needed
   //Later add a new String parameter for the image
-  Widget _rewardList(String a, int b /*, DocumentReference reference*/) {
+  Widget _rewardList(String a, int b, DocumentReference reference) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
@@ -256,8 +257,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red, onPrimary: Colors.white),
-                  onPressed:
-                      reward >= b ? () => press(b /*, reference*/) : null,
+                  onPressed: reward >= b ? () => press(b, reference) : null,
                   child: Text(
                     'Redeem ($b)',
                   ),
@@ -270,18 +270,14 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  void press(int a /*, DocumentReference reference*/) {
+  void press(int a, DocumentReference reference) {
     //To deduct the reward points after claiming
-    if (reward >= a) {
-      setState(() {
-        reward -= a;
-        var data = {"reward_points": reward};
-        control.play();
-        Database.updateUser(context.read<AppUser>().uid, data);
-        //Database.addClaimedReward(reference);
-      });
-      Navigator.pop(context);
-    }
+    reward -= a;
+    var data = {"reward_points": reward};
+    control.play();
+    Database.updateUser(context.read<AppUser>().uid, data);
+    //Database.addClaimedReward(reference);
+    Navigator.pop(context);
   }
 
   @override

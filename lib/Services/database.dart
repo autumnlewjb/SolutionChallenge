@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:return_med/Models/available_reward.dart';
 
 import '../Models/hospital.dart';
 import '../Models/return_info.dart';
@@ -57,34 +56,9 @@ class Database {
 
   static Stream<List<Hospital>> getHospitals() {
     return rewardDB.snapshots().map((snapshot) => snapshot.docs
-        .map((doc) => Hospital.fromMap(doc.data(), doc.id))
+        .map((doc) => Hospital.fromMap(doc.data(), doc.reference))
         .toList());
   }
-
-  static Stream<List<AvailableReward>> getRewardStream(String hospitalId) {
-    Stream<List<AvailableReward>> stream = rewardDB
-        .doc(hospitalId)
-        .collection("offers")
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => AvailableReward.fromMap(doc.data(), doc.id))
-            .toList());
-    return stream;
-    /*List<AvailableReward> avai;
-    stream.listen((data) {
-      avai=data;
-    });
-    return avai;*/
-  }
-
-  /*static Stream<List<AvailableReward>> getRewardStream(
-      String hospitalId, String rewardId) {
-    return rewardDB
-        .doc(hospitalId)
-        .collection("offers")
-        .doc(rewardId)
-        .snapshots();
-  }*/
 
   static Future<void> addUser(AppUser appUser) async {
     var val = userDB.doc(appUser.uid).set({
@@ -143,5 +117,14 @@ class Database {
       'rewardId': reference.id,
       'timeClaimed': DateFormat.yMMMd().add_jm().format(DateTime.now())
     });
+  }
+
+  static Stream<DocumentSnapshot> getRewardDetails(
+      String hospitalId, String rewardId) {
+    return rewardDB
+        .doc(hospitalId)
+        .collection("offers")
+        .doc(rewardId)
+        .snapshots();
   }
 }
