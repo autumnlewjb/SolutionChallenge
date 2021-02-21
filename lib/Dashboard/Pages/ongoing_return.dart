@@ -21,7 +21,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "On going return",
+          "Ongoing return",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.deepPurple,
@@ -48,7 +48,9 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               );
             }
-            returnList.removeWhere((element) => element.status == 'Completed');
+            returnList = returnList
+                .where((element) => element.status != 'Completed')
+                .toList();
             returnList.sort((a, b) => a.status.compareTo(b.status));
             return ListView.builder(
                 itemCount: returnList.length,

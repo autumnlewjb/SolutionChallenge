@@ -1,34 +1,28 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:return_med/Models/available_reward.dart';
+import 'package:return_med/Models/user_reward.dart';
 
 import '../Models/hospital.dart';
 import '../Models/return_info.dart';
 import '../Models/user.dart';
 
 class Database {
-  /*final FirebaseFirestore _firestore;
+  /*
+  final FirebaseFirestore _firestore;
   CollectionReference userDB;
   CollectionReference rewardDB;
-  CollectionReference schDB;
-  CollectionReference claimedRewardDB;
 
-  Database(this._firestore,_firebaseAuth){
-
-  }*/
+  Database(this._firestore,_firebaseAuth){}
+  */
   static CollectionReference userDB =
       FirebaseFirestore.instance.collection('users');
   static CollectionReference rewardDB =
       FirebaseFirestore.instance.collection('rewards');
-  static CollectionReference schDB = FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser.uid)
-      .collection('schedule');
-  static CollectionReference claimedRewardDB = FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser.uid)
-      .collection('rewards');
 
   static Future<DocumentSnapshot> getUser(String uid) async {
     DocumentSnapshot snapshot = await userDB.doc(uid).get();
@@ -41,22 +35,26 @@ class Database {
 
   static Stream<AppUser> getUserStream(String uid) {
     print(uid);
-    return userDB
-        .doc(uid)
-        .snapshots()
-        .map((snapshot) => AppUser.fromMap(snapshot.data()));
+    return userDB.doc(uid).snapshots().map((snapshot) =>
+        AppUser.fromMap(uid, snapshot.data(), getClaimedReward(uid)));
   }
 
-  static Stream<List<ReturnInfo>> getReturnInfo() {
-    return schDB.orderBy('timeCreated', descending: true).snapshots().map(
-        (snapshot) => snapshot.docs
+  static Stream<List<ReturnInfo>> getReturnInfo(String uid) {
+    return userDB
+        .doc(uid)
+        .collection('schedule')
+        .orderBy('timeCreated', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
             .map((doc) => ReturnInfo.fromMap(doc.data()))
             .toList());
   }
 
   static Stream<List<Hospital>> getHospitals() {
-    return rewardDB.snapshots().map((snapshot) => snapshot.docs
-        .map((doc) => Hospital.fromMap(doc.data(), doc.reference))
+    return rewardDB.snapshots().map((snapshot) =>
+        snapshot.docs
+        .map((doc) => Hospital.fromMap(
+            doc.data(), doc.reference, getAvailableReward(doc.id)))
         .toList());
   }
 
@@ -72,7 +70,7 @@ class Database {
       'postcode': appUser.postcode,
       'photoUrl': appUser.photoUrl,
       'reward_points': appUser.rewardPoint,
-    });
+    }, SetOptions(merge: true));
     return val;
   }
 
@@ -81,8 +79,12 @@ class Database {
     return val;
   }
 
-  static Future<void> addSch(ReturnInfo info) async {
-    return await schDB.doc(info.timeCreated).set({
+  static Future<void> addSch(String uid, ReturnInfo info) async {
+    return await userDB
+        .doc(uid)
+        .collection('schedule')
+        .doc(info.timeCreated)
+        .set({
       'medicine': info.medName,
       'expiryDate': info.expiryDate,
       'address1': info.address1,
@@ -95,36 +97,43 @@ class Database {
   }
 
   static Future<void> deleteSch(String id) async {
-    return await schDB.doc(id).delete();
+    return await userDB
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('schedule')
+        .doc(id)
+        .delete();
   }
 
-  static Future<List<DocumentSnapshot>> getAllHospitals() async {
-    QuerySnapshot snapshots = await rewardDB.get();
-
-    return snapshots.docs;
+  static Stream<List<AvailableReward>> getAvailableReward(String id) {
+    return rewardDB.doc(id).collection("offers").snapshots().map((snapshot) =>
+        snapshot.docs
+            .map((doc) => AvailableReward.fromMap(doc.data(), doc.reference))
+            .toList());
   }
 
-  static Future<List<DocumentSnapshot>> getServices(String doc_id) async {
-    QuerySnapshot snapshots =
-        await rewardDB.doc(doc_id).collection("offers").get();
-
-    return snapshots.docs;
+  static Stream<List<UserReward>> getClaimedReward(String id) {
+    return userDB
+        .doc(id)
+        .collection("rewards")
+        .orderBy('timeClaimed', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => UserReward.fromMap(doc.data(), doc.reference))
+            .toList());
   }
 
-  static Future<void> addClaimedReward(DocumentReference reference) async {
-    return await claimedRewardDB.doc(DateTime.now().toString()).set({
-      'hospitalId': reference.parent.parent.id,
-      'rewardId': reference.id,
+  static Future<void> addClaimedReward(
+      String uid, AvailableReward reward) async {
+    return await userDB
+        .doc(uid)
+        .collection("rewards")
+        .doc(DateTime.now().toString())
+        .set({
+      'hospitalId': reward.reference.parent.parent.id,
+      'rewardId': reward.reference.id,
+      'title': reward.title,
+      'description': reward.description,
       'timeClaimed': DateFormat.yMMMd().add_jm().format(DateTime.now())
     });
-  }
-
-  static Stream<DocumentSnapshot> getRewardDetails(
-      String hospitalId, String rewardId) {
-    return rewardDB
-        .doc(hospitalId)
-        .collection("offers")
-        .doc(rewardId)
-        .snapshots();
   }
 }

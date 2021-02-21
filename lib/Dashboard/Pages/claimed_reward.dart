@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/Services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:return_med/Models/user.dart';
+import 'package:return_med/Models/user_reward.dart';
 
 class ClaimedReward extends StatefulWidget {
   @override
@@ -31,60 +32,41 @@ class _ClaimedRewardState extends State<ClaimedReward> {
               Colors.deepPurple[200]
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
-          child: Center(
-            child: StreamBuilder<QuerySnapshot>(
-                stream: Database.claimedRewardDB
-                    .orderBy('timeClaimed', descending: true)
-                    .snapshots(),
-                builder: (BuildContext context, snapshot) {
+          child: Center(child: Consumer<AppUser>(
+            builder: (_, user, __) {
+              return StreamBuilder<List<UserReward>>(
+                stream: user.reward,
+                builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text('Something went wrong');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
-                  if (snapshot.data.size == 0) {
+                  if (snapshot.data.isEmpty) {
                     return Text("Haven't claimed any reward.");
                   }
                   return ListView.builder(
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: StreamBuilder<DocumentSnapshot>(
-                              stream: Database.getRewardDetails(
-                                  snapshot.data.docs[index]
-                                      .data()['hospitalId'],
-                                  snapshot.data.docs[index].data()['rewardId']),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text('Something went wrong');
-                                }
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                }
-                                if (snapshot.data.data() == null) {
-                                  return Text('Something went wrong');
-                                }
-                                return Card(
-                                    elevation: 5,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ListTile(
-                                      title: Text(
-                                          snapshot.data.data()['title'] ??
-                                              'N/A'),
-                                      subtitle: Text(
-                                          snapshot.data.data()['description'] ??
-                                              'N/A'),
-                                    ));
-                              }),
-                        );
-                      });
-                }),
-          )),
+                    padding: EdgeInsets.all(20.0),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      UserReward reward = snapshot.data[index];
+                      return Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          margin: EdgeInsets.all(5),
+                          child: ListTile(
+                            title: Text(reward.title),
+                            subtitle: Text(reward.description),
+                          ));
+                    },
+                  );
+                },
+              );
+            },
+          ))),
     );
   }
 }

@@ -23,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
             create: (BuildContext context) => Database.getUserStream(user.uid),
             catchError: (_, error) => null),
         StreamProvider<List<ReturnInfo>>(
-            create: (BuildContext context) => Database.getReturnInfo(),
+            create: (BuildContext context) => Database.getReturnInfo(user.uid),
             lazy: true,
             catchError: (_, error) => null),
         StreamProvider<List<Hospital>>(

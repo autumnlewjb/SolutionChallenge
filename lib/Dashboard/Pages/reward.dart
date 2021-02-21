@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:return_med/Models/available_reward.dart';
 import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/user.dart';
 import 'package:return_med/Services/database.dart';
@@ -17,7 +17,7 @@ class Reward extends StatefulWidget {
 
 class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   ConfettiController control;
-  var reward;
+  var rewardPoint;
 
   @override
   void initState() {
@@ -62,11 +62,11 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Consumer<AppUser>(builder: (_, user, __) {
-                  reward = user?.rewardPoint;
+                  this.rewardPoint = user?.rewardPoint;
                   return Text(
-                    'Current Point(s): $reward',
+                    'Current Point(s): $rewardPoint',
                     style:
-                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   );
                 }),
               ],
@@ -209,9 +209,12 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 color: Colors.deepPurple[50],
               ),
               child: Center(
-                child: FutureBuilder<List<DocumentSnapshot>>(
-                    future: Database.getServices(hospital.reference.id),
+                child: StreamBuilder<List<AvailableReward>>(
+                    stream: hospital.reward,
                     builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
                       }
@@ -219,10 +222,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                         padding: EdgeInsets.all(20.0),
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
-                          Map<String, dynamic> data =
-                              snapshot.data[index].data();
-                          return _rewardList(data['title'], data['cost'],
-                              snapshot.data[index].reference);
+                          return _rewardList(snapshot.data[index]);
                         },
                       );
                     }),
@@ -231,9 +231,8 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   //The widget build for every rewards which are the same
-  //String a for the name and int b for the points needed
   //Later add a new String parameter for the image
-  Widget _rewardList(String a, int b, DocumentReference reference) {
+  Widget _rewardList(AvailableReward reward) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
@@ -249,7 +248,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '$a',
+                  '${reward.title}',
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
@@ -257,9 +256,10 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red, onPrimary: Colors.white),
-                  onPressed: reward >= b ? () => press(b, reference) : null,
+                  onPressed:
+                      rewardPoint >= reward.cost ? () => press(reward) : null,
                   child: Text(
-                    'Redeem ($b)',
+                    'Redeem (${reward.cost})',
                   ),
                 ),
               ],
@@ -270,13 +270,14 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  void press(int a, DocumentReference reference) {
-    //To deduct the reward points after claiming
-    reward -= a;
-    var data = {"reward_points": reward};
+  //To deduct the reward points after claiming
+  void press(AvailableReward reward) {
+    final uid = context.read<AppUser>().uid;
+    rewardPoint -= reward.cost;
+    var data = {"reward_points": rewardPoint};
     control.play();
-    Database.updateUser(context.read<AppUser>().uid, data);
-    //Database.addClaimedReward(reference);
+    Database.updateUser(uid, data)
+        .then((_) => Database.addClaimedReward(uid, reward));
     Navigator.pop(context);
   }
 

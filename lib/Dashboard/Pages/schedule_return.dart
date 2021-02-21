@@ -2,8 +2,10 @@ import 'package:commons/commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/Models/return_info.dart';
+import 'package:return_med/Models/user.dart';
 import 'package:return_med/Services/database.dart';
 
 class ScheduleReturn extends StatefulWidget {
@@ -285,13 +287,15 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              await Database.addSch(ReturnInfo.toMap(
-                                      medName.text,
-                                      selectedDate,
-                                      address1.text,
-                                      address2.text,
-                                      state,
-                                      postcode.text))
+                              await Database.addSch(
+                                      this.context.read<AppUser>().uid,
+                                      ReturnInfo.toMap(
+                                          medName.text,
+                                          selectedDate,
+                                          address1.text,
+                                          address2.text,
+                                          state,
+                                          postcode.text))
                                   .then((_) => {
                                         setState(() {
                                           _autoValidate =
