@@ -115,11 +115,20 @@ class WidgetModel {
             ],
             title: Text(info.medName),
             subtitle: Text(info.timeCreated),
-            trailing: Text(info.status,
-                style: TextStyle(
-                  color: _getColor(info.status),
-                ))));
+            trailing: Wrap(
+              spacing: 6,
+              children: [
+                Text(info.status,
+                    style: TextStyle(
+                      color: _getColor(info.status),
+                    )),
+                Icon(Icons.arrow_drop_down, size: 18,)
+              ],
+            )));
   }
+
+  bool isSelected = false;
+
 
   Color _getColor(String text) {
     if (text == 'Pending') {

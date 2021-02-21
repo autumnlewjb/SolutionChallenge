@@ -170,7 +170,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
           ),
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(5.0),
                 color: Colors.indigo[100]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -183,7 +183,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.purple[200], onPrimary: Colors.white),
+                      primary: Colors.deepPurple, onPrimary: Colors.white),
                   onPressed: () async {
                     //_services = await Database.getServices(hospital.id);
                     _showModalBottomSheet();
