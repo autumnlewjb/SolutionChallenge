@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/Models/return_info.dart';
-import 'package:return_med/database.dart';
+import 'package:return_med/Services/database.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override
@@ -332,6 +332,10 @@ class _ScheduleReturnState extends State<ScheduleReturn>
   void dispose() {
     super.dispose();
     KeyboardVisibilityNotification().removeListener(subscribingID);
+    medName.dispose();
+    address1.dispose();
+    address2.dispose();
+    postcode.dispose();
   }
 
   @override

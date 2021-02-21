@@ -9,7 +9,7 @@ import 'package:return_med/sign_up.dart';
 
 import 'Dashboard/dashboard.dart';
 import 'Models/user.dart';
-import 'auth.dart';
+import 'Services/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

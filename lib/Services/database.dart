@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:return_med/Models/available_reward.dart';
 
-import 'Models/hospital.dart';
-import 'Models/return_info.dart';
-import 'Models/user.dart';
+import '../Models/hospital.dart';
+import '../Models/return_info.dart';
+import '../Models/user.dart';
 
 class Database {
   /*final FirebaseFirestore _firestore;

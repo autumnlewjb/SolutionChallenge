@@ -6,7 +6,7 @@ import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/return_info.dart';
 import 'package:return_med/Models/user.dart';
 
-import '../database.dart';
+import '../Services/database.dart';
 import 'bottom_navi_bar.dart';
 
 class Dashboard extends StatefulWidget {

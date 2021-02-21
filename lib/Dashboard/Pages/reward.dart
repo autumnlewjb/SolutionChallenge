@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:return_med/Models/available_reward.dart';
 import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/user.dart';
-import 'package:return_med/database.dart';
+import 'package:return_med/Services/database.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'drawer.dart';
