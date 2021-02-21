@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:return_med/Models/user.dart';
+import 'package:return_med/Services/database.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -122,7 +123,7 @@ class _ProfileState extends State<Profile> {
           ),
           Container(
             margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
             width: width,
             height: height * 0.45,
             decoration: BoxDecoration(
@@ -250,11 +251,270 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 )),
+                SizedBox(
+                  height: height * 0.05,
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            color: Colors.deepPurple, width: 1),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                      ),
+                      onPressed: () {
+                        _showModalBottomSheet(context);
+                      },
+                      child: Text(
+                        'Update Information',
+                        style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  _showModalBottomSheet(context) {
+    final firstNameCtrl = TextEditingController();
+    final lastNameCtrl = TextEditingController();
+    final address1Ctrl = TextEditingController();
+    final address2Ctrl = TextEditingController();
+    final postCodeCtrl = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+
+    List states = [
+      "Johor",
+      "Kedah",
+      "Kelantan",
+      "Melaka",
+      "Negeri Sembilan",
+      "Pahang",
+      "Penang",
+      "Perak",
+      "Perlis",
+      "Sabah",
+      "Sarawak",
+      "Selangor",
+      "Terengganu"
+    ];
+    String state;
+    showModalBottomSheet(
+      isScrollControlled: true,
+      enableDrag: true,
+      isDismissible: true,
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          )),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Form(
+            key: _formKey,
+            child: Wrap(
+              children: <Widget>[
+                Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Center(
+                      child: Text(
+                        "Update Information",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                    )),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Cannot leave blank';
+                            }
+                            return null;
+                          },
+                          controller: firstNameCtrl,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: 'First name',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Cannot leave blank';
+                            }
+                            return null;
+                          },
+                          controller: lastNameCtrl,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: 'Last name'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child: TextFormField(
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Cannot leave blank';
+                      }
+                      return null;
+                    },
+                    controller: address1Ctrl,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Address line 1'),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
+                  child: TextFormField(
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Cannot leave blank';
+                      }
+                      return null;
+                    },
+                    controller: address2Ctrl,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Address line 2'),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: DropdownButtonFormField(
+                      validator: (choice) {
+                        if (choice == null) {
+                          return "Please select your state";
+                        }
+                        return null;
+                      },
+                      isExpanded: true,
+                      decoration: InputDecoration.collapsed(hintText: ''),
+                      hint: Text('Choose state'),
+                      value: state,
+                      onChanged: (newState) {
+                        setState(() {
+                          state = newState;
+                        });
+                      },
+                      items: states.map((valueItems) {
+                        return DropdownMenuItem(
+                          value: valueItems,
+                          child: Text(valueItems),
+                        );
+                      }).toList()),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Cannot leave blank';
+                      }
+                      return null;
+                    },
+                    controller: postCodeCtrl,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Post code'),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.deepPurple,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          final appUser = context.read<AppUser>();
+                          appUser.firstName = firstNameCtrl.text;
+                          appUser.lastName = lastNameCtrl.text;
+                          appUser.address1 = address1Ctrl.text;
+                          appUser.address2 = address2Ctrl.text;
+                          appUser.state = state;
+                          appUser.postcode = postCodeCtrl.text;
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Text(
+                        'Update',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() => Database.addUser(this.context.read<AppUser>()));
   }
 }

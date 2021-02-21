@@ -425,7 +425,7 @@ class _MainPageState extends State<MainPage>
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
+                          primary: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
                         ),
