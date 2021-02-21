@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:return_med/Models/return_info.dart';
+import 'package:return_med/Models/widget_model.dart';
 
 class History extends StatefulWidget {
   @override
@@ -14,38 +17,28 @@ class _HistoryState extends State<History> {
         backgroundColor: Colors.deepPurple,
       ),
       body: Center(
-          /*child: StreamBuilder<QuerySnapshot>(
-              stream: Database.schDB
-                  .where('status', isEqualTo: "Completed")
-                  .orderBy('timeCreated', descending: true)
-                  .snapshots(),
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Something went wrong');
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (snapshot.data.size == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Text(
-                      'No ongoing return found. Feel free to schedule a return now! :)',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  );
-                }
-                return ListView.builder(
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) {
-                      Map<String, dynamic> info =
-                          snapshot.data.docs[index].data();
-                      return WidgetModel()
-                          .schReturnTile(this.context,context, info,index);
-                    });
-              })*/
-          ),
+        child: Consumer<List<ReturnInfo>>(builder: (_, returnList, __) {
+          if (returnList == null) {
+            return CircularProgressIndicator();
+          }
+          returnList = returnList
+              .where((element) => element.status == 'Completed')
+              .toList();
+          if (returnList.isEmpty) {
+            return Text(
+              'No ongoing return found. Feel free to schedule a return now! :)',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            );
+          }
+          return ListView.builder(
+              itemCount: returnList.length,
+              itemBuilder: (context, index) {
+                ReturnInfo info = returnList[index];
+                return WidgetModel().schReturnTile(this.context, context, info);
+              });
+        }),
+      ),
     );
   }
 }

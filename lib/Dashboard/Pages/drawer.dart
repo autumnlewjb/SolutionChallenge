@@ -5,7 +5,7 @@ import 'package:return_med/Dashboard/Pages/claimed_reward.dart';
 import 'package:return_med/Dashboard/Pages/history.dart';
 import 'package:return_med/Models/user.dart';
 
-import '../../auth.dart';
+import '../../Services/auth.dart';
 import 'profile.dart';
 
 class drawer extends StatefulWidget {
