@@ -38,7 +38,7 @@ class _HistoryState extends State<History> {
                 .toList();
             if (returnList.isEmpty) {
               return Text(
-                'No ongoing return found. Feel free to schedule a return now! :)',
+                'No records found',
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               );

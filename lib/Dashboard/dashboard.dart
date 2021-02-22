@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Models/available_reward.dart';
 import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/return_info.dart';
 import 'package:return_med/Models/user.dart';
@@ -24,15 +23,13 @@ class _DashboardState extends State<Dashboard> {
             create: (BuildContext context) => Database.getUserStream(user.uid),
             catchError: (_, error) => null),
         StreamProvider<List<ReturnInfo>>(
-            create: (BuildContext context) => Database.getReturnInfo(),
+            create: (BuildContext context) => Database.getReturnInfo(user.uid),
+            lazy: true,
             catchError: (_, error) => null),
         StreamProvider<List<Hospital>>(
             create: (BuildContext context) => Database.getHospitals(),
-            catchError: (_, error) => null),
-        StreamProvider<List<AvailableReward>>(
-            create: (BuildContext context) =>
-                Database.getRewardStream('hospital_a'),
-            catchError: (_, error) => null),
+            lazy: true,
+            catchError: (_, error) => null)
       ],
       child: MaterialApp(
         home: BottomNavBar(),

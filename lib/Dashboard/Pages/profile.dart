@@ -95,7 +95,8 @@ class _ProfileState extends State<Profile> {
                             Consumer<AppUser>(builder: (_, user, __) {
                               return Text(
                                 user.username,
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
                               );
                             }),
                           ],
@@ -111,7 +112,8 @@ class _ProfileState extends State<Profile> {
                             Consumer<AppUser>(builder: (_, user, __) {
                               return Text(
                                 'Point(s): ${user.rewardPoint}',
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
                               );
                             }),
                           ],
@@ -260,8 +262,7 @@ class _ProfileState extends State<Profile> {
                     width: double.infinity,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                            color: Colors.deepPurple, width: 1),
+                        side: BorderSide(color: Colors.deepPurple, width: 1),
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
@@ -318,13 +319,13 @@ class _ProfileState extends State<Profile> {
       context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          )),
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      )),
       builder: (BuildContext context) {
         return Padding(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Form(
             key: _formKey,
             child: Wrap(

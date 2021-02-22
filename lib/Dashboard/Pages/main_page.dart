@@ -204,7 +204,12 @@ class _MainPageState extends State<MainPage>
                   //Text('Step 2: Fill up the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
                   //Text('Step 3: Sumbit the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
                   //SizedBox(height: 10.0,),
-                  Center(child: Text('Fulfill Your Need Not Your Greed',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.white)))
+                  Center(
+                      child: Text('Fulfill Your Need Not Your Greed',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)))
                 ],
               ),
               padding: EdgeInsets.all(10),
