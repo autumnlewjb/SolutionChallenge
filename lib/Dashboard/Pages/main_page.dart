@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/Dashboard/Partner/partner_main_page.dart';
 import 'package:return_med/Models/user.dart';
+import 'package:return_med/Services/auth.dart';
 import 'package:return_med/Services/database.dart';
 
 class MainPage extends StatefulWidget {
@@ -287,17 +288,19 @@ class _MainPageState extends State<MainPage>
                     children: [
                       Container(
                         child: Text('Did you know that?',
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white)),
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.white)),
                       ),
-                      SizedBox(height: screenHeight * 0.01,),
+                      SizedBox(
+                        height: screenHeight * 0.01,
+                      ),
                       Container(
                         width: 210,
                         child: Text(
                           "Most people do not handle their medicine correctly!",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       )
                     ],
@@ -330,6 +333,7 @@ class _MainPageState extends State<MainPage>
     final address2Ctrl = TextEditingController();
     final postCodeCtrl = TextEditingController();
     final _formKey = GlobalKey<FormState>();
+    final appUser = AppUser();
 
     List states = [
       "Johor",
@@ -528,7 +532,13 @@ class _MainPageState extends State<MainPage>
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            final appUser = context.read<AppUser>();
+                            appUser.uid = FirebaseAuth.instance.currentUser.uid;
+                            appUser.email =
+                                FirebaseAuth.instance.currentUser.email;
+                            appUser.username =
+                                FirebaseAuth.instance.currentUser.displayName;
+                            appUser.photoUrl =
+                                FirebaseAuth.instance.currentUser.photoURL;
                             appUser.firstName = firstNameCtrl.text;
                             appUser.lastName = lastNameCtrl.text;
                             appUser.address1 = address1Ctrl.text;
@@ -548,13 +558,36 @@ class _MainPageState extends State<MainPage>
                       ),
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 10.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurple,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                        ),
+                        onPressed: () async {
+                          context.read<Auth>().signOut();
+                        },
+                        child: Text(
+                          'Login with Another Account',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         );
       },
-    ).whenComplete(() => Database.addUser(this.context.read<AppUser>()));
+    ).whenComplete(() => Database.addUser(appUser));
   }
 
   _checkIfUserExists() async {
@@ -563,18 +596,13 @@ class _MainPageState extends State<MainPage>
     DocumentSnapshot snapshot = await Database.getUser(user.uid);
 
     //If the current user is new user
-    if (snapshot == null) {
-      //If sign in by google or fb
-      appUser.uid = user.uid;
-      if (appUser.username == 'N/A') {
-        appUser.username = user.displayName;
-        appUser.email = user.email;
-        appUser.photoUrl = user.photoURL;
-        _showModalBottomSheet(context);
-      } else {
-        Database.addUser(appUser);
-      }
+    //If sign in by google or fb
+    if (snapshot == null && appUser == null) {
+      _showModalBottomSheet(context);
     }
+    // else {
+    //   Database.addUser(appUser);
+    // }
   }
 
   void _launchURL(BuildContext context) async {
