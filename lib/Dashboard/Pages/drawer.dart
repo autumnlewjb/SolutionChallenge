@@ -51,20 +51,24 @@ class _drawerState extends State<drawer> {
   Widget build(BuildContext context) {
     return Drawer(
       elevation: 20,
-      child: ListView(
-        padding: const EdgeInsets.all(0),
+      child: Column(
         children: [
           DrawerHeader(
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
             child: Column(
               children: [
                 Container(
+                  width: double.infinity,
                   child: Consumer<AppUser>(builder: (_, user, __) {
-                    return CircleAvatar(
-                        radius: 45,
-                        backgroundImage: user.photoUrl.isEmpty
-                            ? AssetImage("assets/icon.png")
-                            : NetworkImage(user.photoUrl));
+                    return Column(
+                      children: [
+                        CircleAvatar(
+                            radius: 45,
+                            backgroundImage: user.photoUrl.isEmpty
+                                ? AssetImage("assets/icon.png")
+                                : NetworkImage(user.photoUrl)),
+                      ],
+                    );
                   }),
                 ),
                 SizedBox(
@@ -85,38 +89,55 @@ class _drawerState extends State<drawer> {
                 gradient: LinearGradient(
                     colors: [Colors.deepPurple[300], Colors.deepPurple[600]])),
           ),
-          ListTile(
-              title: Text('Profile'),
-              leading: Icon(
-                Icons.people_rounded,
-                color: Colors.deepPurple,
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new Profile()));
-              }),
-          ListTile(
-              title: Text('Claimed reward'),
-              leading: Icon(
-                Icons.card_giftcard_rounded,
-                color: Colors.deepPurple,
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new ClaimedReward()));
-              }),
-          ListTile(
-              title: Text('History'),
-              leading: Icon(
-                Icons.history,
-                color: Colors.deepPurple,
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new History()));
-              }),
+
+
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Profile'),
+                leading: Icon(
+                  Icons.people_rounded,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new Profile()));
+                }),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Claimed reward'),
+                leading: Icon(
+                  Icons.card_giftcard_rounded,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new ClaimedReward()));
+                }),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('History'),
+                leading: Icon(
+                  Icons.history,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => new History()));
+                }),
+          ),
+
+          Expanded(child: Container()),
+
           ListTile(
             title: Text('Logout'),
             leading: Icon(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
+import 'package:return_med/Dashboard/Partner/partner_main_page.dart';
 import 'package:return_med/Models/user.dart';
 import 'package:return_med/Services/database.dart';
 
@@ -28,7 +29,6 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       drawer: drawer(),
       appBar: AppBar(
@@ -103,12 +103,27 @@ class _MainPageState extends State<MainPage>
                     height: screenHeight * 0.03,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlatButton.icon(
                         onPressed: () => _launchURL(context),
                         icon: Icon(Icons.question_answer_rounded),
                         label: Text("Need help?"),
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                      ),
+
+                      FlatButton.icon(
+                        onPressed: (){
+                          Navigator.push(context,
+                              new MaterialPageRoute(builder: (context) => new PMainpage()));
+                        },
+                        icon: Icon(Icons.arrow_drop_down_circle),
+                        label: Text("Partner"),
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
