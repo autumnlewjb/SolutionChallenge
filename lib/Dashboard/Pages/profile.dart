@@ -302,6 +302,14 @@ class _ProfileState extends State<Profile> {
     final postCodeCtrl = TextEditingController();
     final _formKey = GlobalKey<FormState>();
 
+    final AppUser user = Provider.of<AppUser>(context, listen: false);
+    firstNameCtrl.text = user.firstName;
+    lastNameCtrl.text = user.lastName;
+    address1Ctrl.text = user.address1;
+    address2Ctrl.text = user.address2;
+    postCodeCtrl.text = user.postcode;
+    String state = user.state;
+
     List states = [
       "Johor",
       "Kedah",
@@ -317,7 +325,7 @@ class _ProfileState extends State<Profile> {
       "Selangor",
       "Terengganu"
     ];
-    String state;
+
     showModalBottomSheet(
       isScrollControlled: true,
       enableDrag: true,
