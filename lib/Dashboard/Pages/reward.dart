@@ -98,9 +98,10 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _showHospitals() {
-    return Consumer<List<Hospital>>(
-      builder: (_, hospitalList, __) {
-        if (hospitalList == null) {
+    return StreamBuilder<List<Hospital>>(
+      stream: Database.getHospitals(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Shimmer.fromColors(
               baseColor: Colors.grey[200],
               highlightColor: Colors.grey[300],
@@ -133,11 +134,18 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 )
               ]));
         }
-        return ListView.builder(
-            itemCount: hospitalList.length,
-            itemBuilder: (context, i) {
-              return _orgList(hospitalList[i]);
-            });
+        if (snapshot.hasData) {
+          List<Hospital> hospitalList = snapshot.data;
+          if (hospitalList.isEmpty) {
+            return Text('No hospital is offering rewards');
+          }
+          return ListView.builder(
+              itemCount: hospitalList.length,
+              itemBuilder: (context, i) {
+                return _orgList(hospitalList[i]);
+              });
+        }
+        return Text('Something went wrong');
       },
     );
   }
@@ -209,22 +217,26 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 color: Colors.deepPurple[50],
               ),
               child: Center(
-                child: StreamBuilder<List<AvailableReward>>(
-                    stream: hospital.reward,
+                child: FutureBuilder<List<AvailableReward>>(
+                    future: Database.getAvailableReward(hospital.reference.id),
                     builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Something went wrong');
-                      }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
                       }
-                      return ListView.builder(
-                        padding: EdgeInsets.all(20.0),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return _rewardList(snapshot.data[index]);
-                        },
-                      );
+                      if (snapshot.hasData) {
+                        List<AvailableReward> rewardList = snapshot.data;
+                        if (rewardList.isEmpty) {
+                          return Text('No available rewards');
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.all(20.0),
+                          itemCount: rewardList.length,
+                          itemBuilder: (context, index) {
+                            return _rewardList(rewardList[index]);
+                          },
+                        );
+                      }
+                      return Text('Something went wrong');
                     }),
               ));
         });
@@ -282,5 +294,5 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 }
