@@ -26,264 +26,270 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.deepPurple[300],
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Container(
-            height: height * 0.3,
-            child: Stack(children: [
-              Container(
-                width: width,
-                height: height * 0.3 - 50,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.deepPurple[300],
-                    Colors.deepPurple[400],
-                    Colors.deepPurple,
-                    Colors.deepPurple[600]
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 50,
-                        color: Colors.grey.withOpacity(0.5))
-                  ],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: height * 0.3,
+              child: Stack(children: [
+                Container(
+                  width: width,
+                  height: height * 0.3 - 50,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Colors.deepPurple[300],
+                      Colors.deepPurple[400],
+                      Colors.deepPurple,
+                      Colors.deepPurple[600]
+                    ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 5),
+                          blurRadius: 50,
+                          color: Colors.grey.withOpacity(0.5))
+                    ],
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Consumer<AppUser>(builder: (_, user, __) {
+                        return CircleAvatar(
+                            radius: 52,
+                            backgroundImage: user.photoUrl.isEmpty
+                                ? AssetImage("assets/icon.png")
+                                : NetworkImage(user.photoUrl));
+                      }),
+                    ],
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Consumer<AppUser>(builder: (_, user, __) {
-                      return CircleAvatar(
-                          radius: 52,
-                          backgroundImage: user.photoUrl.isEmpty
-                              ? AssetImage("assets/icon.png")
-                              : NetworkImage(user.photoUrl));
-                    }),
-                  ],
+                Positioned(
+                  bottom: 0,
+                  right: 40,
+                  child: Container(
+                      height: 80,
+                      width: width * 0.8,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(0, 5),
+                                blurRadius: 50,
+                                color: Colors.grey.withOpacity(0.5))
+                          ]),
+                      child: Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.perm_identity_rounded),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Consumer<AppUser>(builder: (_, user, __) {
+                                return Text(
+                                  user.username,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                );
+                              }),
+                            ],
+                          )),
+                          Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.card_giftcard_rounded),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Consumer<AppUser>(builder: (_, user, __) {
+                                return Text(
+                                  'Point(s): ${user.rewardPoint}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                );
+                              }),
+                            ],
+                          )),
+                        ],
+                      ))),
                 ),
+              ]),
+            ),
+            Container(
+              margin: EdgeInsets.all(20),
+              padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
+              width: width,
+              height: height * 0.45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.5))
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                right: 40,
-                child: Container(
-                    height: 80,
-                    width: width * 0.8,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(40),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 50,
-                              color: Colors.grey.withOpacity(0.5))
-                        ]),
-                    child: Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
                       children: [
-                        Container(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Icon(
+                          Icons.people,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: width * 0.075,
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.perm_identity_rounded),
-                            SizedBox(
-                              width: width * 0.03,
+                            Text(
+                              "FIRST NAME",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 14),
                             ),
                             Consumer<AppUser>(builder: (_, user, __) {
                               return Text(
-                                user.username,
+                                user.firstName,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               );
                             }),
                           ],
                         )),
-                        Container(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        SizedBox(
+                          width: width * 0.1,
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.card_giftcard_rounded),
-                            SizedBox(
-                              width: width * 0.03,
+                            Text(
+                              "LAST NAME",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 14),
                             ),
                             Consumer<AppUser>(builder: (_, user, __) {
                               return Text(
-                                'Point(s): ${user.rewardPoint}',
+                                user.lastName,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               );
                             }),
                           ],
                         )),
                       ],
-                    ))),
-              ),
-            ]),
-          ),
-          Container(
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-            width: width,
-            height: height * 0.45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 5),
-                    blurRadius: 50,
-                    color: Colors.grey.withOpacity(0.5))
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Row(
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Container(
+                      child: Row(
                     children: [
                       Icon(
-                        Icons.people,
+                        Icons.email_rounded,
                         size: 20,
                       ),
                       SizedBox(
                         width: width * 0.075,
                       ),
-                      Expanded(
-                          child: Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "FIRST NAME",
+                            "EMAIL ADDRESS",
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Consumer<AppUser>(builder: (_, user, __) {
                             return Text(
-                              user.firstName,
+                              user.email,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             );
                           }),
                         ],
-                      )),
-                      SizedBox(
-                        width: width * 0.1,
                       ),
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "LAST NAME",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                          Consumer<AppUser>(builder: (_, user, __) {
-                            return Text(
-                              user.lastName,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            );
-                          }),
-                        ],
-                      )),
                     ],
+                  )),
+                  SizedBox(
+                    height: height * 0.05,
                   ),
-                ),
-                SizedBox(
-                  height: height * 0.05,
-                ),
-                Container(
-                    child: Row(
-                  children: [
-                    Icon(
-                      Icons.email_rounded,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: width * 0.075,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "EMAIL ADDRESS",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                        ),
-                        Consumer<AppUser>(builder: (_, user, __) {
-                          return Text(
-                            user.email,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          );
-                        }),
-                      ],
-                    ),
-                  ],
-                )),
-                SizedBox(
-                  height: height * 0.05,
-                ),
-                Container(
-                    child: Row(
-                  children: [
-                    Icon(
-                      Icons.house_rounded,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: width * 0.075,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "ADDRESS",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                        ),
-                        Consumer<AppUser>(builder: (_, user, __) {
-                          return Text(
-                            "${user.address1}\n${user.address2}\n${user.postcode} ${user.state}",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          );
-                        }),
-                      ],
-                    ),
-                  ],
-                )),
-                SizedBox(
-                  height: height * 0.05,
-                ),
-                Center(
-                  child: SizedBox(
-                    height: 40,
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.deepPurple, width: 1),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
+                  Container(
+                      child: Row(
+                    children: [
+                      Icon(
+                        Icons.house_rounded,
+                        size: 20,
                       ),
-                      onPressed: () {
-                        _showModalBottomSheet(context);
-                      },
-                      child: Text(
-                        'Update Information',
-                        style: TextStyle(
-                            color: Colors.deepPurple,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: width * 0.075,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "ADDRESS",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          Consumer<AppUser>(builder: (_, user, __) {
+                            return Text(
+                              "${user.address1}\n${user.address2}\n${user.postcode} ${user.state}",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            );
+                          }),
+                        ],
+                      ),
+                    ],
+                  )),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 40,
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.deepPurple, width: 1),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                        ),
+                        onPressed: () {
+                          _showModalBottomSheet(context);
+                        },
+                        child: Text(
+                          'Update Information',
+                          style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

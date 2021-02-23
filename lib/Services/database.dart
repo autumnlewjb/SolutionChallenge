@@ -35,10 +35,8 @@ class Database {
 
   static Stream<AppUser> getUserStream(String uid) {
     print(uid);
-    return userDB
-        .doc(uid)
-        .snapshots()
-        .map((snapshot) => AppUser.fromMap(uid, snapshot.data()));
+    return userDB.doc(uid).snapshots().map((snapshot) => AppUser.fromMap(uid,
+        snapshot.data(), FirebaseAuth.instance.currentUser?.photoURL ?? ""));
   }
 
   static Stream<List<ReturnInfo>> getReturnInfo(String uid) {
