@@ -13,19 +13,20 @@ class AppUser with ChangeNotifier {
   String photoUrl;
   int rewardPoint;
 
-  AppUser({this.uid = 'N/A',
-    this.firstName = 'N/A',
-    this.lastName = 'N/A',
-    this.username = 'N/A',
-    this.email = 'N/A',
-    this.address1 = 'N/A',
-    this.address2 = 'N/A',
-    this.state = 'N/A',
-    this.postcode = 'N/A',
-    this.photoUrl = '',
-    this.rewardPoint = 0});
+  AppUser(
+      {this.uid = 'N/A',
+      this.firstName = 'N/A',
+      this.lastName = 'N/A',
+      this.username = 'N/A',
+      this.email = 'N/A',
+      this.address1 = 'N/A',
+      this.address2 = 'N/A',
+      this.state = 'N/A',
+      this.postcode = 'N/A',
+      this.photoUrl = '',
+      this.rewardPoint = 0});
 
-  factory AppUser.fromMap(String uid, Map data) {
+  factory AppUser.fromMap(String uid, Map data, String photoUrl) {
     return AppUser(
         uid: uid,
         firstName: data['first_name'] ?? 'N/A',
@@ -36,7 +37,7 @@ class AppUser with ChangeNotifier {
         address2: data['address2'] ?? 'N/A',
         state: data['state'] ?? 'N/A',
         postcode: data['postcode'] ?? 'N/A',
-        photoUrl: data['photoUrl'] ?? '',
+        photoUrl: photoUrl ?? '',
         rewardPoint: data['reward_points'] ?? 0);
   }
 }

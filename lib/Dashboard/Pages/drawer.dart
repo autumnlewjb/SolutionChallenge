@@ -60,6 +60,7 @@ class _drawerState extends State<drawer> {
                 Container(
                   width: double.infinity,
                   child: Consumer<AppUser>(builder: (_, user, __) {
+                    print(user.photoUrl);
                     return Column(
                       children: [
                         CircleAvatar(
@@ -89,8 +90,6 @@ class _drawerState extends State<drawer> {
                 gradient: LinearGradient(
                     colors: [Colors.deepPurple[300], Colors.deepPurple[600]])),
           ),
-
-
           Container(
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.black26))),
@@ -101,8 +100,10 @@ class _drawerState extends State<drawer> {
                   color: Colors.deepPurple,
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Profile()));
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Profile()));
                 }),
           ),
           Container(
@@ -131,13 +132,13 @@ class _drawerState extends State<drawer> {
                   color: Colors.deepPurple,
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new History()));
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new History()));
                 }),
           ),
-
           Expanded(child: Container()),
-
           ListTile(
             title: Text('Logout'),
             leading: Icon(
