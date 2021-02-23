@@ -1,19 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Models/hospital.dart';
 import 'package:return_med/Models/return_info.dart';
 import 'package:return_med/Models/user.dart';
 
 import '../Services/database.dart';
 import 'bottom_navi_bar.dart';
 
-class Dashboard extends StatefulWidget {
-  @override
-  _DashboardState createState() => _DashboardState();
-}
-
-class _DashboardState extends State<Dashboard> {
+class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
@@ -21,13 +15,10 @@ class _DashboardState extends State<Dashboard> {
       providers: [
         StreamProvider<AppUser>(
             create: (BuildContext context) => Database.getUserStream(user.uid),
+            lazy: true,
             catchError: (_, error) => null),
         StreamProvider<List<ReturnInfo>>(
             create: (BuildContext context) => Database.getReturnInfo(user.uid),
-            lazy: true,
-            catchError: (_, error) => null),
-        StreamProvider<List<Hospital>>(
-            create: (BuildContext context) => Database.getHospitals(),
             lazy: true,
             catchError: (_, error) => null)
       ],

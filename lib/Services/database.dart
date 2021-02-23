@@ -35,8 +35,10 @@ class Database {
 
   static Stream<AppUser> getUserStream(String uid) {
     print(uid);
-    return userDB.doc(uid).snapshots().map((snapshot) =>
-        AppUser.fromMap(uid, snapshot.data(), getClaimedReward(uid)));
+    return userDB
+        .doc(uid)
+        .snapshots()
+        .map((snapshot) => AppUser.fromMap(uid, snapshot.data()));
   }
 
   static Stream<List<ReturnInfo>> getReturnInfo(String uid) {
@@ -50,12 +52,28 @@ class Database {
             .toList());
   }
 
+  static Stream<List<UserReward>> getClaimedReward(String uid) {
+    return userDB
+        .doc(uid)
+        .collection("rewards")
+        .orderBy('timeClaimed', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => UserReward.fromMap(doc.data(), doc.reference))
+            .toList());
+  }
+
   static Stream<List<Hospital>> getHospitals() {
-    return rewardDB.snapshots().map((snapshot) =>
-        snapshot.docs
-        .map((doc) => Hospital.fromMap(
-            doc.data(), doc.reference, getAvailableReward(doc.id)))
+    return rewardDB.snapshots().map((snapshot) => snapshot.docs
+        .map((doc) => Hospital.fromMap(doc.data(), doc.reference))
         .toList());
+  }
+
+  static Future<List<AvailableReward>> getAvailableReward(String id) {
+    return rewardDB.doc(id).collection("offers").get().then((snapshot) =>
+        snapshot.docs
+            .map((doc) => AvailableReward.fromMap(doc.data(), doc.reference))
+            .toList());
   }
 
   static Future<void> addUser(AppUser appUser) async {
@@ -102,24 +120,6 @@ class Database {
         .collection('schedule')
         .doc(id)
         .delete();
-  }
-
-  static Stream<List<AvailableReward>> getAvailableReward(String id) {
-    return rewardDB.doc(id).collection("offers").snapshots().map((snapshot) =>
-        snapshot.docs
-            .map((doc) => AvailableReward.fromMap(doc.data(), doc.reference))
-            .toList());
-  }
-
-  static Stream<List<UserReward>> getClaimedReward(String id) {
-    return userDB
-        .doc(id)
-        .collection("rewards")
-        .orderBy('timeClaimed', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => UserReward.fromMap(doc.data(), doc.reference))
-            .toList());
   }
 
   static Future<void> addClaimedReward(
