@@ -166,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Container(
                           child: Text(
-                            ' __________________ or login with __________________',
+                            ' _________ or login with _________',
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),

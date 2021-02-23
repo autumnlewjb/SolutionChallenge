@@ -45,15 +45,11 @@ class ClaimedReward extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
-                  padding: EdgeInsets.all(20.0),
                   itemCount: rewardList.length,
                   itemBuilder: (context, index) {
                     UserReward reward = rewardList[index];
                     return Card(
                         elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
                         margin: EdgeInsets.all(5),
                         child: ListTile(
                           title: Text(reward.title),

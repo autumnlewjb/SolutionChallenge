@@ -116,11 +116,12 @@ class _MainPageState extends State<MainPage>
                           ),
                         ),
                       ),
-
                       FlatButton.icon(
-                        onPressed: (){
-                          Navigator.push(context,
-                              new MaterialPageRoute(builder: (context) => new PMainpage()));
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new PMainpage()));
                         },
                         icon: Icon(Icons.arrow_drop_down_circle),
                         label: Text("Partner"),
@@ -156,16 +157,37 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.purple[100],
+                                radius: 25,
+                                backgroundColor: Colors.transparent,
                                 child: Icon(
                                   Icons.timer,
+                                  size: 50,
                                   color: Colors.black,
                                 )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Step 1: Click")
+                            Container(
+                                child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Step 1",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Container(
+                                  width: 110,
+                                  child: Center(
+                                    child: Text(
+                                      "Click the second icon below",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))
                           ],
                         ),
                       ),
@@ -173,16 +195,37 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.purple[100],
+                                radius: 25,
+                                backgroundColor: Colors.transparent,
                                 child: Icon(
                                   Icons.assignment_rounded,
+                                  size: 50,
                                   color: Colors.black,
                                 )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Step 2: Fill")
+                            Container(
+                                child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Step 2",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Container(
+                                  width: 110,
+                                  child: Center(
+                                    child: Text(
+                                      "Fill in the details on the page",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))
                           ],
                         ),
                       ),
@@ -190,16 +233,37 @@ class _MainPageState extends State<MainPage>
                         child: Column(
                           children: [
                             CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.purple[100],
+                                radius: 25,
+                                backgroundColor: Colors.transparent,
                                 child: Icon(
                                   Icons.assignment_turned_in_rounded,
+                                  size: 50,
                                   color: Colors.black,
                                 )),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Step 3: Submit")
+                            Container(
+                                child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Step 3",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Container(
+                                  width: 110,
+                                  child: Center(
+                                    child: Text(
+                                      "Wait for the good news!",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))
                           ],
                         ),
                       )
@@ -211,23 +275,36 @@ class _MainPageState extends State<MainPage>
           ),
           SliverToBoxAdapter(
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(padding: const EdgeInsets.all(20.0)),
-                  //Text('Step 1: CLick the return icon',style: TextStyle(fontSize: 15.0,color: Colors.white)),
-                  //Text('Step 2: Fill up the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
-                  //Text('Step 3: Sumbit the form',style: TextStyle(fontSize: 15.0,color: Colors.white)),
-                  //SizedBox(height: 10.0,),
-                  Center(
-                      child: Text('Fulfill Your Need Not Your Greed',
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)))
+                  Image.asset(
+                    "assets/medicine.webp",
+                    height: screenHeight * 0.135,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text('Did you know that?',
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white)),
+                      ),
+                      SizedBox(height: screenHeight * 0.01,),
+                      Container(
+                        width: 210,
+                        child: Text(
+                          "Most people do not handle their medicine correctly!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(15),
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               height: screenHeight * 0.15,
               decoration: BoxDecoration(

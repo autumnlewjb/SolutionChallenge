@@ -81,7 +81,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
             centerTitle: true,
             elevation: 10,
             title: Text(
-              'Return Med',
+              'Schedule a return',
               style: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
             backgroundColor: Colors.deepPurple),

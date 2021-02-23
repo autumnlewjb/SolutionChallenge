@@ -63,6 +63,7 @@ flutter:
     - assets/facebookicon.png
     - assets/googleicon.jpg
     - assets/icon.png
+    - assets/medicine.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
