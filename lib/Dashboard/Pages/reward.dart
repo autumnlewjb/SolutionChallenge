@@ -40,7 +40,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
         elevation: 10,
         centerTitle: true,
         title: Text(
-          'Return Med',
+          'Reward Collection',
           style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
         backgroundColor: Colors.deepPurple,
