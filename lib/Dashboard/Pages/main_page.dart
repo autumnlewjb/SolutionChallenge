@@ -591,18 +591,12 @@ class _MainPageState extends State<MainPage>
   }
 
   _checkIfUserExists() async {
-    final appUser = context.read<AppUser>();
     final user = context.read<User>();
     DocumentSnapshot snapshot = await Database.getUser(user.uid);
 
-    //If the current user is new user
-    //If sign in by google or fb
-    if (snapshot == null && appUser == null) {
+    if (snapshot == null) {
       _showModalBottomSheet(context);
     }
-    // else {
-    //   Database.addUser(appUser);
-    // }
   }
 
   void _launchURL(BuildContext context) async {

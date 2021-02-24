@@ -8,7 +8,6 @@ import 'package:return_med/login.dart';
 import 'package:return_med/sign_up.dart';
 
 import 'Dashboard/dashboard.dart';
-import 'Models/user.dart';
 import 'Services/auth.dart';
 
 void main() async {
@@ -23,8 +22,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Auth(FirebaseAuth.instance)),
-        ChangeNotifierProvider(create: (_) => AppUser()),
-        StreamProvider(create: (context) => context.read<Auth>().user),
+        StreamProvider(create: (context) => context.read<Auth>().user)
         /*Provider(
             create: (context) => Database(
                 FirebaseFirestore.instance, context.read<Auth>().firebaseAuth))*/

@@ -62,14 +62,14 @@ class Database {
   }
 
   static Stream<List<Hospital>> getHospitals() {
-    return rewardDB.snapshots().map((snapshot) => snapshot.docs
+    return rewardDB.orderBy('name').snapshots().map((snapshot) => snapshot.docs
         .map((doc) => Hospital.fromMap(doc.data(), doc.reference))
         .toList());
   }
 
   static Future<List<AvailableReward>> getAvailableReward(String id) {
-    return rewardDB.doc(id).collection("offers").get().then((snapshot) =>
-        snapshot.docs
+    return rewardDB.doc(id).collection("offers").orderBy('cost').get().then(
+        (snapshot) => snapshot.docs
             .map((doc) => AvailableReward.fromMap(doc.data(), doc.reference))
             .toList());
   }

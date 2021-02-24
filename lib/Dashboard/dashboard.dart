@@ -15,7 +15,7 @@ class Dashboard extends StatelessWidget {
       providers: [
         StreamProvider<AppUser>(
             create: (BuildContext context) => Database.getUserStream(user.uid),
-            lazy: true,
+            lazy: false,
             catchError: (_, error) => null),
         StreamProvider<List<ReturnInfo>>(
             create: (BuildContext context) => Database.getReturnInfo(user.uid),

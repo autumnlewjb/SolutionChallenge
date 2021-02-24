@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-class AppUser with ChangeNotifier {
+class AppUser {
   String uid;
   String firstName;
   String lastName;
@@ -14,7 +12,7 @@ class AppUser with ChangeNotifier {
   int rewardPoint;
 
   AppUser(
-      {this.uid = 'N/A',
+      {this.uid,
       this.firstName = 'N/A',
       this.lastName = 'N/A',
       this.username = 'N/A',

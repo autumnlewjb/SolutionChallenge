@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:return_med/Services/database.dart';
 
 import 'Models/user.dart';
 import 'Services/auth.dart';
@@ -243,7 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Container(
                     padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1),
                       borderRadius: BorderRadius.circular(10),
@@ -309,18 +311,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            final appUser = context.read<AppUser>();
-                            appUser.firstName = firstNameCtrl.text;
-                            appUser.lastName = lastNameCtrl.text;
-                            appUser.username = usernameCtrl.text;
-                            appUser.email = emailCtrl.text;
-                            appUser.address1 = address1Ctrl.text;
-                            appUser.address2 = address2Ctrl.text;
-                            appUser.state = state;
-                            appUser.postcode = postCodeCtrl.text;
+                            final appUser = AppUser(
+                                firstName: firstNameCtrl.text,
+                                lastName: lastNameCtrl.text,
+                                username: usernameCtrl.text,
+                                email: emailCtrl.text,
+                                address1: address1Ctrl.text,
+                                address2: address2Ctrl.text,
+                                state: state,
+                                postcode: postCodeCtrl.text);
                             await context
                                 .read<Auth>()
-                                .createUser(emailCtrl.text, passwordCtrl.text);
+                                .createUser(emailCtrl.text, passwordCtrl.text)
+                                .then((_) =>
+                                    appUser.uid = context.read<User>().uid)
+                                .then((_) => {
+                                      if (appUser.uid != null)
+                                        {Database.addUser(appUser)}
+                                    });
                             Navigator.pop(context);
                           }
                         },
