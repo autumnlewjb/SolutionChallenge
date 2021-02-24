@@ -12,12 +12,13 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final email = TextEditingController();
   final password = TextEditingController();
-  bool isObscure = true;
+  final ValueNotifier<bool> isObscure = ValueNotifier(true);
 
   @override
   void dispose() {
     email.dispose();
     password.dispose();
+    isObscure.dispose();
     super.dispose();
   }
 
@@ -60,31 +61,33 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          controller: password,
-                          validator: (val) =>
-                              val.isEmpty ? 'Enter a password' : null,
-                          obscureText: isObscure,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              suffixIcon: GestureDetector(
-                                child: Tooltip(
-                                  message: "Show/Hide password",
-                                  child: Icon(isObscure
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
-                                },
-                              ),
-                              prefixIcon: Icon(Icons.lock),
-                              labelText: 'Password'),
-                        ),
+                        ValueListenableBuilder<bool>(
+                            valueListenable: isObscure,
+                            builder: (context, bool value, child) {
+                              return TextFormField(
+                                controller: password,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter a password' : null,
+                                obscureText: value,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    suffixIcon: GestureDetector(
+                                      child: Tooltip(
+                                        message: "Show/Hide password",
+                                        child: Icon(value
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
+                                      ),
+                                      onTap: () {
+                                        isObscure.value = !isObscure.value;
+                                      },
+                                    ),
+                                    prefixIcon: Icon(Icons.lock),
+                                    labelText: 'Password'),
+                              );
+                            }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

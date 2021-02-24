@@ -17,9 +17,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with AutomaticKeepAliveClientMixin {
-  int reward = 10;
-  var exist;
-
   @override
   void initState() {
     super.initState();

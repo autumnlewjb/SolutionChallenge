@@ -505,13 +505,17 @@ class _ProfileState extends State<Profile> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          final appUser = context.read<AppUser>();
-                          appUser.firstName = firstNameCtrl.text;
-                          appUser.lastName = lastNameCtrl.text;
-                          appUser.address1 = address1Ctrl.text;
-                          appUser.address2 = address2Ctrl.text;
-                          appUser.state = state;
-                          appUser.postcode = postCodeCtrl.text;
+                          Map<String, dynamic> data = {
+                            'first_name': firstNameCtrl.text,
+                            'last_name': lastNameCtrl.text,
+                            'address1': address1Ctrl.text,
+                            'address2': address2Ctrl.text,
+                            'state': state,
+                            'postcode': postCodeCtrl.text,
+                          };
+                          if (data != null) {
+                            Database.updateUser(user.uid, data);
+                          }
                           Navigator.pop(context);
                         }
                       },
@@ -530,6 +534,6 @@ class _ProfileState extends State<Profile> {
           ),
         );
       },
-    ).whenComplete(() => Database.addUser(this.context.read<AppUser>()));
+    );
   }
 }
