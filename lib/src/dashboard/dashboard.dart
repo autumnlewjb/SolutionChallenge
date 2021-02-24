@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Models/return_info.dart';
-import 'package:return_med/Models/user.dart';
+import 'package:return_med/src/Models/return_info.dart';
+import 'package:return_med/src/Models/user.dart';
 
 import '../Services/database.dart';
 import 'bottom_navi_bar.dart';

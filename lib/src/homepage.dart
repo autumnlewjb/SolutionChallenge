@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/login.dart';
+import 'package:return_med/src/login.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -113,7 +113,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                         "INTRO HERE",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       )),
                       SizedBox(
                         height: 150,

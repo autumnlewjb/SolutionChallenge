@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/dashboard/pages/reward.dart';
+import 'package:return_med/src/dashboard/pages/reward.dart';
 
 import 'Pages/main_page.dart';
 import 'Pages/ongoing_return.dart';
@@ -45,7 +45,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -56,7 +55,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -67,7 +65,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Container(
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),

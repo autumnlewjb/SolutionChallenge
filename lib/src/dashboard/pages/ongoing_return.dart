@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Models/return_info.dart';
-import 'package:return_med/Services/database.dart';
+import 'package:return_med/src/Models/return_info.dart';
+import 'package:return_med/src/Services/database.dart';
 
 import 'drawer.dart';
 

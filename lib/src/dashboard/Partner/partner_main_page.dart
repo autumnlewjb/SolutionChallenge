@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:return_med/Dashboard/Pages/history.dart';
 import 'package:flutter/material.dart';
 import 'package:return_med/Dashboard/Pages/profile.dart';
-import 'package:return_med/Services/auth.dart';
+import 'package:return_med/src/Services/auth.dart';
 import 'package:provider/provider.dart';
-
 
 class PMainpage extends StatefulWidget {
   @override
@@ -56,7 +55,6 @@ class _PMainpageState extends State<PMainpage> {
 
   @override
   Widget build(BuildContext context) {
-
     switch (isPressed) {
       case true:
         _icon1YOffSet = -30;
@@ -83,14 +81,13 @@ class _PMainpageState extends State<PMainpage> {
             curve: Curves.bounceOut,
             width: 55,
             height: 55,
-            transform:
-                Matrix4.translationValues(0, _icon1YOffSet, 1),
+            transform: Matrix4.translationValues(0, _icon1YOffSet, 1),
             duration: Duration(milliseconds: 400),
             decoration: BoxDecoration(
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) => new Profile()));
               },
@@ -102,14 +99,13 @@ class _PMainpageState extends State<PMainpage> {
             curve: Curves.bounceOut,
             width: 55,
             height: 55,
-            transform:
-                Matrix4.translationValues(0, _icon2YOffSet, 1),
+            transform: Matrix4.translationValues(0, _icon2YOffSet, 1),
             duration: Duration(milliseconds: 500),
             decoration: BoxDecoration(
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) => new History()));
               },
@@ -121,14 +117,13 @@ class _PMainpageState extends State<PMainpage> {
             curve: Curves.bounceOut,
             width: 55,
             height: 55,
-            transform:
-                Matrix4.translationValues(0, _icon3YOffSet, 1),
+            transform: Matrix4.translationValues(0, _icon3YOffSet, 1),
             duration: Duration(milliseconds: 700),
             decoration: BoxDecoration(
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
-              onPressed: (){
+              onPressed: () {
                 _showMyDialog();
               },
               icon: Icon(Icons.logout),
@@ -156,26 +151,42 @@ class _PMainpageState extends State<PMainpage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
-                onPressed: (){Navigator.pop(context);},
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Partner Name",style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),),
+                  Text(
+                    "Partner Name",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(Icons.location_on_rounded, color: Colors.white70,),
-                      Text("Location",style: TextStyle(color: Colors.white70),),
+                      Icon(
+                        Icons.location_on_rounded,
+                        color: Colors.white70,
+                      ),
+                      Text(
+                        "Location",
+                        style: TextStyle(color: Colors.white70),
+                      ),
                     ],
                   )
                 ],
               ),
-              CircleAvatar(backgroundImage: AssetImage("assets/icon.png"),)
+              CircleAvatar(
+                backgroundImage: AssetImage("assets/icon.png"),
+              )
             ],
           ),
         ),

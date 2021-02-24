@@ -6,9 +6,9 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
 import 'package:return_med/Dashboard/Pages/drawer.dart';
 import 'package:return_med/Dashboard/Partner/partner_main_page.dart';
-import 'package:return_med/Models/user.dart';
-import 'package:return_med/Services/auth.dart';
-import 'package:return_med/Services/database.dart';
+import 'package:return_med/src/Models/user.dart';
+import 'package:return_med/src/Services/auth.dart';
+import 'package:return_med/src/Services/database.dart';
 
 class MainPage extends StatefulWidget {
   @override
