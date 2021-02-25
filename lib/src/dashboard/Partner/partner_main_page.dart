@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:return_med/src/Dashboard/Pages/profile.dart';
 import 'package:return_med/src/Services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:return_med/src/dashboard/pages/main_page.dart';
 
 class PMainpage extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _PMainpageState extends State<PMainpage> {
 
   double _icon3YOffSet = -90;
 
-  bool isPressed = true;
+  bool isPressed = false;
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -84,6 +85,12 @@ class _PMainpageState extends State<PMainpage> {
             transform: Matrix4.translationValues(0, _icon1YOffSet, 1),
             duration: Duration(milliseconds: 400),
             decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.4))
+                ],
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
@@ -102,6 +109,12 @@ class _PMainpageState extends State<PMainpage> {
             transform: Matrix4.translationValues(0, _icon2YOffSet, 1),
             duration: Duration(milliseconds: 500),
             decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.4))
+                ],
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
@@ -120,6 +133,12 @@ class _PMainpageState extends State<PMainpage> {
             transform: Matrix4.translationValues(0, _icon3YOffSet, 1),
             duration: Duration(milliseconds: 700),
             decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.4))
+                ],
                 color: Colors.indigo[600],
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
@@ -136,61 +155,13 @@ class _PMainpageState extends State<PMainpage> {
                 isPressed = !isPressed;
               });
             },
-            elevation: 0.0,
+            elevation: 5,
             child: new Icon(Icons.menu),
             backgroundColor: Colors.deepPurple,
           )
         ],
       ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(left: 10, right: 10),
-          height: 60,
-          color: Colors.deepPurple,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Partner Name",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: Colors.white70,
-                      ),
-                      Text(
-                        "Location",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              CircleAvatar(
-                backgroundImage: AssetImage("assets/icon.png"),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+      appBar: AppBar(),
+      body: MainPage());
   }
 }
