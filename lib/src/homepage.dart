@@ -111,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 4,
                         child: Container(
-                          // padding: EdgeInsets.fromLTRB(0, 200, 0, 0),
                           child: Text(
                             "INTRO HERE",
                             style: TextStyle(
@@ -124,7 +123,6 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -136,9 +134,6 @@ class _HomePageState extends State<HomePage> {
                               });
                             },
                             child: Container(
-                              // margin: EdgeInsets.fromLTRB(5, 30, 5, 30),
-                              // padding: EdgeInsets.all(20),
-                              // width: double.infinity,
                               decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
