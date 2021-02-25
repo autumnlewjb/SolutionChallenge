@@ -66,7 +66,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                   return Text(
                     'Current Point(s): $rewardPoint',
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   );
                 }),
               ],
@@ -107,7 +107,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               highlightColor: Colors.grey[300],
               period: Duration(milliseconds: 1000),
               child:
-                  ListView(physics: NeverScrollableScrollPhysics(), children: [
+              ListView(physics: NeverScrollableScrollPhysics(), children: [
                 Container(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Container(
@@ -151,41 +151,24 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   // list hospitals
-  //Later add a new String parameter for the image
   Widget _orgList(Hospital hospital) {
     return Container(
       padding: EdgeInsets.only(top: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image(
-              image: AssetImage('assets/HSB.jpg'),
-              //later change the parameter accepted inside for different hospitals images
-              fit: BoxFit.fill,
-              height: 250,
+      child: Card(
+        color: Colors.purple[100],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListTile(
+              title: Text('${hospital.name}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),),
+              subtitle: Text('address'),//later add an additional parameter which is address
             ),
-          ),
-          Divider(
-            height: 5,
-            thickness: 2.0,
-            indent: 20.0,
-            endIndent: 20.0,
-          ),
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: Colors.indigo[100]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '${hospital.name}',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.deepPurple, onPrimary: Colors.white),
@@ -198,11 +181,11 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 10.0,
-          )
-        ],
+            SizedBox(
+              height: 10.0,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -243,41 +226,30 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   }
 
   //The widget build for every rewards which are the same
-  //Later add a new String parameter for the image
   Widget _rewardList(AvailableReward reward) {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Image(
-            image: AssetImage("assets/mask.jpg"),
-            //later change the parameter accepted inside for different reward images
-            height: 200,
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  '${reward.title}',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red, onPrimary: Colors.white),
-                  onPressed:
-                      rewardPoint >= reward.cost ? () => press(reward) : null,
-                  child: Text(
-                    'Redeem (${reward.cost})',
-                  ),
-                ),
-              ],
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              '${reward.title}',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
-          ),
-        ],
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.red, onPrimary: Colors.white),
+              onPressed:
+              rewardPoint >= reward.cost ? () => press(reward) : null,
+              child: Text(
+                'Redeem (${reward.cost})',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
