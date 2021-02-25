@@ -25,16 +25,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
+        height: MediaQuery.of(context).size.height * 6 / 10,
         color: Colors.white,
         child: Center(
-          child: Column(
+          child: ListView(
+            padding: EdgeInsets.all(0),
             children: <Widget>[
               Container(
-                child: Text(
-                  "Login",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                ),
+                child: Text("Login",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    textAlign: TextAlign.center),
               ),
               SizedBox(
                 height: 30,

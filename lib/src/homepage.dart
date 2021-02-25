@@ -169,30 +169,38 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
+        WillPopScope(
+          onWillPop: () {
             setState(() {
               _pageState = 0;
               FocusScope.of(context).unfocus();
             });
           },
-          child: AnimatedContainer(
-            curve: Curves.fastLinearToSlowEaseIn,
-            duration: Duration(seconds: 1),
-            transform: Matrix4.translationValues(0, _loginYOffSet, 1),
-            decoration: BoxDecoration(
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                _pageState = 0;
+                FocusScope.of(context).unfocus();
+              });
+            },
+            child: AnimatedContainer(
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(seconds: 1),
+              transform: Matrix4.translationValues(0, _loginYOffSet, 1),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  )),
+              child: Container(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                )),
-            child: Container(
-              color: Colors.white,
-              margin: EdgeInsets.only(top: 30),
-              child: LoginPage(),
+                margin: EdgeInsets.only(top: 30),
+                child: LoginPage(),
+              ),
             ),
           ),
-        )
+        ),
       ]),
     );
   }
