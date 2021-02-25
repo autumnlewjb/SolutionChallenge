@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:return_med/Dashboard/Pages/history.dart';
+import 'package:return_med/src/Dashboard/Pages/history.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/Dashboard/Pages/profile.dart';
+import 'package:return_med/src/Dashboard/Pages/profile.dart';
 import 'package:return_med/src/Services/auth.dart';
 import 'package:provider/provider.dart';
 

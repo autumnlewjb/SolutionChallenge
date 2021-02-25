@@ -77,10 +77,11 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                      ),
+                      // SizedBox(
+                      //   height: 30,
+                      // ),
                       AnimatedContainer(
                         curve: Curves.fastLinearToSlowEaseIn,
                         duration: Duration(seconds: 1),
@@ -94,9 +95,9 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
                       AnimatedContainer(
                           curve: Curves.fastLinearToSlowEaseIn,
                           duration: Duration(seconds: 1),
@@ -106,9 +107,9 @@ class _HomePageState extends State<HomePage> {
                             radius: 50,
                             backgroundImage: AssetImage('assets/icon.png'),
                           )),
-                      SizedBox(
-                        height: 200,
-                      ),
+                      // SizedBox(
+                      //   height: 200,
+                      // ),
                       Container(
                           child: Text(
                         "INTRO HERE",
@@ -117,9 +118,9 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       )),
-                      SizedBox(
-                        height: 150,
-                      ),
+                      // SizedBox(
+                      //   height: 150,
+                      // ),
                       Container(
                         child: GestureDetector(
                           onTap: () {

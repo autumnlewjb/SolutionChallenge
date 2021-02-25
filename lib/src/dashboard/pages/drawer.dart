@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Dashboard/Pages/claimed_reward.dart';
-import 'package:return_med/Dashboard/Pages/history.dart';
+import 'package:return_med/src/Dashboard/Pages/claimed_reward.dart';
+import 'package:return_med/src/Dashboard/Pages/history.dart';
 import 'package:return_med/src/Models/user.dart';
 
 import '../../Services/auth.dart';
