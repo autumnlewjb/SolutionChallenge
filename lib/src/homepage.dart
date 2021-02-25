@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/login.dart';
+import 'package:return_med/src/login.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -77,11 +77,10 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                      ),
                       AnimatedContainer(
+                        padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                         curve: Curves.fastLinearToSlowEaseIn,
                         duration: Duration(seconds: 1),
                         transform: Matrix4.translationValues(
@@ -94,10 +93,11 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      AnimatedContainer(
+                      Expanded(
+                        flex: 3,
+                        child: AnimatedContainer(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                           curve: Curves.fastLinearToSlowEaseIn,
                           duration: Duration(seconds: 1),
                           transform: Matrix4.translationValues(
@@ -105,55 +105,63 @@ class _HomePageState extends State<HomePage> {
                           child: CircleAvatar(
                             radius: 50,
                             backgroundImage: AssetImage('assets/icon.png'),
-                          )),
-                      SizedBox(
-                        height: 200,
+                          ),
+                        ),
                       ),
-                      Container(
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          // padding: EdgeInsets.fromLTRB(0, 200, 0, 0),
                           child: Text(
-                        "INTRO HERE",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                      )),
-                      SizedBox(
-                        height: 150,
-                      ),
-                      Container(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (_pageState == 1) {
-                                _pageState = 0;
-                              } else {
-                                _pageState = 1;
-                              }
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(20),
-                            padding: EdgeInsets.all(20),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: Offset(0, 5),
-                                      blurRadius: 50,
-                                      color: Colors.black.withOpacity(0.4))
-                                ],
-                                borderRadius: BorderRadius.circular(30),
+                            "INTRO HERE",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white),
-                            child: Center(
-                              child: Text(
-                                'Get started',
-                                style: TextStyle(
-                                    color: Colors.deepPurple,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (_pageState == 1) {
+                                  _pageState = 0;
+                                } else {
+                                  _pageState = 1;
+                                }
+                              });
+                            },
+                            child: Container(
+                              // margin: EdgeInsets.fromLTRB(5, 30, 5, 30),
+                              // padding: EdgeInsets.all(20),
+                              // width: double.infinity,
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0, 5),
+                                        blurRadius: 50,
+                                        color: Colors.black.withOpacity(0.4))
+                                  ],
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Get started',
+                                  style: TextStyle(
+                                      color: Colors.deepPurple,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      )
+                      ),
+                      Expanded(flex: 1, child: Container()),
                     ],
                   ),
                 ),

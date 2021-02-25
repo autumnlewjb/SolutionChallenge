@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/Models/return_info.dart';
-import 'package:return_med/Services/database.dart';
+import 'package:return_med/src/Models/return_info.dart';
+import 'package:return_med/src/Services/database.dart';
 
 class WidgetModel {
   Card schReturnTile(
@@ -122,13 +122,15 @@ class WidgetModel {
                     style: TextStyle(
                       color: _getColor(info.status),
                     )),
-                Icon(Icons.arrow_drop_down, size: 18,)
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 18,
+                )
               ],
             )));
   }
 
   bool isSelected = false;
-
 
   Color _getColor(String text) {
     if (text == 'Pending') {

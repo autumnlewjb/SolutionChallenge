@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/Services/database.dart';
+import 'package:return_med/src/Services/database.dart';
 
-import 'Models/user.dart';
-import 'Services/auth.dart';
+import '../src/Models/user.dart';
+import '../src/Services/auth.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -245,7 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Container(
                     padding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1),
                       borderRadius: BorderRadius.circular(10),

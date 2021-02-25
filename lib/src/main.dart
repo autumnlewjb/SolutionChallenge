@@ -3,12 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/homepage.dart';
-import 'package:return_med/login.dart';
-import 'package:return_med/sign_up.dart';
+import 'package:return_med/src/homepage.dart';
+import 'package:return_med/src/login.dart';
+import 'package:return_med/src/sign_up.dart';
 
-import 'Dashboard/dashboard.dart';
-import 'Services/auth.dart';
+import '../src/Dashboard/dashboard.dart';
+import '../src/Services/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
