@@ -35,6 +35,7 @@ void main() {
       await tester.pump();
 
       expect(find.text("Login").first, findsOneWidget);
+      expect(find.byType(ElevatedButton).first, findsOneWidget);
     });
   });
 }
