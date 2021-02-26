@@ -10,10 +10,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  double width;
+  double height;
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,249 +54,246 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Consumer<AppUser>(
-                      builder: (_, user, __) {
-                        return CircleAvatar(
-                            radius: 52,
-                            backgroundImage: user.photoUrl.isEmpty
-                                ? AssetImage("assets/icon.png")
-                                : NetworkImage(user.photoUrl));
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(40),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 50,
-                              color: Colors.grey.withOpacity(0.5))
-                        ]),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.perm_identity_rounded),
-                              SizedBox(
-                                width: width * 0.03,
-                              ),
-                              Consumer<AppUser>(builder: (_, user, __) {
-                                return Text(
-                                  user.username,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                );
-                              }),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.card_giftcard_rounded),
-                              SizedBox(
-                                width: width * 0.03,
-                              ),
-                              Consumer<AppUser>(builder: (_, user, __) {
-                                return Text(
-                                  'Point(s): ${user.rewardPoint}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                );
-                              }),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 5),
-                            blurRadius: 50,
-                            color: Colors.grey.withOpacity(0.5))
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.people,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: width * 0.075,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "FIRST NAME",
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 14),
-                                  ),
-                                  Consumer<AppUser>(builder: (_, user, __) {
-                                    return Text(
-                                      user.firstName,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    );
-                                  }),
-                                ],
-                              ),
-                              SizedBox(
-                                width: width * 0.1,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "LAST NAME",
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 14),
-                                  ),
-                                  Consumer<AppUser>(builder: (_, user, __) {
-                                    return Text(
-                                      user.lastName,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
-                        Container(
-                            child: Row(
-                          children: [
-                            Icon(
-                              Icons.email_rounded,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: width * 0.075,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "EMAIL ADDRESS",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                                Consumer<AppUser>(builder: (_, user, __) {
-                                  return Text(
-                                    user.email,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }),
-                              ],
-                            ),
-                          ],
-                        )),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
-                        Container(
-                            child: Row(
-                          children: [
-                            Icon(
-                              Icons.house_rounded,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: width * 0.075,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "ADDRESS",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                                Consumer<AppUser>(builder: (_, user, __) {
-                                  return Text(
-                                    "${user.address1}\n${user.address2}\n${user.postcode} ${user.state}",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }),
-                              ],
-                            ),
-                          ],
-                        )),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
-                        Center(
-                          child: SizedBox(
-                            height: 40,
-                            width: double.infinity,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(
-                                    color: Colors.deepPurple, width: 1),
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                              ),
-                              onPressed: () {
-                                _showModalBottomSheet(context);
-                              },
-                              child: Text(
-                                'Update Information',
-                                style: TextStyle(
-                                    color: Colors.deepPurple,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                _profilePic(),
+                _usernameAndPoints(),
+                _profileInfo(),
+              ],
+            ),
+          ),
         ]),
       ),
     );
   }
 
-  _showModalBottomSheet(context) {
+  Widget _profilePic() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Consumer<AppUser>(
+        builder: (_, user, __) {
+          return CircleAvatar(
+              radius: 52,
+              backgroundImage: user.photoUrl.isEmpty
+                  ? AssetImage("assets/icon.png")
+                  : NetworkImage(user.photoUrl));
+        },
+      ),
+    );
+  }
+
+  Widget _profileInfo() {
+    return Container(
+      margin: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 5),
+              blurRadius: 50,
+              color: Colors.grey.withOpacity(0.5))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.people,
+                size: 20,
+              ),
+              SizedBox(
+                width: width * 0.075,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "FIRST NAME",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  Consumer<AppUser>(builder: (_, user, __) {
+                    return Text(
+                      user.firstName,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    );
+                  }),
+                ],
+              ),
+              SizedBox(
+                width: width * 0.1,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "LAST NAME",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  Consumer<AppUser>(builder: (_, user, __) {
+                    return Text(
+                      user.lastName,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    );
+                  }),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: height * 0.05,
+          ),
+          Row(
+            children: [
+              Icon(
+                Icons.email_rounded,
+                size: 20,
+              ),
+              SizedBox(
+                width: width * 0.075,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "EMAIL ADDRESS",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  Consumer<AppUser>(builder: (_, user, __) {
+                    return Text(
+                      user.email,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    );
+                  }),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: height * 0.05,
+          ),
+          Row(
+            children: [
+              Icon(
+                Icons.house_rounded,
+                size: 20,
+              ),
+              SizedBox(
+                width: width * 0.075,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "ADDRESS",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  Consumer<AppUser>(builder: (_, user, __) {
+                    return Text(
+                      "${user.address1}\n${user.address2}\n${user.postcode} ${user.state}",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    );
+                  }),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: height * 0.05,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.deepPurple, width: 1),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+              ),
+              onPressed: () {
+                _showModalBottomSheet(context);
+              },
+              child: Text(
+                'Update Information',
+                style: TextStyle(
+                    color: Colors.deepPurple,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _usernameAndPoints() {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(top: 20, bottom: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40),
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 5),
+              blurRadius: 50,
+              color: Colors.grey.withOpacity(0.5))
+        ],
+      ),
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.perm_identity_rounded),
+                SizedBox(
+                  width: width * 0.03,
+                ),
+                Consumer<AppUser>(builder: (_, user, __) {
+                  return Text(
+                    user.username,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  );
+                }),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.card_giftcard_rounded),
+                SizedBox(
+                  width: width * 0.03,
+                ),
+                Consumer<AppUser>(
+                  builder: (_, user, __) {
+                    return Text(
+                      'Point(s): ${user.rewardPoint}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showModalBottomSheet(context) {
     final firstNameCtrl = TextEditingController();
     final lastNameCtrl = TextEditingController();
     final address1Ctrl = TextEditingController();
