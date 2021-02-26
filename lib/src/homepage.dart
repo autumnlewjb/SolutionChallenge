@@ -77,8 +77,9 @@ class _HomePageState extends State<HomePage> {
                           child: _animatedWidget),
                     ),
                     Expanded(
-                      flex: 4,
+                      flex: 6,
                       child: Container(
+                        padding: EdgeInsets.only(top: 10),
                         child: Text(
                           message,
                           textAlign: TextAlign.center,
