@@ -57,6 +57,14 @@ class _HomePageState extends State<HomePage> {
         _iconXOffSet = _windowWidth * 2.25 / 10;
         _iconYOffSet = -_windowHeight * 0.4 / 10;
         break;
+      case 2:
+        _headingColor = Colors.white;
+        _loginYOffSet = 0;
+        _titleXOffSet = 0;
+        _titleYOffSet = 0;
+        _iconXOffSet = 0;
+        _iconYOffSet = 0;
+        break;
     }
 
     return Scaffold(
@@ -178,6 +186,19 @@ class _HomePageState extends State<HomePage> {
                 FocusScope.of(context).unfocus();
               });
             },
+            onVerticalDragUpdate: (details) {
+              print(details.delta.dy);
+              if (details.delta.dy < 0 && _loginYOffSet > 0) {
+                setState(() {
+                  _pageState = 2;
+                  _loginYOffSet = 0;
+                });
+              } else if (details.delta.dy > 0 && _loginYOffSet == 0) {
+                setState(() {
+                  _pageState = 1;
+                });
+              }
+            },
             child: AnimatedContainer(
               curve: Curves.fastLinearToSlowEaseIn,
               duration: Duration(seconds: 1),
@@ -189,9 +210,9 @@ class _HomePageState extends State<HomePage> {
                     topRight: Radius.circular(30),
                   )),
               child: Container(
-                color: Colors.white,
-                margin: EdgeInsets.only(top: 30),
-                child: LoginPage(),
+                child: SafeArea(
+                  child: LoginPage(),
+                ),
               ),
             ),
           ),
