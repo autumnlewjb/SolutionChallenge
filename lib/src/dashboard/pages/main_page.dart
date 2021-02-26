@@ -151,120 +151,126 @@ class _MainPageState extends State<MainPage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.transparent,
-                                child: Icon(
-                                  Icons.timer,
-                                  size: 50,
-                                  color: Colors.black,
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                                child: Column(
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Step 1",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  width: 110,
-                                  child: Center(
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.timer,
+                                    size: 50,
+                                    color: Colors.black,
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Center(
                                     child: Text(
-                                      "Click the second icon below",
-                                      textAlign: TextAlign.center,
+                                      "Step 1",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                          ],
+                                  Container(
+                                    width: 110,
+                                    child: Center(
+                                      child: Text(
+                                        "Click the second icon below",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.transparent,
-                                child: Icon(
-                                  Icons.assignment_rounded,
-                                  size: 50,
-                                  color: Colors.black,
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                                child: Column(
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Step 2",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  width: 110,
-                                  child: Center(
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.assignment_rounded,
+                                    size: 50,
+                                    color: Colors.black,
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Center(
                                     child: Text(
-                                      "Fill in the details on the page",
-                                      textAlign: TextAlign.center,
+                                      "Step 2",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                          ],
+                                  Container(
+                                    width: 110,
+                                    child: Center(
+                                      child: Text(
+                                        "Fill in the details on the page",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.transparent,
-                                child: Icon(
-                                  Icons.assignment_turned_in_rounded,
-                                  size: 50,
-                                  color: Colors.black,
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                                child: Column(
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Step 3",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  width: 110,
-                                  child: Center(
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.assignment_turned_in_rounded,
+                                    size: 50,
+                                    color: Colors.black,
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Center(
                                     child: Text(
-                                      "Wait for the good news!",
-                                      textAlign: TextAlign.center,
+                                      "Step 3",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ))
-                          ],
+                                  Container(
+                                    width: 110,
+                                    child: Center(
+                                      child: Text(
+                                        "Wait for the good news!",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
