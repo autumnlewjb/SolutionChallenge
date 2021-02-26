@@ -30,6 +30,8 @@ class _HomePageState extends State<HomePage> {
     _windowHeight = MediaQuery.of(context).size.height;
     _windowWidth = MediaQuery.of(context).size.width;
 
+    var _animatedWidget;
+
     switch (_pageState) {
       case 0:
         _loginYOffSet = _windowHeight;
@@ -43,6 +45,7 @@ class _HomePageState extends State<HomePage> {
           Colors.deepPurple[600]
         ];
         _headingColor = Colors.white;
+        _animatedWidget = _columnFormat();
         break;
       case 1:
         _backgroundColor = [
@@ -56,6 +59,7 @@ class _HomePageState extends State<HomePage> {
         _titleYOffSet = _windowHeight * 0.7 / 10;
         _iconXOffSet = _windowWidth * 2.25 / 10;
         _iconYOffSet = -_windowHeight * 0.4 / 10;
+        _animatedWidget = _rowFormat();
         break;
       case 2:
         _headingColor = Colors.white;
@@ -87,33 +91,19 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      AnimatedContainer(
-                        padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        duration: Duration(seconds: 1),
-                        transform: Matrix4.translationValues(
-                            _titleXOffSet, _titleYOffSet, 1),
-                        child: Text(
-                          'Return Med',
-                          style: TextStyle(
-                              color: _headingColor,
-                              fontSize: 27,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
                       Expanded(
                         flex: 3,
-                        child: AnimatedContainer(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          curve: Curves.fastLinearToSlowEaseIn,
-                          duration: Duration(seconds: 1),
-                          transform: Matrix4.translationValues(
-                              _iconXOffSet, _iconYOffSet, 1),
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundImage: AssetImage('assets/icon.png'),
-                          ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: AnimatedSwitcher(
+                              switchInCurve: Curves.easeInToLinear,
+                              switchOutCurve: Curves.easeInToLinear,
+                              duration: Duration(milliseconds: 500),
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) =>
+                                      ScaleTransition(
+                                          child: child, scale: animation),
+                              child: _animatedWidget),
                         ),
                       ),
                       Expanded(
@@ -240,6 +230,65 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ]),
+    );
+  }
+
+  Widget _columnFormat() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+          // transform: Matrix4.translationValues(_titleXOffSet, _titleYOffSet, 1),
+          child: Text(
+            'Return Med',
+            style: TextStyle(
+                color: _headingColor,
+                fontSize: 27,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            alignment: Alignment.topCenter,
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            // transform: Matrix4.translationValues(_iconXOffSet, _iconYOffSet, 1),
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/icon.png'),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _rowFormat() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            child: Text(
+              'Return Med',
+              style: TextStyle(
+                  color: _headingColor,
+                  fontSize: 27,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/icon.png'),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
