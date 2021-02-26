@@ -187,7 +187,6 @@ class _HomePageState extends State<HomePage> {
               });
             },
             onVerticalDragUpdate: (details) {
-              print(details.delta.dy);
               if (details.delta.dy < 0 && _loginYOffSet > 0) {
                 setState(() {
                   _pageState = 2;
@@ -202,6 +201,7 @@ class _HomePageState extends State<HomePage> {
             child: AnimatedContainer(
               curve: Curves.fastLinearToSlowEaseIn,
               duration: Duration(seconds: 1),
+              // padding: EdgeInsets.only(top: 20.0),
               transform: Matrix4.translationValues(0, _loginYOffSet, 1),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -209,10 +209,32 @@ class _HomePageState extends State<HomePage> {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   )),
-              child: Container(
-                child: SafeArea(
-                  child: LoginPage(),
-                ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.swap_vert_circle_rounded),
+                        Container(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text(
+                            _pageState == 1
+                                ? "Swipe Up for Full View"
+                                : "Swipe Down for Better View",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: SafeArea(
+                      child: LoginPage(),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
