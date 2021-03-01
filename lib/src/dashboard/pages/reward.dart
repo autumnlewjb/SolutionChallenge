@@ -6,6 +6,7 @@ import 'package:return_med/src/Models/available_reward.dart';
 import 'package:return_med/src/Models/hospital.dart';
 import 'package:return_med/src/Models/user.dart';
 import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/dashboard/pages/drawer.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Reward extends StatefulWidget {
@@ -33,7 +34,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      drawer: Drawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         elevation: 10,
         centerTitle: true,
