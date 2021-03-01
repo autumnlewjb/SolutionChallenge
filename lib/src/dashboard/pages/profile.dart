@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,11 +74,18 @@ class _ProfileState extends State<Profile> {
       padding: EdgeInsets.all(10),
       child: Consumer<AppUser>(
         builder: (_, user, __) {
-          return CircleAvatar(
-              radius: 52,
-              backgroundImage: user.photoUrl.isEmpty
-                  ? AssetImage("assets/icon.png")
-                  : NetworkImage(user.photoUrl));
+          return CachedNetworkImage(
+            imageUrl: user.photoUrl,
+            placeholder: (context, builder) => CircularProgressIndicator(),
+            imageBuilder: (context, imageProvider) => CircleAvatar(
+              radius: 45,
+              backgroundImage: imageProvider,
+            ),
+            errorWidget: (context, url, error) => CircleAvatar(
+              radius: 45,
+              backgroundImage: AssetImage("assets/icon.png"),
+            ),
+          );
         },
       ),
     );

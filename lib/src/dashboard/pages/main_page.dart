@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Dashboard/Pages/drawer.dart';
 import 'package:return_med/src/Dashboard/Partner/partner_main_page.dart';
 import 'package:return_med/src/Models/user.dart';
 import 'package:return_med/src/Services/auth.dart';
 import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/dashboard/pages/drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage>
     super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      drawer: drawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.deepPurple,

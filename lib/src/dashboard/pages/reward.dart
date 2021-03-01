@@ -8,8 +8,6 @@ import 'package:return_med/src/Models/user.dart';
 import 'package:return_med/src/Services/database.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'drawer.dart';
-
 class Reward extends StatefulWidget {
   @override
   _RewardState createState() => _RewardState();
@@ -35,7 +33,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      drawer: drawer(),
+      drawer: Drawer(),
       appBar: AppBar(
         elevation: 10,
         centerTitle: true,
@@ -66,7 +64,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                   return Text(
                     'Current Point(s): $rewardPoint',
                     style:
-                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   );
                 }),
               ],
@@ -107,7 +105,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               highlightColor: Colors.grey[300],
               period: Duration(milliseconds: 1000),
               child:
-              ListView(physics: NeverScrollableScrollPhysics(), children: [
+                  ListView(physics: NeverScrollableScrollPhysics(), children: [
                 Container(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Container(
@@ -156,15 +154,18 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
       padding: EdgeInsets.only(top: 20.0),
       child: Card(
         color: Colors.purple[100],
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0)
-        ),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ListTile(
-              title: Text('${hospital.name}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),),
-              subtitle: Text('address'),//later add an additional parameter which is address
+              title: Text(
+                '${hospital.name}',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              ),
+              subtitle: Text(
+                  'address'), //later add an additional parameter which is address
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -243,7 +244,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               style: ElevatedButton.styleFrom(
                   primary: Colors.red, onPrimary: Colors.white),
               onPressed:
-              rewardPoint >= reward.cost ? () => press(reward) : null,
+                  rewardPoint >= reward.cost ? () => press(reward) : null,
               child: Text(
                 'Redeem (${reward.cost})',
               ),
