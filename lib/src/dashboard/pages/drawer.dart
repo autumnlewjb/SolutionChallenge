@@ -23,6 +23,7 @@ class _AppDrawerState extends State<AppDrawer> {
         return AlertDialog(
           title: Text('Logout'),
           content: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: ListBody(
               children: <Widget>[
                 Text('Do you want to log out?'),

@@ -45,6 +45,7 @@ class ClaimedReward extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: rewardList.length,
                   itemBuilder: (context, index) {
                     UserReward reward = rewardList[index];

@@ -104,8 +104,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
               baseColor: Colors.grey[200],
               highlightColor: Colors.grey[300],
               period: Duration(milliseconds: 1000),
-              child:
-                  ListView(physics: NeverScrollableScrollPhysics(), children: [
+              child: ListView(physics: BouncingScrollPhysics(), children: [
                 Container(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Container(
@@ -138,6 +137,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             return Text('No hospital is offering rewards');
           }
           return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: hospitalList.length,
               itemBuilder: (context, i) {
                 return _orgList(hospitalList[i]);
@@ -213,6 +213,7 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
                           return Text('No available rewards');
                         }
                         return ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           padding: EdgeInsets.all(20.0),
                           itemCount: rewardList.length,
                           itemBuilder: (context, index) {

@@ -97,6 +97,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     SizedBox(
