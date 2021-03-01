@@ -29,10 +29,10 @@ class _MainPageState extends State<MainPage>
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: AppDrawer(),
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.deepPurple,
-      // ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.deepPurple,
+      ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
           overscroll.disallowGlow();
@@ -40,16 +40,17 @@ class _MainPageState extends State<MainPage>
         child: CustomScrollView(
           physics: ClampingScrollPhysics(),
           slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.deepPurple,
-              pinned: true,
-              stretch: false,
-              expandedHeight: MediaQuery.of(context).size.height / 5,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text('Welcome to Return Med'),
-                centerTitle: true,
-              ),
-            ),
+            // SliverAppBar(
+            //   elevation: 0,
+            //   backgroundColor: Colors.deepPurple,
+            //   pinned: true,
+            //   stretch: false,
+            //   expandedHeight: MediaQuery.of(context).size.height / 5,
+            //   flexibleSpace: FlexibleSpaceBar(
+            //     title: Text('Welcome to Return Med'),
+            //     centerTitle: true,
+            //   ),
+            // ),
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.all(20),
@@ -72,20 +73,20 @@ class _MainPageState extends State<MainPage>
                 ),
                 child: Column(
                   children: <Widget>[
-                    // Container(
-                    //   child: Center(
-                    //     child: Text(
-                    //       'Welcome to Return Med',
-                    //       style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 25,
-                    //           fontWeight: FontWeight.bold),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: screenHeight * 0.03,
-                    // ),
+                    Container(
+                      child: Center(
+                        child: Text(
+                          'Welcome to Return Med',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.03,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
