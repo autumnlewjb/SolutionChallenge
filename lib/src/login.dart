@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              key: new ValueKey("email-field"),
                               controller: email,
                               validator: (val) =>
                                   val.isEmpty ? 'Enter an email' : null,
@@ -70,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                                 valueListenable: isObscure,
                                 builder: (context, bool value, child) {
                                   return TextFormField(
+                                    key: new ValueKey("password-field"),
                                     controller: password,
                                     validator: (val) =>
                                         val.isEmpty ? 'Enter a password' : null,
