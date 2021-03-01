@@ -16,7 +16,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      drawer: drawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,

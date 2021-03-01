@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +9,12 @@ import 'package:return_med/src/Models/user.dart';
 import '../../Services/auth.dart';
 import 'profile.dart';
 
-class drawer extends StatefulWidget {
+class AppDrawer extends StatefulWidget {
   @override
-  _drawerState createState() => _drawerState();
+  _AppDrawerState createState() => _AppDrawerState();
 }
 
-class _drawerState extends State<drawer> {
+class _AppDrawerState extends State<AppDrawer> {
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -63,11 +64,20 @@ class _drawerState extends State<drawer> {
                     print(user.photoUrl);
                     return Column(
                       children: [
-                        CircleAvatar(
+                        CachedNetworkImage(
+                          imageUrl: user.photoUrl,
+                          placeholder: (context, builder) =>
+                              CircularProgressIndicator(),
+                          imageBuilder: (context, imageProvider) =>
+                              CircleAvatar(
                             radius: 45,
-                            backgroundImage: user.photoUrl.isEmpty
-                                ? AssetImage("assets/icon.png")
-                                : NetworkImage(user.photoUrl)),
+                            backgroundImage: imageProvider,
+                          ),
+                          errorWidget: (context, url, error) => CircleAvatar(
+                            radius: 45,
+                            backgroundImage: AssetImage("assets/icon.png"),
+                          ),
+                        )
                       ],
                     );
                   }),

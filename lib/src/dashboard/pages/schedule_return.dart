@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Dashboard/Pages/drawer.dart';
 import 'package:return_med/src/Models/return_info.dart';
 import 'package:return_med/src/Models/user.dart';
 import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/dashboard/pages/drawer.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override
@@ -76,7 +76,7 @@ class _ScheduleReturnState extends State<ScheduleReturn>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        drawer: drawer(),
+        drawer: AppDrawer(),
         appBar: AppBar(
             centerTitle: true,
             elevation: 10,
