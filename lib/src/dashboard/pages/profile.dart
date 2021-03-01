@@ -29,43 +29,48 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.deepPurple[300],
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Stack(children: [
-          Container(
-            width: width,
-            height: height * 0.3 - 50,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.deepPurple[300],
-                Colors.deepPurple[400],
-                Colors.deepPurple,
-                Colors.deepPurple[600]
-              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 5),
-                    blurRadius: 50,
-                    color: Colors.grey.withOpacity(0.5))
-              ],
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40),
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (overscroll) {
+          overscroll.disallowGlow();
+        },
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Stack(children: [
+            Container(
+              width: width,
+              height: height * 0.3 - 50,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Colors.deepPurple[300],
+                  Colors.deepPurple[400],
+                  Colors.deepPurple,
+                  Colors.deepPurple[600]
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.5))
+                ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
+                ),
               ),
             ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                _profilePic(),
-                _usernameAndPoints(),
-                _profileInfo(),
-              ],
+            Container(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  _profilePic(),
+                  _usernameAndPoints(),
+                  _profileInfo(),
+                ],
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
