@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage>
         backgroundColor: Colors.deepPurple,
       ),
       body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Container(

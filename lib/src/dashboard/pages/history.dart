@@ -41,6 +41,7 @@ class History extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     itemCount: returnList.length,
                     itemBuilder: (_, index) {
                       ReturnInfo info = returnList[index];

@@ -72,6 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Container(
           padding: EdgeInsets.all(30),
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Form(
               key: _formKey,
               child: Column(

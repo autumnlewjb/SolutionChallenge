@@ -48,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Form(
                       key: _formKey,
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
                         child: Column(
                           children: <Widget>[

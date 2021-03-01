@@ -30,6 +30,7 @@ class _ProfileState extends State<Profile> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Stack(children: [
           Container(
             width: width,

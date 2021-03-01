@@ -28,6 +28,7 @@ class _PMainpageState extends State<PMainpage> {
         return AlertDialog(
           title: Text('Logout'),
           content: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: ListBody(
               children: <Widget>[
                 Text('Do you want to log out?'),
@@ -75,93 +76,97 @@ class _PMainpageState extends State<PMainpage> {
     }
 
     return Scaffold(
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          AnimatedContainer(
-            curve: Curves.bounceOut,
-            width: 55,
-            height: 55,
-            transform: Matrix4.translationValues(0, _icon1YOffSet, 1),
-            duration: Duration(milliseconds: 400),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 5),
-                      blurRadius: 50,
-                      color: Colors.grey.withOpacity(0.4))
-                ],
-                color: Colors.indigo[600],
-                borderRadius: BorderRadius.circular(50)),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new Profile()));
-              },
-              icon: Icon(Icons.people),
-              color: Colors.white,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AnimatedContainer(
+              curve: Curves.bounceOut,
+              width: 55,
+              height: 55,
+              transform: Matrix4.translationValues(0, _icon1YOffSet, 1),
+              duration: Duration(milliseconds: 400),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 5),
+                        blurRadius: 50,
+                        color: Colors.grey.withOpacity(0.4))
+                  ],
+                  color: Colors.indigo[600],
+                  borderRadius: BorderRadius.circular(50)),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Profile()));
+                },
+                icon: Icon(Icons.people),
+                color: Colors.white,
+              ),
             ),
-          ),
-          AnimatedContainer(
-            curve: Curves.bounceOut,
-            width: 55,
-            height: 55,
-            transform: Matrix4.translationValues(0, _icon2YOffSet, 1),
-            duration: Duration(milliseconds: 500),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 5),
-                      blurRadius: 50,
-                      color: Colors.grey.withOpacity(0.4))
-                ],
-                color: Colors.indigo[600],
-                borderRadius: BorderRadius.circular(50)),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new History()));
-              },
-              icon: Icon(Icons.history),
-              color: Colors.white,
+            AnimatedContainer(
+              curve: Curves.bounceOut,
+              width: 55,
+              height: 55,
+              transform: Matrix4.translationValues(0, _icon2YOffSet, 1),
+              duration: Duration(milliseconds: 500),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 5),
+                        blurRadius: 50,
+                        color: Colors.grey.withOpacity(0.4))
+                  ],
+                  color: Colors.indigo[600],
+                  borderRadius: BorderRadius.circular(50)),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new History()));
+                },
+                icon: Icon(Icons.history),
+                color: Colors.white,
+              ),
             ),
-          ),
-          AnimatedContainer(
-            curve: Curves.bounceOut,
-            width: 55,
-            height: 55,
-            transform: Matrix4.translationValues(0, _icon3YOffSet, 1),
-            duration: Duration(milliseconds: 700),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 5),
-                      blurRadius: 50,
-                      color: Colors.grey.withOpacity(0.4))
-                ],
-                color: Colors.indigo[600],
-                borderRadius: BorderRadius.circular(50)),
-            child: IconButton(
-              onPressed: () {
-                _showMyDialog();
-              },
-              icon: Icon(Icons.logout),
-              color: Colors.white,
+            AnimatedContainer(
+              curve: Curves.bounceOut,
+              width: 55,
+              height: 55,
+              transform: Matrix4.translationValues(0, _icon3YOffSet, 1),
+              duration: Duration(milliseconds: 700),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 5),
+                        blurRadius: 50,
+                        color: Colors.grey.withOpacity(0.4))
+                  ],
+                  color: Colors.indigo[600],
+                  borderRadius: BorderRadius.circular(50)),
+              child: IconButton(
+                onPressed: () {
+                  _showMyDialog();
+                },
+                icon: Icon(Icons.logout),
+                color: Colors.white,
+              ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                isPressed = !isPressed;
-              });
-            },
-            elevation: 5,
-            child: new Icon(Icons.menu),
-            backgroundColor: Colors.deepPurple,
-          )
-        ],
-      ),
-      appBar: AppBar(),
-      body: MainPage());
+            FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  isPressed = !isPressed;
+                });
+              },
+              elevation: 5,
+              child: new Icon(Icons.menu),
+              backgroundColor: Colors.deepPurple,
+            )
+          ],
+        ),
+        appBar: AppBar(),
+        body: MainPage());
   }
 }

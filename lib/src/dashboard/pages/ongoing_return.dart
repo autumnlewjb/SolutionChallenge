@@ -53,6 +53,7 @@ class _OngoingState extends State<Ongoing> with AutomaticKeepAliveClientMixin {
               );
             }
             return ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: returnList.length,
                 itemBuilder: (_, index) {
                   ReturnInfo info = returnList[index];
