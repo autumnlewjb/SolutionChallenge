@@ -166,7 +166,7 @@ class _PMainpageState extends State<PMainpage> {
             )
           ],
         ),
-        appBar: AppBar(),
+        // appBar: AppBar(),
         body: MainPage());
   }
 }
