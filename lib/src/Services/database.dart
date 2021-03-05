@@ -4,12 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:return_med/src/Models/available_reward.dart';
-import 'package:return_med/src/Models/user_reward.dart';
+import 'package:return_med/src/models/available_reward.dart';
+import 'package:return_med/src/models/user_reward.dart';
 
-import '../Models/hospital.dart';
-import '../Models/return_info.dart';
-import '../Models/user.dart';
+import '../models/hospital.dart';
+import '../models/return_info.dart';
+import '../models/user.dart';
 
 class Database {
   /*

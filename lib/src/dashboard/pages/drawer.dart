@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Dashboard/Pages/claimed_reward.dart';
-import 'package:return_med/src/Dashboard/Pages/history.dart';
-import 'package:return_med/src/Models/user.dart';
+import 'package:return_med/src/dashboard/pages/claimed_reward.dart';
+import 'package:return_med/src/dashboard/pages/history.dart';
+import 'package:return_med/src/models/user.dart';
 
 import '../../Services/auth.dart';
 import 'profile.dart';

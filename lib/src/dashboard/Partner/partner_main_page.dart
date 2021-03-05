@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:return_med/src/Dashboard/Pages/history.dart';
+import 'package:return_med/src/dashboard/pages/history.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/src/Dashboard/Pages/profile.dart';
-import 'package:return_med/src/Services/auth.dart';
+import 'package:return_med/src/dashboard/pages/profile.dart';
+import 'package:return_med/src/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:return_med/src/dashboard/pages/main_page.dart';
 
@@ -166,7 +166,6 @@ class _PMainpageState extends State<PMainpage> {
             )
           ],
         ),
-        // appBar: AppBar(),
         body: MainPage());
   }
 }

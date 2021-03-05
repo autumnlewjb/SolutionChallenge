@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Dashboard/Partner/partner_main_page.dart';
-import 'package:return_med/src/Models/user.dart';
-import 'package:return_med/src/Services/auth.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/dashboard/partner/partner_main_page.dart';
+import 'package:return_med/src/models/user.dart';
+import 'package:return_med/src/services/auth.dart';
+import 'package:return_med/src/services/database.dart';
 import 'package:return_med/src/dashboard/pages/drawer.dart';
 
 class MainPage extends StatefulWidget {
@@ -40,17 +40,6 @@ class _MainPageState extends State<MainPage>
         child: CustomScrollView(
           physics: ClampingScrollPhysics(),
           slivers: <Widget>[
-            // SliverAppBar(
-            //   elevation: 0,
-            //   backgroundColor: Colors.deepPurple,
-            //   pinned: true,
-            //   stretch: false,
-            //   expandedHeight: MediaQuery.of(context).size.height / 5,
-            //   flexibleSpace: FlexibleSpaceBar(
-            //     title: Text('Welcome to Return Med'),
-            //     centerTitle: true,
-            //   ),
-            // ),
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.all(20),

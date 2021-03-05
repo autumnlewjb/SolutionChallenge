@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Models/user.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/models/user.dart';
+import 'package:return_med/src/services/database.dart';
 
 class Profile extends StatefulWidget {
   @override

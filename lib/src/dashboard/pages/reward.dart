@@ -2,10 +2,10 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Models/available_reward.dart';
-import 'package:return_med/src/Models/hospital.dart';
-import 'package:return_med/src/Models/user.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/models/available_reward.dart';
+import 'package:return_med/src/models/hospital.dart';
+import 'package:return_med/src/models/user.dart';
+import 'package:return_med/src/services/database.dart';
 import 'package:return_med/src/dashboard/pages/drawer.dart';
 import 'package:shimmer/shimmer.dart';
 

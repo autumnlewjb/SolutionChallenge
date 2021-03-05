@@ -7,8 +7,8 @@ import 'package:return_med/src/homepage.dart';
 import 'package:return_med/src/login.dart';
 import 'package:return_med/src/sign_up.dart';
 
-import 'Dashboard/dashboard.dart';
-import 'Services/auth.dart';
+import 'dashboard/dashboard.dart';
+import 'services/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

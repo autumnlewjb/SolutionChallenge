@@ -4,7 +4,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
-import 'package:return_med/src/Services/auth.dart';
+import 'package:return_med/src/services/auth.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -78,7 +78,7 @@ void main() {
     test('with facebook working properly', () async {
       await _auth.signInWithFacebook();
       expect(_auth.response, null);
-    }, skip: false);
+    }, skip: true);
 
     test('with facebook shows exception when something goes wrong', () async {
       when(_facebookAuth.logIn(['email'])).thenReturn(Future.delayed(

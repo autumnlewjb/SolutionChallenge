@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Models/user.dart';
-import 'package:return_med/src/Models/user_reward.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/models/user.dart';
+import 'package:return_med/src/models/user_reward.dart';
+import 'package:return_med/src/services/database.dart';
 
 class ClaimedReward extends StatelessWidget {
   @override
