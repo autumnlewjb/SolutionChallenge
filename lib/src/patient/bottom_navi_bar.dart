@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/src/dashboard/pages/reward.dart';
+import 'package:return_med/src/patient/pages/reward.dart';
 
 import 'pages/main_page.dart';
 import 'pages/ongoing_return.dart';

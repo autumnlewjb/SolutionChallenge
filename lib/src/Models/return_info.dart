@@ -9,6 +9,7 @@ class ReturnInfo {
   String postcode;
   String status;
   String timeCreated;
+  String pic;
 
   ReturnInfo(
       {this.medName,
@@ -18,7 +19,8 @@ class ReturnInfo {
       this.state,
       this.postcode,
       this.status,
-      this.timeCreated});
+      this.timeCreated,
+      this.pic});
 
   factory ReturnInfo.fromMap(Map data) {
     return ReturnInfo(
@@ -29,7 +31,8 @@ class ReturnInfo {
         state: data['state'] ?? 'N/A',
         postcode: data['postcode'] ?? 'N/A',
         status: data['status'] ?? 'N/A',
-        timeCreated: data['timeCreated'] ?? 'N/A');
+        timeCreated: data['timeCreated'] ?? 'N/A',
+        pic: data['pic'] ?? 'N/A');
   }
 
   factory ReturnInfo.toMap(String medName, DateTime expiryDate, String address1,

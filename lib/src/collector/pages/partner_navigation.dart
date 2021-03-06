@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
-import 'package:return_med/src/dashboard/pages/history.dart';
+import 'package:return_med/src/collector/pages/available_return.dart';
 import 'package:flutter/material.dart';
-import 'package:return_med/src/dashboard/pages/profile.dart';
+import 'package:return_med/src/patient/pages/profile.dart';
 import 'package:return_med/src/services/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/dashboard/pages/main_page.dart';
+import 'package:return_med/src/collector/pages/main_page.dart';
+import 'drawer.dart';
 
-class PMainpage extends StatefulWidget {
+class PartnerNavigation extends StatefulWidget {
   @override
-  _PMainpageState createState() => _PMainpageState();
+  _PartnerNavigationState createState() => _PartnerNavigationState();
 }
 
-class _PMainpageState extends State<PMainpage> {
+class _PartnerNavigationState extends State<PartnerNavigation> {
   double _icon1YOffSet = 0;
 
   double _icon2YOffSet = -75;
@@ -125,9 +126,9 @@ class _PMainpageState extends State<PMainpage> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new History()));
+                          builder: (context) => new AvailableReturn()));
                 },
-                icon: Icon(Icons.history),
+                icon: Icon(Icons.pedal_bike),
                 color: Colors.white,
               ),
             ),
@@ -166,6 +167,6 @@ class _PMainpageState extends State<PMainpage> {
             )
           ],
         ),
-        body: MainPage());
+        body: PartnerMainPage());
   }
 }

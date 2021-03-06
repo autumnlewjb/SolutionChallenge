@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:return_med/src/models/return_info.dart';
 import 'package:return_med/src/models/user.dart';
 import 'package:return_med/src/services/database.dart';
-import 'package:return_med/src/dashboard/pages/drawer.dart';
+import 'package:return_med/src/patient/pages/drawer.dart';
 
 class ScheduleReturn extends StatefulWidget {
   @override

@@ -4,18 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/dashboard/partner/partner_main_page.dart';
+import 'package:return_med/src/models/return_info.dart';
 import 'package:return_med/src/models/user.dart';
 import 'package:return_med/src/services/auth.dart';
 import 'package:return_med/src/services/database.dart';
-import 'package:return_med/src/dashboard/pages/drawer.dart';
+import 'package:return_med/src/collector/pages/drawer.dart';
 
-class MainPage extends StatefulWidget {
+class PartnerMainPage extends StatefulWidget {
   @override
-  _MainPageState createState() => _MainPageState();
+  _PartnerMainPageState createState() => _PartnerMainPageState();
 }
 
-class _MainPageState extends State<MainPage>
+class _PartnerMainPageState extends State<PartnerMainPage>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
@@ -27,309 +27,107 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
+    var user = Provider.of<User>(context);
     return Scaffold(
-      drawer: AppDrawer(),
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.deepPurple,
+        elevation: 0,
       ),
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
-        child: CustomScrollView(
-          physics: ClampingScrollPhysics(),
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.deepPurple,
-                    Colors.deepPurple[400],
-                    Colors.deepPurple[300]
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 50,
-                        color: Colors.grey.withOpacity(0.5))
-                  ],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
+      drawer: AppDrawer(),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Colors.deepPurple,
+                  Colors.deepPurple[400],
+                  Colors.deepPurple[300]
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 5),
+                      blurRadius: 50,
+                      color: Colors.grey.withOpacity(0.5))
+                ],
+              ),
+              child: Column(
+                children: [
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(10),
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Container(
+                  //       margin: EdgeInsets.all(2),
+                  //       child: Icon(Icons.menu),
+                  //     ),
+                  //   ),
+                  // ),
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      padding: EdgeInsets.all(30),
+                      alignment: Alignment.bottomLeft,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Consumer<List<ReturnInfo>>(
+                            builder: (_, returnList, __) {
+                              returnList = returnList
+                                  ?.where((element) =>
+                                      element.status == 'Completed')
+                                  ?.where((element) => element.pic == user.uid)
+                                  ?.toList();
+                              return Expanded(
+                                flex: 3,
+                                child: FittedBox(
+                                  alignment: Alignment.bottomLeft,
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    "${returnList?.length ?? 0}",
+                                    style: TextStyle(
+                                        fontSize: 150, color: Colors.white),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "collections",
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Center(
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 30),
+                      alignment: Alignment.topLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
                         child: Text(
-                          'Welcome to Return Med',
+                          "Hello!",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 50,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            "Do you have any disposable medicine?",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                          child: Text(
-                            "This is where you can start to dispose of your medicine without any worries. Let's start now!",
-                            style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        FlatButton.icon(
-                          onPressed: () => _launchURL(context),
-                          icon: Icon(Icons.question_answer_rounded),
-                          label: Text("Need help?"),
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                        FlatButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new PMainpage()));
-                          },
-                          icon: Icon(Icons.arrow_drop_down_circle),
-                          label: Text("Partner"),
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Text(
-                      "Steps to be taken",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(
-                                      Icons.timer,
-                                      size: 50,
-                                      color: Colors.black,
-                                    )),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    child: Column(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "Step 1",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 110,
-                                      child: Center(
-                                        child: Text(
-                                          "Click the second icon below",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(
-                                      Icons.assignment_rounded,
-                                      size: 50,
-                                      color: Colors.black,
-                                    )),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    child: Column(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "Step 2",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 110,
-                                      child: Center(
-                                        child: Text(
-                                          "Fill in the details on the page",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(
-                                      Icons.assignment_turned_in_rounded,
-                                      size: 50,
-                                      color: Colors.black,
-                                    )),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    child: Column(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "Step 3",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 110,
-                                      child: Center(
-                                        child: Text(
-                                          "Wait for the good news!",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      "assets/medicine.webp",
-                      height: screenHeight * 0.135,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text('Did you know that?',
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.white)),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.01,
-                        ),
-                        Container(
-                          width: 210,
-                          child: Text(
-                            "Most people do not handle their medicine correctly!",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.all(15),
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                height: screenHeight * 0.15,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.deepPurple[200],
-                        Colors.deepPurple[400],
-                        Colors.deepPurple
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(20)),
-              ),
-            )
           ],
         ),
       ),

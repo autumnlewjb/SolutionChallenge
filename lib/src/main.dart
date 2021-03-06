@@ -7,7 +7,7 @@ import 'package:return_med/src/homepage.dart';
 import 'package:return_med/src/login.dart';
 import 'package:return_med/src/sign_up.dart';
 
-import 'dashboard/dashboard.dart';
+import 'patient/dashboard.dart';
 import 'services/auth.dart';
 
 void main() async {

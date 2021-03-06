@@ -50,6 +50,26 @@ class Database {
             .toList());
   }
 
+  static Stream<List<ReturnInfo>> getAllReturnInfo() {
+    return FirebaseFirestore.instance
+        .collectionGroup("schedule")
+        .orderBy("timeCreated", descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => ReturnInfo.fromMap(doc.data()))
+            .toList());
+  }
+
+  static Future<String> getUsernameFromReturnInfo(String returnDocId) async {
+    return await FirebaseFirestore.instance
+        .collection("schedule")
+        .doc(returnDocId)
+        .parent
+        .parent
+        .get()
+        .then((userDoc) => userDoc.data()['username']);
+  }
+
   static Stream<List<UserReward>> getClaimedReward(String uid) {
     return userDB
         .doc(uid)

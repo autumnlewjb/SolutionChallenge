@@ -6,7 +6,7 @@ import 'package:return_med/src/models/available_reward.dart';
 import 'package:return_med/src/models/hospital.dart';
 import 'package:return_med/src/models/user.dart';
 import 'package:return_med/src/services/database.dart';
-import 'package:return_med/src/dashboard/pages/drawer.dart';
+import 'package:return_med/src/patient/pages/drawer.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Reward extends StatefulWidget {
