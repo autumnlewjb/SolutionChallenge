@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/src/dashboard/pages/reward.dart';
+import 'package:return_med/src/patient/pages/reward.dart';
 
-import 'Pages/main_page.dart';
-import 'Pages/ongoing_return.dart';
-import 'Pages/schedule_return.dart';
+import 'pages/main_page.dart';
+import 'pages/ongoing_return.dart';
+import 'pages/schedule_return.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override

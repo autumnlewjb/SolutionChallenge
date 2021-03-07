@@ -1,16 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Models/return_info.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/Models/user.dart';
+import 'package:return_med/src/models/return_info.dart';
+import 'package:return_med/src/services/database.dart';
 
-class History extends StatelessWidget {
+class PartnerHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Ongoing history'),
+        title: Text('Collection history'),
         backgroundColor: Colors.deepPurple,
       ),
       body: Builder(
@@ -32,6 +35,7 @@ class History extends StatelessWidget {
                 }
                 returnList = returnList
                     ?.where((element) => element.status == 'Completed')
+                    ?.where((element) => element.pic == user.uid)
                     ?.toList();
                 if (returnList.isEmpty) {
                   return Text(
@@ -126,54 +130,6 @@ class History extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: TextButton.icon(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                    title: Text('Warning'),
-                                                    content: Text(
-                                                        'Are you sure you want to delete?'),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        child: Text('Cancel'),
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                      ),
-                                                      FlatButton(
-                                                          child:
-                                                              Text('Confirm'),
-                                                          onPressed: () async {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Database.deleteSch(info
-                                                                    .timeCreated)
-                                                                .then((_) =>
-                                                                    Scaffold.of(
-                                                                            context)
-                                                                        .showSnackBar(
-                                                                            SnackBar(
-                                                                      content: Text(
-                                                                          'Successfully deleted!'),
-                                                                      duration: Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                    )));
-                                                          })
-                                                    ]);
-                                              });
-                                        },
-                                        icon: Icon(Icons.delete),
-                                        label: Text("Delete")),
                                   ),
                                 ),
                               ],

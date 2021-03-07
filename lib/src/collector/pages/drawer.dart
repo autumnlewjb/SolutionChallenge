@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Dashboard/Pages/claimed_reward.dart';
-import 'package:return_med/src/Dashboard/Pages/history.dart';
-import 'package:return_med/src/Models/user.dart';
+import 'package:return_med/src/collector/pages/accepted_return.dart';
+import 'package:return_med/src/collector/pages/available_return.dart';
+import 'package:return_med/src/collector/pages/history.dart';
+import 'package:return_med/src/patient/pages/history.dart';
+import 'package:return_med/src/models/user.dart';
 
-import '../../Services/auth.dart';
-import 'profile.dart';
+import '../../services/auth.dart';
+import '../../patient/pages/profile.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -121,16 +123,32 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.black26))),
             child: ListTile(
-                title: Text('Claimed reward'),
+                title: Text('Available Return'),
                 leading: Icon(
-                  Icons.card_giftcard_rounded,
+                  Icons.public,
                   color: Colors.deepPurple,
                 ),
                 onTap: () {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new ClaimedReward()));
+                          builder: (context) => new AvailableReturn()));
+                }),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Accepted Return'),
+                leading: Icon(
+                  Icons.pedal_bike,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new AcceptedReturn()));
                 }),
           ),
           Container(
@@ -146,7 +164,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new History()));
+                          builder: (context) => new PartnerHistory()));
                 }),
           ),
           Expanded(child: Container()),

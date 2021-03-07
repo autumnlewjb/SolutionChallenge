@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class ReturnInfo {
+  String docId;
   String medName;
   String expiryDate;
   String address1;
@@ -9,19 +11,24 @@ class ReturnInfo {
   String postcode;
   String status;
   String timeCreated;
+  String pic;
 
   ReturnInfo(
-      {this.medName,
+      {this.docId,
+      this.medName,
       this.expiryDate,
       this.address1,
       this.address2,
       this.state,
       this.postcode,
       this.status,
-      this.timeCreated});
+      this.timeCreated,
+      this.pic});
 
-  factory ReturnInfo.fromMap(Map data) {
+  factory ReturnInfo.fromMap(QueryDocumentSnapshot doc) {
+    var data = doc.data();
     return ReturnInfo(
+        docId: doc.id,
         medName: data['medicine'] ?? 'N/A',
         expiryDate: data['expiryDate'] ?? 'N/A',
         address1: data['address1'] ?? 'N/A',
@@ -29,7 +36,8 @@ class ReturnInfo {
         state: data['state'] ?? 'N/A',
         postcode: data['postcode'] ?? 'N/A',
         status: data['status'] ?? 'N/A',
-        timeCreated: data['timeCreated'] ?? 'N/A');
+        timeCreated: data['timeCreated'] ?? 'N/A',
+        pic: data['pic'] ?? 'N/A');
   }
 
   factory ReturnInfo.toMap(String medName, DateTime expiryDate, String address1,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:return_med/src/Models/return_info.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/models/return_info.dart';
+import 'package:return_med/src/services/database.dart';
 
 class WidgetModel {
   Card schReturnTile(

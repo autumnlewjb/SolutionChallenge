@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/Services/database.dart';
+import 'package:return_med/src/services/database.dart';
 
-import '../src/Models/user.dart';
-import '../src/Services/auth.dart';
+import '../src/models/user.dart';
+import '../src/services/auth.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
