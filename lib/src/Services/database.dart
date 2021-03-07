@@ -23,6 +23,8 @@ class Database {
       FirebaseFirestore.instance.collection('users');
   static CollectionReference rewardDB =
       FirebaseFirestore.instance.collection('rewards');
+  static Query scheduleGroup =
+      FirebaseFirestore.instance.collectionGroup('schedule');
 
   static Future<DocumentSnapshot> getUser(String uid) async {
     DocumentSnapshot snapshot = await userDB.doc(uid).get();
@@ -45,19 +47,16 @@ class Database {
         .collection('schedule')
         .orderBy('timeCreated', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => ReturnInfo.fromMap(doc.data()))
-            .toList());
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => ReturnInfo.fromMap(doc)).toList());
   }
 
   static Stream<List<ReturnInfo>> getAllReturnInfo() {
-    return FirebaseFirestore.instance
-        .collectionGroup("schedule")
+    return scheduleGroup
         .orderBy("timeCreated", descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => ReturnInfo.fromMap(doc.data()))
-            .toList());
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => ReturnInfo.fromMap(doc)).toList());
   }
 
   static Future<String> getUsernameFromReturnInfo(String returnDocId) async {
@@ -92,6 +91,33 @@ class Database {
         (snapshot) => snapshot.docs
             .map((doc) => AvailableReward.fromMap(doc.data(), doc.reference))
             .toList());
+  }
+
+  static void updateReturnStatus(String scheduleId, String newStatus) async {
+    scheduleGroup.where("doc.id").get().then((snapshot) {
+      snapshot.docs.forEach((doc) {
+        if (doc.id == scheduleId) {
+          switch (newStatus) {
+            case "Completed":
+              doc.reference.update({
+                'status': newStatus,
+              });
+              break;
+            case "Pending":
+              doc.reference.update({
+                'status': newStatus,
+                'pic': null,
+              });
+              break;
+            case "Accepted":
+              doc.reference.update({
+                'status': newStatus,
+                'pic': FirebaseAuth.instance.currentUser.uid
+              });
+          }
+        }
+      });
+    });
   }
 
   static Future<void> addUser(AppUser appUser) async {

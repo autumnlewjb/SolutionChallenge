@@ -132,54 +132,6 @@ class PartnerHistory extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: TextButton.icon(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                    title: Text('Warning'),
-                                                    content: Text(
-                                                        'Are you sure you want to delete?'),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        child: Text('Cancel'),
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                      ),
-                                                      FlatButton(
-                                                          child:
-                                                              Text('Confirm'),
-                                                          onPressed: () async {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Database.deleteSch(info
-                                                                    .timeCreated)
-                                                                .then((_) =>
-                                                                    Scaffold.of(
-                                                                            context)
-                                                                        .showSnackBar(
-                                                                            SnackBar(
-                                                                      content: Text(
-                                                                          'Successfully deleted!'),
-                                                                      duration: Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                    )));
-                                                          })
-                                                    ]);
-                                              });
-                                        },
-                                        icon: Icon(Icons.delete),
-                                        label: Text("Delete")),
-                                  ),
-                                ),
                               ],
                               title: Text(info.medName),
                               subtitle: Text(info.timeCreated),

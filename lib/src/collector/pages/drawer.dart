@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:return_med/src/collector/pages/accepted_return.dart';
 import 'package:return_med/src/collector/pages/available_return.dart';
 import 'package:return_med/src/collector/pages/history.dart';
 import 'package:return_med/src/patient/pages/history.dart';
@@ -116,6 +117,38 @@ class _AppDrawerState extends State<AppDrawer> {
                       context,
                       new MaterialPageRoute(
                           builder: (context) => new Profile()));
+                }),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Available Return'),
+                leading: Icon(
+                  Icons.public,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new AvailableReturn()));
+                }),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Accepted Return'),
+                leading: Icon(
+                  Icons.pedal_bike,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new AcceptedReturn()));
                 }),
           ),
           Container(

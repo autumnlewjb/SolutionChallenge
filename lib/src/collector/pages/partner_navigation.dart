@@ -128,7 +128,7 @@ class _PartnerNavigationState extends State<PartnerNavigation> {
                       new MaterialPageRoute(
                           builder: (context) => new AvailableReturn()));
                 },
-                icon: Icon(Icons.pedal_bike),
+                icon: Icon(Icons.public),
                 color: Colors.white,
               ),
             ),

@@ -1,18 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:return_med/src/collector/pages/accepted_return.dart';
 import 'package:return_med/src/models/return_info.dart';
 import 'package:return_med/src/services/database.dart';
 
 import 'drawer.dart';
 
-class AvailableReturn extends StatefulWidget {
+class AcceptedReturn extends StatefulWidget {
   @override
-  _AvailableReturnState createState() => _AvailableReturnState();
+  _AcceptedReturnState createState() => _AcceptedReturnState();
 }
 
-class _AvailableReturnState extends State<AvailableReturn>
+class _AcceptedReturnState extends State<AcceptedReturn>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _AvailableReturnState extends State<AvailableReturn>
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Available Return",
+          "Accepted Return",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.deepPurple,
@@ -44,7 +44,9 @@ class _AvailableReturnState extends State<AvailableReturn>
                 return CircularProgressIndicator();
               }
               returnList = returnList
-                  ?.where((element) => element.status == "Pending")
+                  ?.where((element) => element.status == "Accepted")
+                  ?.where((element) =>
+                      element.pic == FirebaseAuth.instance.currentUser.uid)
                   ?.toList();
               returnList?.sort((a, b) => a.status.compareTo(b.status));
               print(returnList);
@@ -144,20 +146,34 @@ class _AvailableReturnState extends State<AvailableReturn>
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Database.updateReturnStatus(
-                                            info.docId, "Accepted");
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AcceptedReturn()));
-                                      },
-                                      child: Text("Accept")),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Database.updateReturnStatus(
+                                                  info.docId, "Completed");
+                                            },
+                                            child: Text("Complete")),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Database.updateReturnStatus(
+                                                  info.docId, "Pending");
+                                            },
+                                            child: Text("Reject")),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
