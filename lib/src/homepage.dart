@@ -260,6 +260,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Expanded(
           child: Container(
+            alignment: Alignment.center,
             margin: EdgeInsets.all(0),
             padding: EdgeInsets.all(5),
             child: CircleAvatar(

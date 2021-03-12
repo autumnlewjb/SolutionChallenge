@@ -12,13 +12,6 @@ import '../models/return_info.dart';
 import '../models/user.dart';
 
 class Database {
-  /*
-  final FirebaseFirestore _firestore;
-  CollectionReference userDB;
-  CollectionReference rewardDB;
-
-  Database(this._firestore,_firebaseAuth){}
-  */
   static CollectionReference userDB =
       FirebaseFirestore.instance.collection('users');
   static CollectionReference rewardDB =

@@ -23,9 +23,6 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Auth(FirebaseAuth.instance)),
         StreamProvider(create: (context) => context.read<Auth>().user)
-        /*Provider(
-            create: (context) => Database(
-                FirebaseFirestore.instance, context.read<Auth>().firebaseAuth))*/
       ],
       child: MaterialApp(
         routes: {
