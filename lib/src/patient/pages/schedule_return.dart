@@ -103,16 +103,6 @@ class _ScheduleReturnState extends State<ScheduleReturn>
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text(
-                      'Schedule a return',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
                     TextFormField(
                       autovalidateMode: _autoValidate,
                       controller: medName,

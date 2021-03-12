@@ -51,15 +51,6 @@ class _RewardState extends State<Reward> with AutomaticKeepAliveClientMixin {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Reward',
-                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 Consumer<AppUser>(builder: (_, user, __) {
                   this.rewardPoint = user?.rewardPoint;
                   return Text(
