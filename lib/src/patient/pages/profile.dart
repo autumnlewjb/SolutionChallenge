@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
           child: Stack(children: [
             Container(
               width: width,
-              height: height * 0.3 - 50,
+              height: height * 0.3 - 80,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [

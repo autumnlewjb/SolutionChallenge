@@ -183,10 +183,9 @@ class _MainPageState extends State<MainPage>
                                       ),
                                     ),
                                     Container(
-                                      width: 110,
                                       child: Center(
                                         child: Text(
-                                          "Click the second icon below",
+                                          "Click the icon below",
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -223,7 +222,6 @@ class _MainPageState extends State<MainPage>
                                       ),
                                     ),
                                     Container(
-                                      width: 110,
                                       child: Center(
                                         child: Text(
                                           "Fill in the details on the page",
@@ -263,7 +261,6 @@ class _MainPageState extends State<MainPage>
                                       ),
                                     ),
                                     Container(
-                                      width: 110,
                                       child: Center(
                                         child: Text(
                                           "Wait for the good news!",
@@ -290,9 +287,9 @@ class _MainPageState extends State<MainPage>
                   children: [
                     Image.asset(
                       "assets/medicine.webp",
-                      height: screenHeight * 0.135,
                     ),
-                    Column(
+                    Expanded(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
@@ -304,7 +301,6 @@ class _MainPageState extends State<MainPage>
                           height: screenHeight * 0.01,
                         ),
                         Container(
-                          width: 210,
                           child: Text(
                             "Most people do not handle their medicine correctly!",
                             textAlign: TextAlign.left,
@@ -315,7 +311,7 @@ class _MainPageState extends State<MainPage>
                         )
                       ],
                     ),
-                  ],
+                    )],
                 ),
                 padding: EdgeInsets.all(15),
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -329,6 +325,24 @@ class _MainPageState extends State<MainPage>
                       ],
                     ),
                     borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: Column(
+                  children: [
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    Text("Announcement", style: TextStyle(color: Colors.black),),
+                    TextButton(onPressed: (){}, child: Text("More >"),)
+                  ],),
+                    Container(
+                      height: 100,
+                      color: Colors.red,
+                    )
+                  ]),
               ),
             )
           ],
