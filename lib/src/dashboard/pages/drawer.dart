@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:return_med/src/dashboard/pages/claimed_reward.dart';
-import 'package:return_med/src/dashboard/pages/history.dart';
 import 'package:return_med/src/Models/user.dart';
+import 'package:return_med/src/patient/pages/history.dart';
 
 import '../../Services/auth.dart';
 import 'package:return_med/src/patient/pages/profile.dart';

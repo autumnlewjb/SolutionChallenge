@@ -149,6 +149,22 @@ class _AppDrawerState extends State<AppDrawer> {
                           builder: (context) => new History()));
                 }),
           ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black26))),
+            child: ListTile(
+                title: Text('Leaderboard'),
+                leading: Icon(
+                  Icons.whatshot_rounded,
+                  color: Colors.deepPurple,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new History()));
+                }),
+          ),
           Expanded(child: Container()),
           ListTile(
             title: Text('Logout'),
