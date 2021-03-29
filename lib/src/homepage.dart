@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   double _loginYOffSet = 0;
   int _pageState = 0;
 
-  final message = "Return you meds.\nSave the environment.";
+  final message = "Return your meds.\nSave the environment.";
 
   @override
   Widget build(BuildContext context) {
